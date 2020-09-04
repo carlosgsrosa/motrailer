@@ -3,11 +3,12 @@ import {FlatList, Alert, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
-import {getCardDimension} from '../../util';
+import {showError, getCardDimension, showNotifyMessage} from '../../util';
 
 import api, {api_key} from '../../services/api';
 
-import {fonts} from '../../constants';
+const NOW = 'now';
+const TRENDING = 'trending';
 
 import {
   ScrollView,
@@ -42,87 +43,82 @@ export default function Movies() {
   const navigation = useNavigation();
   const {getItem, setItem} = useAsyncStorage('@MoTrailer:watchList');
 
+  const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [trendingMovie, setTrendingMovie] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [watchList, setWatchList] = useState([]);
 
   const getMoviePlaying = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get('/movie/now_playing', params);
-      setMovie(response.data.results);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
-    }
+    setLoading(true);
+    await api
+      .get('/movie/now_playing', params)
+      .then((response) => {
+        setMovie(response.data.results);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        showError('getMoviePlaying', e.message);
+      });
   };
 
-  const getTredingMovie = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get('/trending/movie/day', params);
-      setTrendingMovie(response.data.results);
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
-    }
+  const getTrendingMovie = async () => {
+    setLoading(true);
+    await api
+      .get('/trending/movie/day', params)
+      .then((response) => {
+        setTrendingMovie(response.data.results);
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        showError(e.message);
+      });
   };
 
   const onNavigateMore = () => {
     navigation.navigate('AllMovies');
   };
 
-  const onAddWatchList = async (data) => {
-    await getItem()
-      .then((value) => {
-        const isMoviePrevAdded =
-          watchList.filter((m) => m.id === data.id).length > 0 ? true : false;
+  const toggleWatchList = (data, origin) => {
+    const clone = origin === NOW ? [...movie] : [...trendingMovie];
 
-        if (isMoviePrevAdded) {
-          Alert.alert(
-            'Whatchlist',
-            `Filme ${data.original_title} ja se encontra na sua lista!`,
-          );
-          return;
+    clone.filter((item) => {
+      if (item.id === data.id) {
+        item.favorite = !item.favorite;
+
+        if (origin === NOW) {
+          setMovie(clone);
+        } else {
+          setTrendingMovie(clone);
         }
-
-        watchList.push(data);
-        saveLocalWatchList();
-      })
-      .catch((error) => {
-        setLoading(false);
-        Alert.alert('Ocorreu um erro ao recuperar dados!', error.message);
-      });
+        const allListMovies = [...movie, ...trendingMovie];
+        saveLocalWatchList(allListMovies.filter((f) => f.favorite));
+      }
+    });
   };
 
-  const getLocalWatchList = async () => {
-    const value = await getItem();
-    console.log(value);
-    if (value !== null) {
-      setWatchList(JSON.parse(value));
+  const saveLocalWatchList = async (data) => {
+    try {
+      await setItem(JSON.stringify(data));
+    } catch (e) {
+      setLoading(false);
+      showError('saveLocalWatchList', e.message);
     }
   };
 
-  const saveLocalWatchList = async () => {
-    await setItem(JSON.stringify(watchList)).then(
-      () => console.warn('Movie adicionado a sua Whatchlist!'),
-      setLoading(false),
-    );
-  };
-
   useEffect(() => {
-    getLocalWatchList();
     getMoviePlaying();
-    getTredingMovie();
+    getTrendingMovie();
   }, []);
+
+  if (loading) {
+    return <LoadingModal visible={loading} />;
+  }
 
   return (
     <SafeAreaView backgroundColor="#EE7429">
       <AppStatusBar style="light-content" />
-      <LoadingModal visible={loading} />
+
       <VerticalView flex={1} backgroundColor="#fff">
         <Header title="MOVIE" />
         <ScrollView
@@ -166,10 +162,11 @@ export default function Movies() {
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
               <MovieList
-                onAddWatchList={onAddWatchList}
+                onPress={toggleWatchList}
                 width="140px"
                 height="210px"
-                data={item}
+                origin="now"
+                {...item}
               />
             )}
           />
@@ -206,11 +203,12 @@ export default function Movies() {
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
               <MovieList
-                onAddWatchList={onAddWatchList}
+                onPress={toggleWatchList}
                 marginRight="15px"
                 width={getCardDimension(15, 2)}
                 height="270px"
-                data={item}
+                origin="trending"
+                {...item}
               />
             )}
           />

@@ -15,11 +15,11 @@ export default function CastList({data}) {
 
   return (
     <TouchableOpacity onPress={() => navigation.push('Person', params)}>
-      <Wrapper width="90px" height="121px" style={styles.shadow}>
+      <Wrapper style={styles.shadow}>
         <Poster
           resizeMode="cover"
           width="90px"
-          height="121px"
+          height="131px"
           borderRadius="6px"
           gender={data.gender}
           type="person"

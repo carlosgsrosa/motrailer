@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FlatList, Alert, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {getCardDimension} from '../../util';
+import {showError, getCardDimension} from '../../util';
 
 import api, {api_key} from '../../services/api';
 
@@ -36,9 +36,9 @@ const params = {
 };
 
 export default function Movies() {
+  const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [trendingMovie, setTrendingMovie] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
@@ -48,9 +48,9 @@ export default function Movies() {
       const response = await api.get('/discover/tv', params);
       setMovie(response.data.results);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   }
 
@@ -60,9 +60,9 @@ export default function Movies() {
       const response = await api.get('/trending/tv/day', params);
       setTrendingMovie(response.data.results);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   }
 

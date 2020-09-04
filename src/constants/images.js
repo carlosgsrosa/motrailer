@@ -30,6 +30,7 @@ export const icons = {
   bookmark_checked: require('../assets/icons/bookmark_checked.png'),
   logo: require('../assets/icons/logo.png'),
   zoom: require('../assets/icons/zoom.png'),
+  tick: require('../assets/icons/tick.png'),
 };
 
 export default {background, icons};

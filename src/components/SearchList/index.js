@@ -59,7 +59,7 @@ export default function SearchList({data}) {
     switch (data.media_type) {
       case 'movie':
       case 'tv':
-        return <Text numberOfLines={3}>{data.overview}</Text>;
+        return <Text numberOfLines={4}>{data.overview}</Text>;
       case 'person':
         const movies = data.known_for.map((item, index) => (
           <TouchableOpacity
@@ -87,9 +87,9 @@ export default function SearchList({data}) {
       <VerticalView style={styles.shadow}>
         <HorizontalView>
           <Poster
+            width="100px"
+            height="145px"
             resizeMode="cover"
-            width="90px"
-            height="121px"
             borderRadius="6px"
             type={data.media_type}
             source={image}

@@ -3,6 +3,7 @@ import {Alert, FlatList, TouchableOpacity} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
 import {
+  showError,
   getUri,
   getWindowWidth,
   getYearFromDate,
@@ -38,7 +39,7 @@ export default function Movie() {
   const route = useRoute();
   const navigation = useNavigation();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState({});
   const [genres, setGenres] = useState([]);
   const [movieCredit, setMovieCredit] = useState([]);
@@ -95,8 +96,8 @@ export default function Movie() {
         .map((item) => {
           return item.release_dates[0];
         });
-    } catch (error) {
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+    } catch (e) {
+      showError(e.message);
     }
   }
 
@@ -117,9 +118,9 @@ export default function Movie() {
         );
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((e) => {
         setLoading(false);
-        userAlert(error.message, true);
+        showError(e.message);
       });
   }
 
@@ -129,24 +130,10 @@ export default function Movie() {
       const response = await api.get(`/movie/${movieId}/credits`, {api_key});
       setMovieCredit(response.data.cast);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
-  }
-
-  function userAlert(message, rollback) {
-    return Alert.alert('Acorreu um erro inesperado!', message, [
-      {
-        text: 'OK',
-        onPress: () => {
-          if (rollback) {
-            navigation.goBack();
-          }
-        },
-      },
-      {cancelable: false},
-    ]);
   }
 
   function Header() {
@@ -166,11 +153,11 @@ export default function Movie() {
 
   function MoviePoster() {
     return (
-      <Wrapper marginLeft="15px" style={[styles.shadow]}>
+      <Wrapper marginLeft="15px" style={styles.shadow}>
         <Poster
-          resizeMode="cover"
-          width="140px"
-          height="210px"
+          resizeMode="center"
+          width="120px"
+          height="180px"
           borderRadius="6px"
           type="movie"
           source={movie.poster_path}
@@ -385,9 +372,9 @@ export default function Movie() {
       const response = await api.get(`/movie/${movieId}/images`);
       setMovieBackdrops(response.data.backdrops);
       setMoviePosters(response.data.posters);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   };
 
@@ -397,10 +384,13 @@ export default function Movie() {
     getMovieMedia();
   }, []);
 
+  if (loading) {
+    return <LoadingModal visible={loading} />;
+  }
+
   return (
     <VerticalView backgroundColor="#fff">
       <AppStatusBar transparent style="light-content" />
-      <LoadingModal visible={loading} />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
         <HorizontalView style={styles.absoluteView}>

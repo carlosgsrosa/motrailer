@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {images, intro} from '../../constants';
 
-import {getWindowWidth} from '../../util';
+import {showError, getWindowWidth} from '../../util';
 
 import {
   AppStatusBar,
@@ -100,8 +100,8 @@ export default function Intro() {
     try {
       await AsyncStorage.setItem('@MoTrailer:signed', 'false');
       navigation.replace('Home');
-    } catch (error) {
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+    } catch (e) {
+      showError(e.message);
     }
   }
 

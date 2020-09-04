@@ -1,24 +1,28 @@
 import React, {createContext, useState, useEffect} from 'react';
-import {Alert} from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import {useAsyncStorage} from '@react-native-community/async-storage';
+
+import {showError} from '../util';
 
 export const AuthContext = createContext({signed: false, user: {}});
 
 export const AuthProvider = ({children}) => {
+  const {getItem} = useAsyncStorage('@MoTrailer:signed');
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  async function getStorageUser() {
-    try {
-      const value = await AsyncStorage.getItem('@MoTrailer:signed');
-      if (value !== null) {
-        setUser(value);
-      }
-    } catch (error) {
-      Alert.alert('Acorreu um erro inesperado!', error.message);
-    }
+  const getStorageUser = async () => {
+    await getItem()
+      .then((value) => {
+        if (value !== null) {
+          setUser(value);
+        }
+      })
+      .catch((error) => {
+        showError(error.message);
+      });
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     getStorageUser();

@@ -3,6 +3,8 @@ import {Alert, TextInput, TouchableOpacity, FlatList} from 'react-native';
 
 import {images} from '../../constants';
 
+import {showError} from '../../util';
+
 import api, {api_key} from '../../services/api';
 
 import {
@@ -17,10 +19,10 @@ import {
 } from '../../components';
 
 export default function Search() {
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState(null);
 
   async function getSearchMulti(pageNumber = page) {
@@ -44,9 +46,9 @@ export default function Search() {
         setTotalPages(response.data.total_pages);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((e) => {
         setLoading(false);
-        Alert.alert('Acorreu um erro inesperado!', error.message);
+        showError(e.message);
       });
   }
 
@@ -97,7 +99,7 @@ export default function Search() {
         initialNumToRender={7}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListFooterComponent={
-          loading && <Loading size="small" color="#ED7329" />
+          loading && <Loading size="large" color="#ED7329" />
         }
         onEndReached={() => getSearchMulti()}
         onEndReachedThreshold={1}

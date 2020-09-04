@@ -30,7 +30,7 @@ const homeScreenOptions = {
   },
 };
 
-export default function Routes() {
+export default () => {
   const {signed, loading} = useContext(AuthContext);
 
   if (loading) {
@@ -74,4 +74,4 @@ export default function Routes() {
       <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
-}
+};

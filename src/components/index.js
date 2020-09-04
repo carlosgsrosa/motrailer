@@ -26,8 +26,8 @@ const SafeAreaView = styled.SafeAreaView`
 
 const Wrapper = styled.View`
   margin-left: ${(props) => props.marginLeft || '0px'};
-  width: ${(props) => props.width || '140px'};
-  height: ${(props) => props.height || '210px'};
+  /* width: ${(props) => props.width || '140px'}; */
+  /* height: ${(props) => props.height || '210px'}; */
 
   margin-left: ${(props) => props.marginLeft || '0px'};
   margin-top: ${(props) => props.marginTop || '0px'};
@@ -36,7 +36,7 @@ const Wrapper = styled.View`
 `;
 
 const ScrollView = styled.ScrollView`
-  background-color: ${(props) => props.backgroundColor | 'transparent'};
+  background-color: ${(props) => props.backgroundColor || 'transparent'};
 
   margin-left: ${(props) => props.marginLeft || '0px'};
   margin-top: ${(props) => props.marginTop || '0px'};
@@ -58,6 +58,7 @@ const VerticalView = styled.View`
 
   background-color: ${(props) => props.backgroundColor || 'transparent'};
 
+  /* align-items: ${(props) => props.alignItems || 'flex-start'}; */
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
 
   margin-left: ${(props) => props.marginLeft || '0px'};

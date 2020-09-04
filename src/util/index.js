@@ -1,4 +1,4 @@
-import {Dimensions} from 'react-native';
+import {Alert, Dimensions, Platform, ToastAndroid} from 'react-native';
 
 import {image_path} from '../services/api';
 
@@ -92,4 +92,17 @@ export function getCardDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
   const cardWitdh = (getWindowWidth() - DIVISOR) / columns;
   return cardWitdh + 'px';
+}
+
+export function showError(method = '', message) {
+  Alert.alert('Acorreu um erro inesperado!', message);
+  console.log(`${method}:`, message);
+}
+
+export function showNotifyMessage(message) {
+  if (Platform.OS === 'ios') {
+    Alert.alert(message);
+  } else {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  }
 }

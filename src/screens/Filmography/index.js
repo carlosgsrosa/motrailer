@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useLayoutEffect} from 'react';
-import {FlatList, Alert} from 'react-native';
+import {FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
 import api, {api_key} from '../../services/api';
 
-import {getCardDimension} from '../../util';
+import {showError, getCardDimension} from '../../util';
 
 import {
   SafeAreaView,
@@ -13,17 +13,17 @@ import {
   ItemSeparatorComponent,
   styles,
   Loading,
-  Text,
+  EmptyContent,
 } from '../../components';
 
 export default function Filmography(props) {
   const route = useRoute();
   const personId = route.params.id;
 
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [totalResults, setTotalResults] = useState(0);
 
   async function getMovies() {
@@ -52,7 +52,7 @@ export default function Filmography(props) {
       })
       .catch((error) => {
         setLoading(false);
-        Alert.alert('Acorreu um erro inesperado!', error.message);
+        showError(error.message);
       });
   }
 
@@ -78,6 +78,9 @@ export default function Filmography(props) {
         onEndReachedThreshold={1}
         data={data}
         keyExtractor={(_, index) => String(index)}
+        ListEmptyComponent={() => (
+          <EmptyContent message="Nenhum filme encontrado!" />
+        )}
         renderItem={({item}) => (
           <MovieList
             onAddWatchList={onAddWatchList}

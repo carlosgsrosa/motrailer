@@ -19,10 +19,10 @@ export default function PersonTopTabStack() {
   return (
     <Tab.Navigator
       tabBarOptions={{
+        activeTintColor: '#fff',
         style: {
           backgroundColor: '#EE7429',
         },
-        activeTintColor: '#fff',
         indicatorStyle: {
           backgroundColor: '#fff',
         },

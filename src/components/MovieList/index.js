@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -18,9 +18,24 @@ import {
 
 export default function MovieList(props) {
   const navigation = useNavigation();
-  const {marginRight, width, height, data, showLabels = true} = props;
 
-  // console.warn(props);
+  const {
+    marginRight,
+    width,
+    height,
+    showLabels = true,
+    onPress,
+    origin,
+  } = props;
+
+  const data = {
+    id: props.id,
+    original_title: props.original_title,
+    favorite: props.favorite,
+    vote_average: props.vote_average,
+    poster_path: props.poster_path,
+    release_date: props.release_date,
+  };
 
   return (
     <VerticalView marginRight={marginRight} style={styles.shadow}>
@@ -28,7 +43,7 @@ export default function MovieList(props) {
         <>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => props.onAddWatchList(data)}
+            onPress={() => onPress(data, origin)}
             style={{
               position: 'absolute',
               top: 0,
@@ -36,10 +51,14 @@ export default function MovieList(props) {
               zIndex: 1,
             }}>
             <Image
-              resizeMode="cover"
+              resizeMode="contain"
               height="46px"
               width="32px"
-              source={images.icons.bookmark}
+              source={
+                data.favorite
+                  ? images.icons.bookmark_checked
+                  : images.icons.bookmark
+              }
             />
           </TouchableOpacity>
 
@@ -60,14 +79,12 @@ export default function MovieList(props) {
         {showLabels ? (
           <VerticalView style={styles.roundedAbsoluteView}>
             <Text
-              fontSize="12px"
+              fontSize="30px"
               fontFamily="SFProDisplay-Bold"
               marginTop="5px"
-              color="#fff"
+              color="#ff0"
               marginLeft="5px">
-              {getYearFromDate(
-                data.first_air_date ? data.first_air_date : data.release_date,
-              )}
+              {String(data.favorite)} - {getYearFromDate(data.release_date)}
             </Text>
             <Text
               color="#fff"
@@ -76,7 +93,7 @@ export default function MovieList(props) {
               marginLeft="5px"
               marginBottom="5px"
               numberOfLines={2}>
-              {stringToUpperCase(data.name ? data.name : data.original_title)}
+              {stringToUpperCase(data.original_title)}
             </Text>
           </VerticalView>
         ) : null}

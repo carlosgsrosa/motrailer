@@ -4,7 +4,7 @@ import {useRoute} from '@react-navigation/native';
 
 import api, {api_key} from '../../services/api';
 
-import {getYearsOfAge} from '../../util';
+import {showError, getYearsOfAge} from '../../util';
 
 import {
   SafeAreaView,
@@ -28,10 +28,11 @@ const params = {
 
 export default function Person() {
   const route = useRoute();
+
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
   const [social, setSocial] = useState({});
   const [alsoKnownAs, setAlsoKnownAs] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const personId = route.params.id;
 
@@ -42,9 +43,9 @@ export default function Person() {
       setData(response.data);
       setAlsoKnownAs(response.data.also_known_as);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   }
 
@@ -57,9 +58,9 @@ export default function Person() {
       );
       setSocial(response.data);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   }
 
@@ -79,22 +80,24 @@ export default function Person() {
           paddingRight="15px"
           paddingBottom="15px">
           <VerticalView style={{width: 190}}>
-            <Wrapper width="140px" height="210px" style={styles.shadow}>
-              <Poster
-                resizeMode="cover"
-                width="140px"
-                height="210px"
-                borderRadius="6px"
-                gender={data.gender}
-                type="person"
-                source={data.profile_path}
+            <VerticalView justifyContent="center" alignItems="center">
+              <Wrapper style={styles.shadow}>
+                <Poster
+                  resizeMode="cover"
+                  width="190px"
+                  height="276px"
+                  borderRadius="6px"
+                  gender={data.gender}
+                  type="person"
+                  source={data.profile_path}
+                />
+              </Wrapper>
+              <SocialMedia
+                twitter_id={social.twitter_id}
+                facebook_id={social.facebook_id}
+                instagram_id={social.instagram_id}
               />
-            </Wrapper>
-            <SocialMedia
-              twitter_id={social.twitter_id}
-              facebook_id={social.facebook_id}
-              instagram_id={social.instagram_id}
-            />
+            </VerticalView>
             <Text fontWeight="bold" marginTop="15px">
               Known for
             </Text>
@@ -116,7 +119,7 @@ export default function Person() {
               <Text key={index}>{item.trim()}</Text>
             ))}
           </VerticalView>
-          <VerticalView flex={1} paddingLeft="5px">
+          <VerticalView flex={1} paddingLeft="15px">
             <Text>{data.biography}</Text>
           </VerticalView>
         </HorizontalView>

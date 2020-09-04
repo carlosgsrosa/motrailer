@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, FlatList, Alert} from 'react-native';
+import {TouchableOpacity, FlatList} from 'react-native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
-import {getWindowWidth, getCardDimension} from '../../util';
+import {showError, getWindowWidth, getCardDimension} from '../../util';
 
 import {images} from '../../constants';
 
@@ -45,9 +45,9 @@ function CustomImageBackground() {
 }
 
 export default function Profile() {
-  const {getItem, setItem} = useAsyncStorage('@MoTrailer:watchList');
+  const {getItem} = useAsyncStorage('@MoTrailer:watchList');
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [watchList, setWatchList] = useState([]);
 
   const navigation = useNavigation();
@@ -59,9 +59,9 @@ export default function Profile() {
         setWatchList(JSON.parse(value));
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((e) => {
         setLoading(false);
-        Alert.alert('Ocorreu um erro ao recuperar dados!', error.message);
+        showError(e.message);
       });
   };
 
@@ -117,7 +117,7 @@ export default function Profile() {
                   alignItems="center"
                   style={styles.shadow}>
                   <Text fontSize="30px" color="#222222">
-                    {watchList.length}
+                    {watchList ? watchList.length : 0}
                   </Text>
                   <Text color="#999999">Watching</Text>
                 </VerticalView>
@@ -140,7 +140,7 @@ export default function Profile() {
                   marginRight="15px"
                   width={getCardDimension(15, 4)}
                   height="119px"
-                  data={item}
+                  {...item}
                 />
               )}
             />

@@ -2,6 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Alert, FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
+import api, {api_key} from '../../services/api';
+
+import {showError} from '../../util';
+
 import {
   HorizontalView,
   LoadingModal,
@@ -10,11 +14,10 @@ import {
   TrailerList,
 } from '../../components';
 
-import api, {api_key} from '../../services/api';
-
 export default function Trailer() {
   const route = useRoute();
-  const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
   const movieId = route.params;
@@ -25,9 +28,9 @@ export default function Trailer() {
       const response = await api.get(`/movie/${movieId}/videos`, {api_key});
       setData(response.data.results);
       setLoading(false);
-    } catch (error) {
+    } catch (e) {
       setLoading(false);
-      Alert.alert('Acorreu um erro inesperado!', error.message);
+      showError(e.message);
     }
   }
 

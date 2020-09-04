@@ -18,19 +18,22 @@ export default function HomeBottomTabStack() {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
+        style: {
+          height: 83,
+        },
       }}
       screenOptions={({route}) => ({
         headerTitleAlign: 'center',
         tabBarIcon: ({focused}) => {
-          const name = route.name.toLowerCase();
+          const name = focused
+            ? route.name.toLowerCase()
+            : route.name.toLowerCase() + OUTLINE;
           return (
             <Image
               height="40px"
               width="36px"
               resizeMode="contain"
-              source={
-                focused ? images.icons[name] : images.icons[name + OUTLINE]
-              }
+              source={images.icons[name]}
             />
           );
         },
