@@ -79,12 +79,12 @@ export default function MovieList(props) {
         {showLabels ? (
           <VerticalView style={styles.roundedAbsoluteView}>
             <Text
-              fontSize="30px"
+              fontSize="13px"
               fontFamily="SFProDisplay-Bold"
               marginTop="5px"
-              color="#ff0"
+              color="#fff"
               marginLeft="5px">
-              {String(data.favorite)} - {getYearFromDate(data.release_date)}
+              {getYearFromDate(data.release_date)}
             </Text>
             <Text
               color="#fff"

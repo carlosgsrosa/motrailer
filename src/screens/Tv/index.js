@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {showError, getCardDimension} from '../../util';
 
-import api, {api_key} from '../../services/api';
+import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
 
 import {
   ScrollView,
@@ -24,7 +24,7 @@ import {
 
 const params = {
   params: {
-    api_key: api_key,
+    api_key: THE_MOVIE_DB_API_KEY,
     page: 1,
     include_adult: false,
     include_video: false,
@@ -115,7 +115,7 @@ export default function Movies() {
             data={movie}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
-              <MovieList width="140px" height="210px" data={item} />
+              <MovieList width="140px" height="210px" {...item} />
             )}
           />
 
@@ -148,7 +148,7 @@ export default function Movies() {
                 marginRight="15px"
                 width={getCardDimension(15, 2)}
                 height="270px"
-                data={item}
+                {...item}
               />
             )}
           />

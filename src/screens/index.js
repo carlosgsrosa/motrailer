@@ -1,3 +1,4 @@
+import Splash from '../screens/Splash';
 import Intro from '../screens/Intro';
 import Movies from '../screens/Movies';
 import Movie from '../screens/Movie';
@@ -12,6 +13,7 @@ import Media from '../screens/Media';
 import Testes from '../screens/Testes';
 
 export {
+  Splash,
   Intro,
   Movies,
   Movie,

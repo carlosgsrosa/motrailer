@@ -1,14 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Alert, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
-import {showError, getCardDimension, showNotifyMessage} from '../../util';
+import {showError, getCardDimension} from '../../util';
 
-import api, {api_key} from '../../services/api';
+import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
 
 const NOW = 'now';
-const TRENDING = 'trending';
 
 import {
   ScrollView,
@@ -22,13 +21,12 @@ import {
   Text,
   styles,
   LoadingModal,
-  TrailerList,
   ShowMore,
 } from '../../components';
 
 const params = {
   params: {
-    api_key: api_key,
+    api_key: THE_MOVIE_DB_API_KEY,
     page: 1,
     include_adult: false,
     include_video: false,
@@ -46,6 +44,7 @@ export default function Movies() {
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [trendingMovie, setTrendingMovie] = useState([]);
+  const [watchList, setWatchList] = useState([]);
 
   const getMoviePlaying = async () => {
     setLoading(true);
@@ -71,7 +70,7 @@ export default function Movies() {
       })
       .catch((e) => {
         setLoading(false);
-        showError(e.message);
+        showError('getTrendingMovie', e.message);
       });
   };
 
@@ -81,7 +80,6 @@ export default function Movies() {
 
   const toggleWatchList = (data, origin) => {
     const clone = origin === NOW ? [...movie] : [...trendingMovie];
-
     clone.filter((item) => {
       if (item.id === data.id) {
         item.favorite = !item.favorite;
@@ -106,7 +104,21 @@ export default function Movies() {
     }
   };
 
+  const getLocalWatchList = async () => {
+    setLoading(true);
+    await getItem()
+      .then((value) => {
+        setWatchList(JSON.parse(value));
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        showError(e.message);
+      });
+  };
+
   useEffect(() => {
+    getLocalWatchList();
     getMoviePlaying();
     getTrendingMovie();
   }, []);

@@ -41,16 +41,12 @@ const Media = () => {
 
   return (
     <SafeAreaView flex={1} backgroundColor="#EE7429">
-      <VerticalView
-        alignItems="flex-end"
-        paddingRight="15px"
-        paddingTop="15px"
-        paddingBottom="15px">
+      <VerticalView paddingLeft="15px" paddingTop="15px" paddingBottom="15px">
         <TouchableOpacity
-          style={styles.button}
+          // style={styles.button}
           onPress={() => navigation.goBack()}>
           <Image
-            style={{tintColor: '#EE7429'}}
+            style={{tintColor: '#fff'}}
             width="24px"
             height="24px"
             resizeMode="contain"

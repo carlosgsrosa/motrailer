@@ -1,9 +1,9 @@
 import {Alert, Dimensions, Platform, ToastAndroid} from 'react-native';
 
-import {image_path} from '../services/api';
+import {IMAGE_PATH} from '../services/api';
 
 export function getUri(path) {
-  return image_path + path;
+  return IMAGE_PATH + path;
 }
 
 export function convertStringToDate(string) {
@@ -82,7 +82,7 @@ export function minutesInHours(minutes) {
 
 export function formatDate(date) {
   try {
-    return new Date(date).toLocaleDateString('en-US');
+    return new Date(date).toLocaleDateString('Pt-br');
   } catch (error) {
     return 0;
   }

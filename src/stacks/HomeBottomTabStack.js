@@ -18,9 +18,6 @@ export default function HomeBottomTabStack() {
     <Tab.Navigator
       tabBarOptions={{
         showLabel: false,
-        style: {
-          height: 83,
-        },
       }}
       screenOptions={({route}) => ({
         headerTitleAlign: 'center',

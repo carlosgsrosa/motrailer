@@ -1,11 +1,17 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import AuthContext from '../contexts/auth';
 
 import {LoadingModal} from '../components';
 
-import {Intro, Movie, Search, Trailer, Settings, Media} from '../screens';
+import {
+  Splash,
+  Intro,
+  Movie,
+  Search,
+  Trailer,
+  Settings,
+  Media,
+} from '../screens';
 
 import {HomeBottomTabStack, PersonTopTabStack} from '../stacks';
 
@@ -31,16 +37,15 @@ const homeScreenOptions = {
 };
 
 export default () => {
-  const {signed, loading} = useContext(AuthContext);
-
-  if (loading) {
-    return <LoadingModal visible={loading} />;
-  }
-
   return (
     <Stack.Navigator
-      initialRouteName={signed ? 'Home' : 'Intro'}
+      initialRouteName={Splash}
       screenOptions={homeScreenOptions}>
+      <Stack.Screen
+        options={introScreenOptions}
+        name="Splash"
+        component={Splash}
+      />
       <Stack.Screen
         options={introScreenOptions}
         name="Intro"

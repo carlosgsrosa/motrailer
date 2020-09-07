@@ -5,7 +5,7 @@ import {images} from '../../constants';
 
 import {showError} from '../../util';
 
-import api, {api_key} from '../../services/api';
+import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
 
 import {
   SafeAreaView,
@@ -34,7 +34,7 @@ export default function Search() {
     await api
       .get('/search/multi', {
         params: {
-          api_key: api_key,
+          api_key: THE_MOVIE_DB_API_KEY,
           query: query,
           page: page,
           include_adult: false,

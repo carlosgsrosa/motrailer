@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {Alert, FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
 import {
@@ -12,7 +12,7 @@ import {
   formatDate,
 } from '../../util';
 
-import api, {api_key} from '../../services/api';
+import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
 
 import {images} from '../../constants';
 
@@ -106,7 +106,7 @@ export default function Movie() {
     await api
       .get(`/movie/${movieId}`, {
         params: {
-          api_key: api_key,
+          api_key: THE_MOVIE_DB_API_KEY,
           append_to_response: 'release_dates',
         },
       })
@@ -127,7 +127,9 @@ export default function Movie() {
   async function getMovieCredit() {
     setLoading(true);
     try {
-      const response = await api.get(`/movie/${movieId}/credits`, {api_key});
+      const response = await api.get(`/movie/${movieId}/credits`, {
+        THE_MOVIE_DB_API_KEY,
+      });
       setMovieCredit(response.data.cast);
       setLoading(false);
     } catch (e) {
