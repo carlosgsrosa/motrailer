@@ -12,16 +12,19 @@ export const AuthProvider = ({children}) => {
   const [loading, setLoading] = useState(true);
 
   const getStorageUser = async () => {
+    setLoading(true);
     await getItem()
       .then((value) => {
         if (value !== null) {
-          setUser(value);
+          setUser(JSON.parse(value));
+          console.warn('USER', user);
         }
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         showError(error.message);
       });
-    setLoading(false);
   };
 
   useEffect(() => {

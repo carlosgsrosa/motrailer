@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Alert, FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
-import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 import {showError} from '../../util';
 
@@ -26,7 +26,7 @@ export default function Trailer() {
     try {
       setLoading(true);
       const response = await api.get(`/movie/${movieId}/videos`, {
-        THE_MOVIE_DB_API_KEY,
+        API_KEY,
       });
       setData(response.data.results);
       setLoading(false);

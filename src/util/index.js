@@ -72,9 +72,7 @@ export function minutesInHours(minutes) {
   try {
     var hours = Math.floor(minutes / 60);
     var minutes = (minutes / 60 - hours) * 60;
-    var rminutes = Math.round(minutes);
-
-    return hours + 'h ' + rminutes + 'm';
+    return hours + 'h ' + Math.round(minutes) + 'm';
   } catch (error) {
     return 0;
   }
@@ -90,8 +88,8 @@ export function formatDate(date) {
 
 export function getCardDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
-  const cardWitdh = (getWindowWidth() - DIVISOR) / columns;
-  return cardWitdh + 'px';
+  const cardWidth = (getWindowWidth() - DIVISOR) / columns;
+  return cardWidth + 'px';
 }
 
 export function showError(method = '', message) {

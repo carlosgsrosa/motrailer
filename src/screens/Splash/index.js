@@ -8,15 +8,17 @@ import {images} from '../../constants';
 
 import {ImageBackground} from './styles';
 
-export default () => {
+export default function Splash() {
   const navigation = useNavigation();
-  const {signed} = useContext(AuthContext);
+  const {loading, signed} = useContext(AuthContext);
 
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace(signed ? 'Home' : 'Intro');
-    }, 2000);
-  }, []);
+      if (!loading) {
+        navigation.replace(signed ? 'Home' : 'Intro');
+      }
+    }, 1000);
+  }, [loading]);
 
   return (
     <>
@@ -24,4 +26,4 @@ export default () => {
       <ImageBackground source={images.background.splash} />
     </>
   );
-};
+}

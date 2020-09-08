@@ -84,7 +84,7 @@ export default function MovieList(props) {
               marginTop="5px"
               color="#fff"
               marginLeft="5px">
-              {getYearFromDate(data.release_date)}
+              {getYearFromDate(data.release_date || props.first_air_date)}
             </Text>
             <Text
               color="#fff"
@@ -93,7 +93,7 @@ export default function MovieList(props) {
               marginLeft="5px"
               marginBottom="5px"
               numberOfLines={2}>
-              {stringToUpperCase(data.original_title)}
+              {stringToUpperCase(data.original_title || props.name)}
             </Text>
           </VerticalView>
         ) : null}

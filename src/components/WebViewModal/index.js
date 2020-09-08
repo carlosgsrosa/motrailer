@@ -15,26 +15,29 @@ import {images} from '../../constants';
 
 export default function WebViewModal(props) {
   const {onCancel, visible, uri} = props;
-  const [modalVisible, setModalVisible] = useState(visible);
 
   return (
     <Modal visible={visible} transparent onRequestClose={onCancel}>
       <VerticalView
+        flex={1}
         backgroundColor="rgba(0,0,0,0.7)"
         justifyContent="center"
         alignItems="center">
-        <TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={onCancel}>
           <VerticalView
             borderRadius="6px"
             backgroundColor="#fff"
-            style={{minWidth: 350, minHeight: 400}}>
+            style={{minWidth: '90%', maxHeight: 600}}>
             <HorizontalView
-              justifyContent="flex-end"
+              justifyContent="space-between"
               backgroundColor="#EE7429"
               paddingLeft="15px"
               paddingTop="15px"
               paddingRight="15px"
               paddingBottom="15px">
+              <Text fontSize="20px" color="#fff">
+                USER PERMISSION
+              </Text>
               <TouchableOpacity onPress={onCancel} shadowOpacity={0.7}>
                 <Image
                   style={{tintColor: '#fff'}}
@@ -44,16 +47,9 @@ export default function WebViewModal(props) {
                 />
               </TouchableOpacity>
             </HorizontalView>
-            <VerticalView
-              paddingLeft="15px"
-              paddingTop="15px"
-              paddingRight="15px"
-              paddingBottom="15px">
-              <WebView
-                source={{uri: uri}}
-                style={{maxHeight: 400, maxWidth: '90%'}}
-              />
-            </VerticalView>
+            <TouchableWithoutFeedback>
+              <WebView source={{uri: uri}} />
+            </TouchableWithoutFeedback>
           </VerticalView>
         </TouchableWithoutFeedback>
       </VerticalView>

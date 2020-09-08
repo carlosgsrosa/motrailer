@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FlatList, Alert} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
-import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 import {showError, getCardDimension} from '../../util';
 
@@ -38,7 +38,7 @@ export default function Filmography(props) {
       .get('/discover/movie', {
         params: {
           page: page,
-          api_key: THE_MOVIE_DB_API_KEY,
+          api_key: API_KEY,
           with_cast: personId,
           sort_by: 'release_date.desc',
         },

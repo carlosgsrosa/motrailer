@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useAsyncStorage} from '@react-native-community/async-storage';
 
+import AuthContext from '../../contexts/auth';
+
 import {showError, getCardDimension} from '../../util';
 
-import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 const NOW = 'now';
 
@@ -26,10 +28,9 @@ import {
 
 const params = {
   params: {
-    api_key: THE_MOVIE_DB_API_KEY,
+    api_key: API_KEY,
     page: 1,
     include_adult: false,
-    include_video: false,
     primary_release_year: 2020,
     year: 2020,
     append_to_response: 'trailers',
@@ -39,6 +40,8 @@ const params = {
 
 export default function Movies() {
   const navigation = useNavigation();
+  const {user} = useContext(AuthContext);
+
   const {getItem, setItem} = useAsyncStorage('@MoTrailer:watchList');
 
   const [loading, setLoading] = useState(true);
@@ -83,14 +86,13 @@ export default function Movies() {
     clone.filter((item) => {
       if (item.id === data.id) {
         item.favorite = !item.favorite;
-
         if (origin === NOW) {
           setMovie(clone);
         } else {
           setTrendingMovie(clone);
         }
-        const allListMovies = [...movie, ...trendingMovie];
-        saveLocalWatchList(allListMovies.filter((f) => f.favorite));
+        const allMovieSections = [...movie, ...trendingMovie];
+        saveLocalWatchList(allMovieSections.filter((a) => a.favorite));
       }
     });
   };
@@ -98,6 +100,7 @@ export default function Movies() {
   const saveLocalWatchList = async (data) => {
     try {
       await setItem(JSON.stringify(data));
+      console.log('Salvo com sucesso!');
     } catch (e) {
       setLoading(false);
       showError('saveLocalWatchList', e.message);

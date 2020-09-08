@@ -22,16 +22,17 @@ export const IMAGE_PATH = 'https://image.tmdb.org/t/p/w500';
 // export const ORIGINAL_IMAGE_PATH = 'https://image.tmdb.org/t/p/original';
 export const API_WEB = 'https://api.themoviedb.org/3/';
 export const WEB_HOST = 'https://www.themoviedb.org/';
-export const THE_MOVIE_DB_API_KEY = '3fc09cc44084fa0417f92b6ab0739b08';
-const THE_MOVIE_DB_ACCESS_TOKEN =
+export const API_KEY = '3fc09cc44084fa0417f92b6ab0739b08';
+const ACCESS_TOKEN =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZmMwOWNjNDQwODRmYTA0MTdmOTJiNmFiMDczOWIwOCIsInN1YiI6IjVlY2Q4NTEyOWEzYzQ5MDAxZTA5NGE1YiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sezDZxvidwmAwCPHdJra1z57c3LvM462I3HlBXNBZA8';
 export const FIREBASE_SENDER_ID = 762950146051;
+export const USER_PERMISSION_URL = 'https://www.themoviedb.org/authenticate/';
 
 const api = axios.create({
   baseURL: API_WEB,
   timeout: 3000,
   headers: {
-    Authorization: `Bearer ${THE_MOVIE_DB_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
     'Content-Type': 'application/json;charset=utf-8',
   },
 });

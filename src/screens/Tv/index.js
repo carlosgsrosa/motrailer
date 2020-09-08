@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {showError, getCardDimension} from '../../util';
 
-import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 import {
   ScrollView,
@@ -18,16 +18,14 @@ import {
   Text,
   styles,
   LoadingModal,
-  TrailerList,
   ShowMore,
 } from '../../components';
 
 const params = {
   params: {
-    api_key: THE_MOVIE_DB_API_KEY,
+    api_key: API_KEY,
     page: 1,
     include_adult: false,
-    include_video: false,
     primary_release_year: 2020,
     year: 2020,
     append_to_response: 'trailers',
@@ -47,6 +45,7 @@ export default function Movies() {
       setLoading(true);
       const response = await api.get('/discover/tv', params);
       setMovie(response.data.results);
+      console.log(movie);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -94,7 +93,7 @@ export default function Movies() {
             <Text fontSize="18px" fontWeight="bold" color="#666666">
               Now
             </Text>
-            <TouchableOpacity onPress={() => alert('Soon')}>
+            <TouchableOpacity onPress={() => Alert.alert('Soon')}>
               <Text fontSize="18px" fontWeight="bold" color="#666666">
                 ...
               </Text>

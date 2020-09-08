@@ -12,7 +12,7 @@ import {
   formatDate,
 } from '../../util';
 
-import api, {THE_MOVIE_DB_API_KEY} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 import {images} from '../../constants';
 
@@ -106,7 +106,7 @@ export default function Movie() {
     await api
       .get(`/movie/${movieId}`, {
         params: {
-          api_key: THE_MOVIE_DB_API_KEY,
+          api_key: API_KEY,
           append_to_response: 'release_dates',
         },
       })
@@ -128,7 +128,7 @@ export default function Movie() {
     setLoading(true);
     try {
       const response = await api.get(`/movie/${movieId}/credits`, {
-        THE_MOVIE_DB_API_KEY,
+        API_KEY,
       });
       setMovieCredit(response.data.cast);
       setLoading(false);
