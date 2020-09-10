@@ -1,14 +1,14 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 
-import {VerticalView, Text, styles} from '../../components';
+import {VerticalView, Text, GlobalStyles} from '../../components';
 
 export default function ShowMore(props) {
   const {onPress, width, height} = props;
 
   return (
     <TouchableOpacity
-      style={[{marginLeft: 5}, styles.shadow]}
+      style={[{marginLeft: 5}, GlobalStyles.shadow]}
       onPress={onPress}
       activeOpacity={0.8}>
       <VerticalView

@@ -1,13 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {FlatList, TouchableOpacity, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useAsyncStorage} from '@react-native-community/async-storage';
 
 import AuthContext from '../../contexts/auth';
 
-import {showError, getCardDimension} from '../../util';
+import {showError, getCardDimension, showNotifyMessage} from '../../util';
 
-import api, {API_KEY} from '../../services/api';
+import api, {API_KEY, USER_PERMISSION_URL} from '../../services/api';
 
 const NOW = 'now';
 
@@ -21,7 +20,7 @@ import {
   ItemSeparatorComponent,
   MovieList,
   Text,
-  styles,
+  GlobalStyles,
   LoadingModal,
   ShowMore,
 } from '../../components';
@@ -30,24 +29,19 @@ const params = {
   params: {
     api_key: API_KEY,
     page: 1,
-    include_adult: false,
-    primary_release_year: 2020,
-    year: 2020,
-    append_to_response: 'trailers',
+    language: 'pt-br',
     sort_by: 'popularity.desc',
   },
 };
 
 export default function Movies() {
   const navigation = useNavigation();
-  const {user} = useContext(AuthContext);
 
-  const {getItem, setItem} = useAsyncStorage('@MoTrailer:watchList');
+  const {user} = useContext(AuthContext);
 
   const [loading, setLoading] = useState(true);
   const [movie, setMovie] = useState([]);
   const [trendingMovie, setTrendingMovie] = useState([]);
-  const [watchList, setWatchList] = useState([]);
 
   const getMoviePlaying = async () => {
     setLoading(true);
@@ -81,47 +75,52 @@ export default function Movies() {
     navigation.navigate('AllMovies');
   };
 
-  const toggleWatchList = (data, origin) => {
-    const clone = origin === NOW ? [...movie] : [...trendingMovie];
-    clone.filter((item) => {
-      if (item.id === data.id) {
-        item.favorite = !item.favorite;
-        if (origin === NOW) {
-          setMovie(clone);
-        } else {
-          setTrendingMovie(clone);
-        }
-        const allMovieSections = [...movie, ...trendingMovie];
-        saveLocalWatchList(allMovieSections.filter((a) => a.favorite));
-      }
-    });
-  };
-
-  const saveLocalWatchList = async (data) => {
-    try {
-      await setItem(JSON.stringify(data));
-      console.log('Salvo com sucesso!');
-    } catch (e) {
-      setLoading(false);
-      showError('saveLocalWatchList', e.message);
-    }
-  };
-
-  const getLocalWatchList = async () => {
-    setLoading(true);
-    await getItem()
-      .then((value) => {
-        setWatchList(JSON.parse(value));
-        setLoading(false);
+  const addToWatchList = async (media_type, media_id, watchlist) => {
+    await api
+      .post(
+        `https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
+        {
+          media_type,
+          media_id,
+          watchlist,
+        },
+      )
+      .then((response) => {
+        showNotifyMessage(response.data.status_message);
       })
       .catch((e) => {
-        setLoading(false);
-        showError(e.message);
+        showError('addToWatchList', e.message);
       });
   };
 
+  const toggleWatchList = (data, origin) => {
+    if (user) {
+      const clone = origin === NOW ? [...movie] : [...trendingMovie];
+      clone.filter((item) => {
+        if (item.id === data.id) {
+          item.watchlist = !item.watchlist;
+          if (origin === NOW) {
+            setMovie(clone);
+          } else {
+            setTrendingMovie(clone);
+          }
+
+          addToWatchList(data.media_type, data.id, item.watchlist);
+        }
+      });
+    } else {
+      Alert.alert(
+        'Atenção!',
+        'Deseja classificar ou adicionar este item a uma lista? Favor efetue Login!',
+        [
+          {text: 'CANCELAR', onPress: () => {}, style: 'cancel'},
+          {text: 'LOGIN', onPress: () => navigation.navigate('Profile')},
+        ],
+      );
+    }
+  };
+
   useEffect(() => {
-    getLocalWatchList();
     getMoviePlaying();
     getTrendingMovie();
   }, []);
@@ -132,10 +131,9 @@ export default function Movies() {
 
   return (
     <SafeAreaView backgroundColor="#EE7429">
-      <AppStatusBar style="light-content" />
-
+      <AppStatusBar barStyle="light-content" />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header title="MOVIE" />
+        <Header title="FILMES" />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -150,7 +148,7 @@ export default function Movies() {
               fontSize="18px"
               fontFamily="SFProDisplay-Bold"
               color="#666666">
-              Now
+              Agora
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Text
@@ -163,10 +161,11 @@ export default function Movies() {
           </HorizontalView>
 
           <FlatList
+            bounces={false}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             horizontal
-            contentContainerStyle={styles.content}
+            contentContainerStyle={GlobalStyles.content}
             ItemSeparatorComponent={() => (
               <ItemSeparatorComponent width="5px" />
             )}
@@ -181,6 +180,7 @@ export default function Movies() {
                 width="140px"
                 height="210px"
                 origin="now"
+                media_type="movie"
                 {...item}
               />
             )}
@@ -195,7 +195,7 @@ export default function Movies() {
               fontSize="18px"
               fontFamily="SFProDisplay-Bold"
               color="#666666">
-              Trending
+              Os Mais Populares
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Text
@@ -209,7 +209,7 @@ export default function Movies() {
 
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.content}
+            contentContainerStyle={GlobalStyles.content}
             numColumns={2}
             ItemSeparatorComponent={() => (
               <ItemSeparatorComponent height="15px" />
@@ -223,6 +223,7 @@ export default function Movies() {
                 width={getCardDimension(15, 2)}
                 height="270px"
                 origin="trending"
+                media_type="movie"
                 {...item}
               />
             )}

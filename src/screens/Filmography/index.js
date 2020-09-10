@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {FlatList, Alert} from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import {useRoute, useNavigation} from '@react-navigation/native';
 
 import api, {API_KEY} from '../../services/api';
 
@@ -9,15 +9,19 @@ import {showError, getCardDimension} from '../../util';
 import {
   SafeAreaView,
   AppStatusBar,
+  HorizontalView,
   MovieList,
+  Text,
   ItemSeparatorComponent,
-  styles,
+  GlobalStyles,
   Loading,
   EmptyContent,
 } from '../../components';
 
 export default function Filmography(props) {
   const route = useRoute();
+  const navigation = useNavigation();
+
   const personId = route.params.id;
 
   const [loading, setLoading] = useState(true);
@@ -26,7 +30,7 @@ export default function Filmography(props) {
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
-  async function getMovies() {
+  const getMovies = async () => {
     setLoading(true);
 
     if (totalPages && page > totalPages) {
@@ -54,7 +58,7 @@ export default function Filmography(props) {
         setLoading(false);
         showError(error.message);
       });
-  }
+  };
 
   const onAddWatchList = (movieId) => {
     Alert.alert('movieId: ' + movieId);
@@ -63,13 +67,19 @@ export default function Filmography(props) {
   useEffect(() => {
     getMovies();
   }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      tabBarLabel: `Filmografia (${totalResults})`,
+    });
+  }, [totalResults]);
+
   return (
     <SafeAreaView>
-      <AppStatusBar />
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={2}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListFooterComponent={
           loading && <Loading size="large" color="#ED7329" />

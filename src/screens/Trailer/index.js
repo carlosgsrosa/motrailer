@@ -9,7 +9,7 @@ import {showError} from '../../util';
 import {
   HorizontalView,
   LoadingModal,
-  styles,
+  GlobalStyles,
   ItemSeparatorComponent,
   TrailerList,
 } from '../../components';
@@ -47,7 +47,7 @@ export default function Trailer() {
         <FlatList
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.content}
+          contentContainerStyle={GlobalStyles.content}
           ItemSeparatorComponent={() => <ItemSeparatorComponent height="3px" />}
           data={data}
           keyExtractor={(_, index) => String(index)}

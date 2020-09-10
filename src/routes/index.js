@@ -34,7 +34,7 @@ const homeScreenOptions = {
   },
 };
 
-export default () => {
+export default function Routes() {
   return (
     <Stack.Navigator
       initialRouteName={Splash}
@@ -77,4 +77,4 @@ export default () => {
       <Stack.Screen name="Settings" component={Settings} />
     </Stack.Navigator>
   );
-};
+}

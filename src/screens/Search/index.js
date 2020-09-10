@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import {TextInput, TouchableOpacity, FlatList} from 'react-native';
 
 import {images} from '../../constants';
 
@@ -14,7 +14,7 @@ import {
   Image,
   SearchList,
   ItemSeparatorComponent,
-  styles,
+  GlobalStyles,
   Loading,
 } from '../../components';
 
@@ -54,7 +54,7 @@ export default function Search() {
 
   return (
     <SafeAreaView>
-      <AppStatusBar style="light-content" />
+      <AppStatusBar barStyle="light-content" />
       <HorizontalView
         paddingLeft="15px"
         paddingTop="15px"
@@ -95,7 +95,7 @@ export default function Search() {
       <FlatList
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.content}
+        contentContainerStyle={GlobalStyles.content}
         initialNumToRender={7}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListFooterComponent={

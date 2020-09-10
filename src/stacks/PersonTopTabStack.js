@@ -39,7 +39,7 @@ export default function PersonTopTabStack() {
         name="Filmography"
         component={Filmography}
         options={{
-          tabBarLabel: 'Filmography',
+          tabBarLabel: 'Filmografia',
         }}
         initialParams={route.params}
       />

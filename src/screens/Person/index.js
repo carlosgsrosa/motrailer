@@ -13,7 +13,7 @@ import {
   HorizontalView,
   Text,
   Wrapper,
-  styles,
+  GlobalStyles,
   LoadingModal,
   SocialMedia,
   Poster,
@@ -81,7 +81,7 @@ export default function Person() {
           paddingBottom="15px">
           <VerticalView style={{width: 190}}>
             <VerticalView justifyContent="center" alignItems="center">
-              <Wrapper style={styles.shadow}>
+              <Wrapper style={GlobalStyles.shadow}>
                 <Poster
                   resizeMode="cover"
                   width="190px"

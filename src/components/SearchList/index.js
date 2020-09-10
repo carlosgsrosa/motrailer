@@ -6,7 +6,7 @@ import {
   VerticalView,
   HorizontalView,
   Text,
-  styles,
+  GlobalStyles,
   Poster,
 } from '../../components';
 
@@ -84,7 +84,7 @@ export default function SearchList({data}) {
       onPress={() => {
         handleNavigation();
       }}>
-      <VerticalView style={styles.shadow}>
+      <VerticalView style={GlobalStyles.shadow}>
         <HorizontalView>
           <Poster
             width="100px"

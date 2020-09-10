@@ -10,7 +10,7 @@ import {
   VerticalView,
   VoteAverage,
   Text,
-  styles,
+  GlobalStyles,
   Poster,
   GradientCircle,
   Image,
@@ -26,19 +26,21 @@ export default function MovieList(props) {
     showLabels = true,
     onPress,
     origin,
+    media_type,
   } = props;
 
   const data = {
     id: props.id,
     original_title: props.original_title,
-    favorite: props.favorite,
+    watchlist: props.watchlist || false,
     vote_average: props.vote_average,
     poster_path: props.poster_path,
     release_date: props.release_date,
+    media_type: media_type,
   };
 
   return (
-    <VerticalView marginRight={marginRight} style={styles.shadow}>
+    <VerticalView marginRight={marginRight} style={GlobalStyles.shadow}>
       {showLabels ? (
         <>
           <TouchableOpacity
@@ -55,7 +57,7 @@ export default function MovieList(props) {
               height="46px"
               width="32px"
               source={
-                data.favorite
+                data.watchlist
                   ? images.icons.bookmark_checked
                   : images.icons.bookmark
               }
@@ -77,7 +79,7 @@ export default function MovieList(props) {
           source={data.poster_path}
         />
         {showLabels ? (
-          <VerticalView style={styles.roundedAbsoluteView}>
+          <VerticalView style={GlobalStyles.roundedAbsoluteView}>
             <Text
               fontSize="13px"
               fontFamily="SFProDisplay-Bold"

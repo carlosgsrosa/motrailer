@@ -97,12 +97,9 @@ export default function Intro() {
   }
 
   async function goToHome() {
-    try {
-      await AsyncStorage.setItem('@MoTrailer:signed', 'false');
-      navigation.replace('Home');
-    } catch (e) {
-      showError(e.message);
-    }
+    await AsyncStorage.setItem('@MoTrailer:firstTime', 'false')
+      .then(() => navigation.replace('Home'))
+      .catch((e) => showError(e.message));
   }
 
   function _renderItem(index, total) {
@@ -117,11 +114,7 @@ export default function Intro() {
 
   return (
     <>
-      <AppStatusBar
-        translucent
-        barStyle="light-content"
-        backgroundColor="#EE7429"
-      />
+      <AppStatusBar translucent barStyle="light-content" />
       <Swiper
         ref={swiperRef}
         renderPagination={_renderItem}

@@ -202,7 +202,7 @@ const GradientCircle = styled(LinearGradient)`
   padding: 2px;
 `;
 
-const styles = StyleSheet.create({
+const GlobalStyles = StyleSheet.create({
   shadow: elevationShadowStyle(4),
   content: {
     padding: 15,
@@ -236,7 +236,7 @@ export {
   ItemSeparatorComponent,
   Text,
   Image,
-  styles,
+  GlobalStyles,
   AppStatusBar,
   VoteAverage,
   RBSheetDetail,

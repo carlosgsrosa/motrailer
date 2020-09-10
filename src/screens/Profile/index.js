@@ -1,8 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {TouchableOpacity, FlatList} from 'react-native';
-import AsyncStorage, {
-  useAsyncStorage,
-} from '@react-native-community/async-storage';
+import {StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
@@ -11,10 +9,14 @@ import {showError, getWindowWidth, getCardDimension} from '../../util';
 
 import {images} from '../../constants';
 
-import api, {API_KEY, USER_PERMISSION_URL} from '../../services/api';
+import api, {
+  API_KEY,
+  USER_PERMISSION_URL,
+  THUMBNAIL_PATH,
+} from '../../services/api';
 
 import {
-  styles,
+  GlobalStyles,
   SafeAreaView,
   AppStatusBar,
   VerticalView,
@@ -33,11 +35,9 @@ import {
 } from '../../components';
 
 export default function Profile() {
-  const {setItem} = useAsyncStorage('@MoTrailer:token');
+  const {user, setUser} = useContext(AuthContext);
 
   const navigation = useNavigation();
-
-  const {user} = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
   const [webViewVisible, setWebViewVisible] = useState(false);
@@ -48,43 +48,40 @@ export default function Profile() {
   const [totalResults, setTotalResults] = useState(0);
 
   function CustomImageBackground() {
-    const source = user ? user.avatar.gravatar.hash : null;
+    const avatar = user ? user.avatar.gravatar.hash : null;
+
+    const getName = () => {
+      return user.name ? user.name : user.username;
+    };
 
     return (
       <ImageBackground
-        style={{justifyContent: 'center', alignItems: 'center'}}
+        style={styles.imageBackground}
         width={getWindowWidth() + 'px'}
         height="210px"
         resizeMode="cover"
         source={images.background.profile}>
-        <VerticalView marginBottom="30px">
-          <Image
-            style={{borderWidth: 1, borderColor: '#fff'}}
-            width="110px"
-            height="110px"
-            borderRadius="55px"
-            source={
-              source
-                ? {uri: `http://0.gravatar.com/avatar/${source}`}
-                : images.background.profile
-            }
-          />
-        </VerticalView>
+        <TouchableOpacity onPress={() => setWebViewVisible(!webViewVisible)}>
+          <VerticalView marginBottom="40px">
+            <Image
+              style={styles.image}
+              width="110px"
+              height="110px"
+              borderRadius="55px"
+              source={
+                avatar
+                  ? {uri: THUMBNAIL_PATH + avatar}
+                  : images.background.male_profile
+              }
+            />
+          </VerticalView>
+        </TouchableOpacity>
+        <Text fontSize="28px" fontWeight="300">
+          {user ? getName() : null}
+        </Text>
       </ImageBackground>
     );
   }
-
-  const saveToken = async (data) => {
-    setLoading(true);
-    try {
-      await setItem(JSON.stringify(data));
-      console.log('Token salvo com sucesso!');
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      showError('saveToken', e.message);
-    }
-  };
 
   const getToken = async () => {
     setLoading(true);
@@ -92,7 +89,6 @@ export default function Profile() {
       .get('/authentication/token/new', {API_KEY})
       .then((response) => {
         setToken(response.data);
-        saveToken(JSON.stringify(response.data));
         setWebViewVisible(true);
         setLoading(false);
       })
@@ -102,13 +98,11 @@ export default function Profile() {
       });
   };
 
-  const onCancel = () => {
-    setWebViewVisible(!webViewVisible);
+  const onConfirm = () => {
     getAuthentication();
   };
 
   const getAuthentication = async () => {
-    setLoading(true);
     await api
       .post(
         `/authentication/session/new?api_key=${API_KEY}&request_token=${token.request_token}`,
@@ -116,41 +110,43 @@ export default function Profile() {
       .then((response) => {
         const {success, status_message} = response.data;
         if (success) {
-          getAccount(response.data.session_id);
+          getUserAccount(response.data.session_id);
         } else {
           showError('getAuthentication', status_message);
         }
-        setLoading(false);
+        setWebViewVisible(!webViewVisible);
       })
       .catch((e) => {
-        setLoading(false);
         showError('getAuthentication', e.message);
       });
   };
 
-  const saveLocalAccount = async (account) => {
-    setLoading(true);
-    try {
-      await AsyncStorage.setItem('@MoTrailer:signed', JSON.stringify(account));
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      showError('saveAccount', e.message);
-    }
-  };
-
-  const getAccount = async (session_id) => {
+  const getUserAccount = async (sessionId) => {
     setLoading(true);
     await api
-      .get(`/account?api_key=${API_KEY}&session_id=${session_id}`)
+      .get(`/account?api_key=${API_KEY}&session_id=${sessionId}`)
       .then((response) => {
-        response.data.session_id = session_id;
-        saveLocalAccount(response.data);
+        response.data.session_id = sessionId;
+        setUser(response.data);
+        saveLocalUser(JSON.stringify(response.data));
         setLoading(false);
       })
       .catch((e) => {
         setLoading(false);
-        showError('getAccount', e.message);
+        showError('getUserAccount', e.message);
+      });
+  };
+
+  const saveLocalUser = (data) => {
+    setLoading(true);
+    AsyncStorage.setItem('@MoTrailer:user', data)
+      .then(() => {
+        console.log('saveLocalUser', 'User salvo com sucesso!');
+        setLoading(false);
+      })
+      .catch((e) => {
+        setLoading(false);
+        showError('saveLocalUser', e.message);
       });
   };
 
@@ -167,7 +163,7 @@ export default function Profile() {
         params: {
           page: page,
           api_key: API_KEY,
-          session_id: user.session_id,
+          session_id: user ? user.session_id : null,
         },
       })
       .then((response) => {
@@ -184,26 +180,23 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    console.log('USER', user);
     if (!user) {
+      setWatchList([]);
+      setTotalResults(0);
       getToken();
     } else {
       getWatchList();
     }
-  }, []);
-
-  // useEffect(() => {}, [token]);
-
-  // useEffect(() => navigation.addListener('focus', () => getWatchList()), []);
+  }, [user]);
 
   return (
     <SafeAreaView backgroundColor="#EE7429">
-      <AppStatusBar style="light-content" />
+      <AppStatusBar barStyle="light-content" />
       <LoadingModal visible={loading} />
       <WebViewModal
-        onCancel={() => {
-          onCancel();
-        }}
+        title="PERMISSÃO MANUAL"
+        onCancel={() => setWebViewVisible(!webViewVisible)}
+        onConfirm={onConfirm}
         visible={webViewVisible}
         uri={USER_PERMISSION_URL + token.request_token}
       />
@@ -215,6 +208,7 @@ export default function Profile() {
           showsVerticalScrollIndicator={false}>
           <CustomImageBackground />
           <VerticalView
+            backgroundColor="#ffff"
             paddingLeft="15px"
             paddingTop="15px"
             paddingRight="15px">
@@ -247,20 +241,21 @@ export default function Profile() {
                   paddingRight="20px"
                   paddingBottom="15px"
                   alignItems="center"
-                  style={styles.shadow}>
+                  style={GlobalStyles.shadow}>
                   <Text fontSize="30px" color="#222222">
-                    {watchList ? watchList.length : 0}
+                    {totalResults}
                   </Text>
-                  <Text color="#999999">Watching</Text>
+                  <Text color="#999999">Filmes</Text>
                 </VerticalView>
               </TouchableOpacity>
             </HorizontalView>
           </VerticalView>
-          <VerticalView>
+          <VerticalView backgroundColor="#ffff">
             <FlatList
+              bounces={false}
               showsVerticalScrollIndicator={false}
               numColumns={4}
-              contentContainerStyle={styles.content}
+              contentContainerStyle={GlobalStyles.content}
               ListFooterComponent={
                 loading && <Loading size="large" color="#ED7329" />
               }
@@ -268,7 +263,7 @@ export default function Profile() {
                 <ItemSeparatorComponent height="15px" />
               )}
               ListEmptyComponent={() => (
-                <EmptyContent message="Nenhum filme encontrado!" />
+                <EmptyContent message="Nenhum filme encontrado na sua lista de interesses!" />
               )}
               onEndReached={getWatchList}
               onEndReachedThreshold={1}
@@ -290,3 +285,8 @@ export default function Profile() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  imageBackground: {justifyContent: 'center', alignItems: 'center'},
+  image: {borderWidth: 1, borderColor: '#fff', overflow: 'hidden'},
+});

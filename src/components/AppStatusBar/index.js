@@ -6,7 +6,7 @@ import {StatusBar, Platform} from 'react-native';
 // light-content
 
 export default function AppStatusBar(props) {
-  const style = props.style;
+  const style = props.barStyle;
 
   function getStyleByOS() {
     if (Platform.OS === 'ios') {

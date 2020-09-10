@@ -1,23 +1,24 @@
 import React, {createContext, useState, useEffect} from 'react';
-import {useAsyncStorage} from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {showError} from '../util';
 
-export const AuthContext = createContext({signed: false, user: {}});
+export const AuthContext = createContext({firstTime: true, user: {}});
 
 export const AuthProvider = ({children}) => {
-  const {getItem} = useAsyncStorage('@MoTrailer:signed');
-
   const [user, setUser] = useState(null);
+  const [firstTime, setFirstTime] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const getStorageUser = async () => {
-    setLoading(true);
-    await getItem()
+  const isFirstTime = async () => {
+    await AsyncStorage.getItem('@MoTrailer:firstTime')
       .then((value) => {
         if (value !== null) {
-          setUser(JSON.parse(value));
-          console.warn('USER', user);
+          setFirstTime(JSON.parse(value));
+
+          if (firstTime) {
+            getLocalUser();
+          }
         }
         setLoading(false);
       })
@@ -27,12 +28,24 @@ export const AuthProvider = ({children}) => {
       });
   };
 
+  const getLocalUser = async () => {
+    await (
+      await AsyncStorage.getItem('@MoTrailer:user').then((value) => {
+        if (value !== null) {
+          setUser(JSON.parse(value));
+        }
+      })
+    ).catch((e) => {
+      showError('getLocalUser', e.message);
+    });
+  };
+
   useEffect(() => {
-    getStorageUser();
+    isFirstTime();
   }, []);
 
   return (
-    <AuthContext.Provider value={{signed: !!user, user, loading}}>
+    <AuthContext.Provider value={{firstTime, user, setUser, loading}}>
       {children}
     </AuthContext.Provider>
   );

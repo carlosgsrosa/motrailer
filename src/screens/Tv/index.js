@@ -16,7 +16,7 @@ import {
   ItemSeparatorComponent,
   MovieList,
   Text,
-  styles,
+  GlobalStyles,
   LoadingModal,
   ShowMore,
 } from '../../components';
@@ -45,7 +45,6 @@ export default function Movies() {
       setLoading(true);
       const response = await api.get('/discover/tv', params);
       setMovie(response.data.results);
-      console.log(movie);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -76,7 +75,7 @@ export default function Movies() {
 
   return (
     <SafeAreaView backgroundColor="#EE7429">
-      <AppStatusBar style="light-content" />
+      <AppStatusBar barStyle="light-content" />
       <LoadingModal visible={loading} />
       <VerticalView flex={1} backgroundColor="#fff">
         <Header title="TV" />
@@ -104,7 +103,7 @@ export default function Movies() {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             horizontal
-            contentContainerStyle={styles.content}
+            contentContainerStyle={GlobalStyles.content}
             ItemSeparatorComponent={() => (
               <ItemSeparatorComponent width="5px" />
             )}
@@ -135,7 +134,7 @@ export default function Movies() {
 
           <FlatList
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.content}
+            contentContainerStyle={GlobalStyles.content}
             numColumns={2}
             ItemSeparatorComponent={() => (
               <ItemSeparatorComponent height="15px" />

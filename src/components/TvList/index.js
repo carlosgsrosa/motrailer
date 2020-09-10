@@ -8,7 +8,7 @@ import {
   VerticalView,
   VoteAverage,
   Text,
-  styles,
+  GlobalStyles,
   Poster,
   GradientCircle,
 } from '../../components';
@@ -22,7 +22,7 @@ export default function MovieList({marginRight, width, height, data}) {
 
   return (
     <>
-      <VerticalView marginRight={marginRight} style={styles.shadow}>
+      <VerticalView marginRight={marginRight} style={GlobalStyles.shadow}>
         <GradientCircle colors={['#F99F00', '#DC3563', '#E75D3E']}>
           <VoteAverage fontColor="#fff" voteAverage={data.vote_average} />
         </GradientCircle>
@@ -35,7 +35,7 @@ export default function MovieList({marginRight, width, height, data}) {
             type="movie"
             source={data.poster_path}
           />
-          <VerticalView style={styles.roundedAbsoluteView}>
+          <VerticalView style={GlobalStyles.roundedAbsoluteView}>
             <Text fontSize="12px" marginTop="5px" color="#fff" marginLeft="5px">
               {getYearFromDate(data.first_air_date)}
             </Text>

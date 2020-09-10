@@ -28,7 +28,7 @@ import {
   CastList,
   RBSheetDetail,
   VoteAverage,
-  styles,
+  GlobalStyles,
   Wrapper,
   LoadingModal,
   Poster,
@@ -107,6 +107,7 @@ export default function Movie() {
       .get(`/movie/${movieId}`, {
         params: {
           api_key: API_KEY,
+          language: 'pt-br',
           append_to_response: 'release_dates',
         },
       })
@@ -155,7 +156,7 @@ export default function Movie() {
 
   function MoviePoster() {
     return (
-      <Wrapper marginLeft="15px" style={styles.shadow}>
+      <Wrapper marginLeft="15px" style={GlobalStyles.shadow}>
         <Poster
           resizeMode="center"
           width="120px"
@@ -209,7 +210,7 @@ export default function Movie() {
 
   function Popularity() {
     return (
-      <Text marginTop="15px" fontWeight="300" marginLeft="10px" fontSize="15px">
+      <Text marginTop="5px" fontWeight="300" marginLeft="10px" fontSize="15px">
         {movie.popularity} People wathing
       </Text>
     );
@@ -261,7 +262,7 @@ export default function Movie() {
       <TouchableOpacity onPress={() => refBSDetail.current.open()}>
         <Text
           color="#666666"
-          marginTop="170px"
+          marginTop="140px"
           marginLeft="15px"
           marginRight="15px"
           fontSize="17px"
@@ -285,7 +286,7 @@ export default function Movie() {
           paddingBottom="15px"
           marginTop="15px">
           <Text fontWeight="500" fontSize="17px" color="#999999">
-            Full Cast
+            Elenco
           </Text>
         </HorizontalView>
         <HorizontalView>
@@ -331,7 +332,7 @@ export default function Movie() {
           paddingBottom="15px"
           marginTop="15px">
           <Text fontWeight="500" fontSize="17px" color="#999999">
-            Media
+            Imagens de fundo
           </Text>
         </HorizontalView>
         <FlatList
@@ -392,10 +393,10 @@ export default function Movie() {
 
   return (
     <VerticalView backgroundColor="#fff">
-      <AppStatusBar transparent style="light-content" />
+      <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
-        <HorizontalView style={styles.absoluteView}>
+        <HorizontalView style={GlobalStyles.absoluteView}>
           <MoviePoster />
           <VerticalView flex={1}>
             <Name />

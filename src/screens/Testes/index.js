@@ -41,7 +41,8 @@ function getRandomColor() {
 const HEADER_HEIGHT =
   Platform.OS === 'ios' ? 115 : 70 + StatusBar.currentHeight;
 
-import Toggle from './Toggle';
+// import Toggle from './Toggle';
+import WebViewInjection from './WebViewInjection';
 
 export default function Testes() {
   const scrollY = new Animated.Value(0);
@@ -52,7 +53,8 @@ export default function Testes() {
   });
 
   return (
-    <Toggle />
+    <WebViewInjection />
+    // <Toggle />
     // <View style={{flex: 1}}>
     //   <Animated.View
     //     style={{

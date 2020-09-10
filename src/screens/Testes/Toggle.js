@@ -42,7 +42,6 @@ export default function Toggle() {
 }
 
 const Item = (props) => {
-  console.warn(props);
   return (
     <View
       style={{

@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {Wrapper, Text, styles, Poster} from '../../components';
+import {Wrapper, Text, GlobalStyles, Poster} from '../../components';
 
 export default function CastList({data}) {
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ export default function CastList({data}) {
 
   return (
     <TouchableOpacity onPress={() => navigation.push('Person', params)}>
-      <Wrapper style={styles.shadow}>
+      <Wrapper style={GlobalStyles.shadow}>
         <Poster
           resizeMode="cover"
           width="90px"
@@ -28,7 +28,7 @@ export default function CastList({data}) {
       </Wrapper>
 
       <Text
-        style={styles.text}
+        style={GlobalStyles.text}
         fontSize="12px"
         marginTop="3px"
         numberOfLines={1}>
@@ -36,7 +36,7 @@ export default function CastList({data}) {
       </Text>
 
       <Text
-        style={styles.text}
+        style={GlobalStyles.text}
         fontWeight="300"
         fontSize="11px"
         marginBottom="15px"

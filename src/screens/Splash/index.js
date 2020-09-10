@@ -1,28 +1,32 @@
 import React, {useEffect, useContext} from 'react';
-import {StatusBar} from 'react-native';
+
 import {useNavigation} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
 
 import {images} from '../../constants';
 
+import {AppStatusBar} from '../../components';
+
 import {ImageBackground} from './styles';
 
 export default function Splash() {
   const navigation = useNavigation();
-  const {loading, signed} = useContext(AuthContext);
+  const {loading, firstTime} = useContext(AuthContext);
+
+  console.warn('FIRST_TIME', firstTime);
 
   useEffect(() => {
     setTimeout(() => {
       if (!loading) {
-        navigation.replace(signed ? 'Home' : 'Intro');
+        navigation.replace(firstTime ? 'Intro' : 'Home');
       }
     }, 1000);
   }, [loading]);
 
   return (
     <>
-      <StatusBar />
+      <AppStatusBar translucent barStyle="light-content" />
       <ImageBackground source={images.background.splash} />
     </>
   );
