@@ -256,9 +256,7 @@ export default function Profile() {
               showsVerticalScrollIndicator={false}
               numColumns={4}
               contentContainerStyle={GlobalStyles.content}
-              ListFooterComponent={
-                loading && <Loading size="large" color="#ED7329" />
-              }
+              ListFooterComponent={loading && <Loading />}
               ItemSeparatorComponent={() => (
                 <ItemSeparatorComponent height="15px" />
               )}

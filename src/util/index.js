@@ -80,7 +80,7 @@ export function minutesInHours(minutes) {
 
 export function formatDate(date) {
   try {
-    return new Date(date).toLocaleDateString('Pt-br');
+    return new Date(date).toLocaleDateString('US');
   } catch (error) {
     return 0;
   }

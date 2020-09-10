@@ -107,7 +107,7 @@ export default function Movie() {
       .get(`/movie/${movieId}`, {
         params: {
           api_key: API_KEY,
-          language: 'pt-br',
+          language: 'en-US',
           append_to_response: 'release_dates',
         },
       })

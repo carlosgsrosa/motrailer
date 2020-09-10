@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {TextInput, TouchableOpacity, FlatList} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, FlatList} from 'react-native';
 
 import {images} from '../../constants';
 
@@ -25,7 +25,7 @@ export default function Search() {
   const [totalPages, setTotalPages] = useState(0);
   const [query, setQuery] = useState(null);
 
-  async function getSearchMulti(pageNumber = page) {
+  async function getSearchMulti(pageNumber = page, research = false) {
     if (totalPages && pageNumber > totalPages) {
       return;
     }
@@ -36,12 +36,21 @@ export default function Search() {
         params: {
           api_key: API_KEY,
           query: query,
-          page: page,
-          include_adult: false,
+          page: pageNumber,
         },
       })
       .then((response) => {
-        setData([...data, ...response.data.results]);
+        setData(
+          research
+            ? response.data.results
+            : [...data, ...response.data.results],
+        );
+
+        const media_type_movie = (item) => item.media_type === 'movie';
+        const media_type_person = (item) => item.media_type === 'person';
+
+        console.log(data.filter(media_type_movie));
+
         setPage(pageNumber + 1);
         setTotalPages(response.data.total_pages);
         setLoading(false);
@@ -65,25 +74,16 @@ export default function Search() {
         backgroundColor="#EE7429">
         <TextInput
           autoFocus
-          style={[
-            {
-              height: 40,
-              width: '100%',
-              paddingLeft: 10,
-              borderColor: '#fff',
-              borderRadius: 18,
-              borderWidth: 1,
-              backgroundColor: '#fff',
-            },
-          ]}
+          style={styles.input}
           autoCorrect={false}
           onChangeText={(value) => setQuery(value)}
           value={query}
         />
         <TouchableOpacity
-          onPress={() => getSearchMulti()}
+          onPress={() => getSearchMulti(1, true)}
           style={{position: 'absolute', zIndex: 1, right: 28}}>
           <Image
+            style={{tintColor: '#EE7429'}}
             width="21px"
             height="21px"
             resizeMode="contain"
@@ -93,21 +93,32 @@ export default function Search() {
       </HorizontalView>
 
       <FlatList
+        bounces={false}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={GlobalStyles.content}
         initialNumToRender={7}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
-        ListFooterComponent={
-          loading && <Loading size="large" color="#ED7329" />
-        }
+        ListFooterComponent={loading && <Loading />}
         onEndReached={() => getSearchMulti()}
         onEndReachedThreshold={1}
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 20}}
-        keyExtractor={(_, index) => String(index)}
+        keyExtractor={(item) => String(item.id)}
         data={data}
         renderItem={({item}) => <SearchList data={item} />}
       />
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    width: '100%',
+    paddingLeft: 10,
+    borderColor: '#fff',
+    borderRadius: 18,
+    borderWidth: 1,
+    backgroundColor: '#fff',
+  },
+});

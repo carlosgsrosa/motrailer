@@ -81,9 +81,7 @@ export default function Filmography(props) {
         numColumns={2}
         contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
-        ListFooterComponent={
-          loading && <Loading size="large" color="#ED7329" />
-        }
+        ListFooterComponent={loading && <Loading />}
         onEndReached={getMovies}
         onEndReachedThreshold={1}
         data={data}
