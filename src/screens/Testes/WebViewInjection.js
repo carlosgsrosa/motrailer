@@ -8,7 +8,6 @@ export default () => {
   const webViewUrl = 'https://reactnative.dev';
 
   const _onMessage = (event) => {
-    console.log('_onMessage', JSON.parse(event.nativeEvent.data));
     const res = JSON.parse(event.nativeEvent.data);
     if (res.message === 'ok') {
       navigation.navigate('Movies');

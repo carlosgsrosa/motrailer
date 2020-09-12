@@ -46,11 +46,6 @@ export default function Search() {
             : [...data, ...response.data.results],
         );
 
-        const media_type_movie = (item) => item.media_type === 'movie';
-        const media_type_person = (item) => item.media_type === 'person';
-
-        console.log(data.filter(media_type_movie));
-
         setPage(pageNumber + 1);
         setTotalPages(response.data.total_pages);
         setLoading(false);

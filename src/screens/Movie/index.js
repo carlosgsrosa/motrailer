@@ -32,6 +32,7 @@ import {
   Wrapper,
   LoadingModal,
   Poster,
+  ShowMore,
 } from '../../components';
 
 export default function Movie() {
@@ -45,7 +46,7 @@ export default function Movie() {
   const [movieCredit, setMovieCredit] = useState([]);
   const [movieCertification, setMovieCertification] = useState([]);
   const [movieBackdrops, setMovieBackdrops] = useState([]);
-  const [moviePosters, setMoviePosters] = useState([]);
+  const [moviePosters, setMovieImages] = useState([]);
 
   const movieId = route.params.id;
 
@@ -125,13 +126,13 @@ export default function Movie() {
       });
   }
 
-  async function getMovieCredit() {
+  async function getMovieCast() {
     setLoading(true);
     try {
       const response = await api.get(`/movie/${movieId}/credits`, {
         API_KEY,
       });
-      setMovieCredit(response.data.cast);
+      setMovieCredit(response.data.cast.slice(0, 10));
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -286,14 +287,18 @@ export default function Movie() {
           paddingBottom="15px"
           marginTop="15px">
           <Text fontWeight="500" fontSize="17px" color="#999999">
-            Elenco
+            Top Billed Cast
           </Text>
         </HorizontalView>
         <HorizontalView>
           <FlatList
+            bounces={false}
+            horizontal
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
-            horizontal
+            ListFooterComponent={() => (
+              <ShowMore width={90} height={131} onPress={openCast} />
+            )}
             contentContainerStyle={{
               paddingLeft: 10,
               paddingTop: 15,
@@ -310,6 +315,10 @@ export default function Movie() {
       </>
     );
   }
+
+  const openCast = () => {
+    alert('SOON');
+  };
 
   const openMedia = (data, index) => {
     const params = {
@@ -332,10 +341,11 @@ export default function Movie() {
           paddingBottom="15px"
           marginTop="15px">
           <Text fontWeight="500" fontSize="17px" color="#999999">
-            Imagens de fundo
+            Media
           </Text>
         </HorizontalView>
         <FlatList
+          bounces={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           horizontal
@@ -373,8 +383,7 @@ export default function Movie() {
   const getMovieMedia = async () => {
     try {
       const response = await api.get(`/movie/${movieId}/images`);
-      setMovieBackdrops(response.data.backdrops);
-      setMoviePosters(response.data.posters);
+      setMovieImages([...response.data.posters, ...response.data.backdrops]);
     } catch (e) {
       setLoading(false);
       showError(e.message);
@@ -383,7 +392,7 @@ export default function Movie() {
 
   useEffect(() => {
     getMovie();
-    getMovieCredit();
+    getMovieCast();
     getMovieMedia();
   }, []);
 

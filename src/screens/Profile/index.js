@@ -141,7 +141,6 @@ export default function Profile() {
     setLoading(true);
     AsyncStorage.setItem('@MoTrailer:user', data)
       .then(() => {
-        console.log('saveLocalUser', 'User salvo com sucesso!');
         setLoading(false);
       })
       .catch((e) => {
@@ -201,7 +200,7 @@ export default function Profile() {
         uri={USER_PERMISSION_URL + token.request_token}
       />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header title={'PROFILE'} />
+        <Header color="#fff" title={'PROFILE'} backgroundColor="#EE7429" />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -245,7 +244,7 @@ export default function Profile() {
                   <Text fontSize="30px" color="#222222">
                     {totalResults}
                   </Text>
-                  <Text color="#999999">Filmes</Text>
+                  <Text color="#999999">Movies</Text>
                 </VerticalView>
               </TouchableOpacity>
             </HorizontalView>

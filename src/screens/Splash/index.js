@@ -14,8 +14,6 @@ export default function Splash() {
   const navigation = useNavigation();
   const {loading, firstTime} = useContext(AuthContext);
 
-  console.warn('FIRST_TIME', firstTime);
-
   useEffect(() => {
     setTimeout(() => {
       if (!loading) {

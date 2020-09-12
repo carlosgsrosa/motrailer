@@ -15,7 +15,6 @@ export default function WebViewModal(props) {
   const {title, onCancel, onConfirm, visible, uri} = props;
 
   const _onMessage = (event) => {
-    console.log('_onMessage', JSON.parse(event.nativeEvent.data));
     const response = JSON.parse(event.nativeEvent.data);
     if (response.message === 'ok') {
       onConfirm();

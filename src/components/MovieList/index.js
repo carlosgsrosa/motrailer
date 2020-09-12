@@ -78,28 +78,28 @@ export default function MovieList(props) {
           type="movie"
           source={data.poster_path}
         />
-        {showLabels ? (
-          <VerticalView style={GlobalStyles.roundedAbsoluteView}>
-            <Text
-              fontSize="13px"
-              fontFamily="SFProDisplay-Bold"
-              marginTop="5px"
-              color="#fff"
-              marginLeft="5px">
-              {getYearFromDate(data.release_date || props.first_air_date)}
-            </Text>
-            <Text
-              color="#fff"
-              fontSize="15px"
-              fontFamily="SFProDisplay-Bold"
-              marginLeft="5px"
-              marginBottom="5px"
-              numberOfLines={2}>
-              {stringToUpperCase(data.original_title || props.name)}
-            </Text>
-          </VerticalView>
-        ) : null}
       </TouchableOpacity>
+      {showLabels ? (
+        <VerticalView style={GlobalStyles.roundedAbsoluteView}>
+          <Text
+            fontSize="13px"
+            fontFamily="SFProDisplay-Bold"
+            marginTop="5px"
+            color="#fff"
+            marginLeft="5px">
+            {getYearFromDate(data.release_date || props.first_air_date)}
+          </Text>
+          <Text
+            color="#fff"
+            fontSize="15px"
+            fontFamily="SFProDisplay-Bold"
+            marginLeft="5px"
+            marginBottom="5px"
+            numberOfLines={2}>
+            {stringToUpperCase(data.original_title || props.name)}
+          </Text>
+        </VerticalView>
+      ) : null}
     </VerticalView>
   );
 }

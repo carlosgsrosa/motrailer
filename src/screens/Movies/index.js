@@ -29,7 +29,6 @@ const params = {
   params: {
     api_key: API_KEY,
     page: 1,
-    language: 'pt-br',
     sort_by: 'popularity.desc',
   },
 };
@@ -75,7 +74,7 @@ export default function Movies() {
     navigation.navigate('AllMovies');
   };
 
-  const addToWatchList = async (media_type, media_id, watchlist) => {
+  const addWatchList = async (media_type, media_id, watchlist) => {
     await api
       .post(
         `https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
@@ -105,7 +104,7 @@ export default function Movies() {
             setTrendingMovie(clone);
           }
 
-          addToWatchList(data.media_type, data.id, item.watchlist);
+          addWatchList(data.media_type, data.id, item.watchlist);
         }
       });
     } else {
@@ -113,7 +112,7 @@ export default function Movies() {
         'Atenção!',
         'Deseja classificar ou adicionar este item a uma lista? Favor efetue Login!',
         [
-          {text: 'CANCELAR', onPress: () => {}, style: 'cancel'},
+          {text: 'CANCEL', onPress: () => {}, style: 'cancel'},
           {text: 'LOGIN', onPress: () => navigation.navigate('Profile')},
         ],
       );
@@ -130,10 +129,10 @@ export default function Movies() {
   }
 
   return (
-    <SafeAreaView backgroundColor="#EE7429">
-      <AppStatusBar barStyle="light-content" />
+    <SafeAreaView backgroundColor="#fff">
+      <AppStatusBar barStyle="dark-content" />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header title="FILMES" />
+        <Header title="MOVIES" backgroundColor="#fff" />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -148,7 +147,7 @@ export default function Movies() {
               fontSize="18px"
               fontFamily="SFProDisplay-Bold"
               color="#666666">
-              Agora
+              Now
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Text
@@ -195,7 +194,7 @@ export default function Movies() {
               fontSize="18px"
               fontFamily="SFProDisplay-Bold"
               color="#666666">
-              Os Mais Populares
+              Trending
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Text

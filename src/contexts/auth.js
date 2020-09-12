@@ -15,7 +15,6 @@ export const AuthProvider = ({children}) => {
       .then((value) => {
         if (value !== null) {
           setFirstTime(JSON.parse(value));
-
           if (firstTime) {
             getLocalUser();
           }
@@ -29,15 +28,13 @@ export const AuthProvider = ({children}) => {
   };
 
   const getLocalUser = async () => {
-    await (
-      await AsyncStorage.getItem('@MoTrailer:user').then((value) => {
+    await AsyncStorage.getItem('@MoTrailer:user')
+      .then((value) => {
         if (value !== null) {
           setUser(JSON.parse(value));
         }
       })
-    ).catch((e) => {
-      showError('getLocalUser', e.message);
-    });
+      .catch((e) => showError('getLocalUser', e.message));
   };
 
   useEffect(() => {

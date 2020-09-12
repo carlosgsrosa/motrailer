@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -11,7 +11,7 @@ import {images} from '../../constants';
 import {HorizontalView, Text, Image} from '../../components';
 
 export default function Header(props) {
-  const {title} = props;
+  const {title, backgroundColor} = props;
 
   const {user} = useContext(AuthContext);
 
@@ -19,7 +19,7 @@ export default function Header(props) {
 
   const handleNavigation = () => {
     switch (title) {
-      case 'FILMES':
+      case 'MOVIES':
       case 'TV':
         navigation.navigate('Search');
         break;
@@ -31,7 +31,7 @@ export default function Header(props) {
 
   const getImageSource = () => {
     switch (title) {
-      case 'FILMES':
+      case 'MOVIES':
       case 'TV':
         return images.icons.search;
       case 'PROFILE':
@@ -67,18 +67,21 @@ export default function Header(props) {
       paddingTop="15px"
       paddingRight="15px"
       paddingBottom="5px"
-      backgroundColor="#EE7429"
+      backgroundColor={backgroundColor}
       justifyContent="space-between">
-      <Text color="#fff" fontSize="24px" fontFamily="SFProDisplay-Bold">
+      <Text color={props.color} fontSize="24px" fontFamily="SFProDisplay-Bold">
         {title}
       </Text>
       <HorizontalView>
         <Avatar />
         <TouchableOpacity
-          style={styles.button}
+          style={[
+            styles.button,
+            {backgroundColor: title === 'PROFILE' ? '#fff' : '#EE7429'},
+          ]}
           onPress={() => handleNavigation()}>
           <Image
-            style={{tintColor: '#EE7429'}}
+            style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#fff'}}
             width="24px"
             height="24px"
             resizeMode="contain"
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
     borderRadius: 40,
-    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },

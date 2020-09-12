@@ -74,8 +74,8 @@ export default function Movies() {
   }, []);
 
   return (
-    <SafeAreaView backgroundColor="#EE7429">
-      <AppStatusBar barStyle="light-content" />
+    <SafeAreaView backgroundColor="#fff">
+      <AppStatusBar barStyle="dark-content" />
       <LoadingModal visible={loading} />
       <VerticalView flex={1} backgroundColor="#fff">
         <Header title="TV" />
