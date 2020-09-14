@@ -18,6 +18,7 @@ import Loading from './Loading';
 import Header from './Header';
 import WebViewModal from './WebViewModal';
 import ShowMore from './ShowMore';
+import ReviewList from './ReviewList';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -253,4 +254,5 @@ export {
   Header,
   WebViewModal,
   ShowMore,
+  ReviewList,
 };

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
 import {
@@ -44,8 +44,8 @@ export default function Movie() {
   const [movie, setMovie] = useState({});
   const [genres, setGenres] = useState([]);
   const [movieCredit, setMovieCredit] = useState([]);
+  const [castCrew, setCastCrew] = useState([]);
   const [movieCertification, setMovieCertification] = useState([]);
-  const [movieBackdrops, setMovieBackdrops] = useState([]);
   const [moviePosters, setMovieImages] = useState([]);
 
   const movieId = route.params.id;
@@ -133,6 +133,7 @@ export default function Movie() {
         API_KEY,
       });
       setMovieCredit(response.data.cast.slice(0, 10));
+      setCastCrew(response.data);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -192,12 +193,7 @@ export default function Movie() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           horizontal
-          contentContainerStyle={{
-            paddingLeft: 10,
-            paddingTop: 5,
-            paddingRight: 15,
-            paddingBottom: 5,
-          }}
+          contentContainerStyle={styles.flatListContainer}
           ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
           data={movieCertification}
           keyExtractor={(_, index) => String(index)}
@@ -224,12 +220,7 @@ export default function Movie() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           horizontal
-          contentContainerStyle={{
-            paddingLeft: 10,
-            paddingTop: 5,
-            paddingRight: 15,
-            paddingBottom: 5,
-          }}
+          contentContainerStyle={styles.flatListContainer}
           ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
           data={genres}
           keyExtractor={(_, index) => String(index)}
@@ -242,18 +233,22 @@ export default function Movie() {
   function Rating() {
     return (
       <HorizontalView marginLeft="10px" alignItems="center">
+        <Image
+          height="22.92px"
+          width="24px"
+          marginRight="5px"
+          resizeMode="contain"
+          source={images.icons.rating_star}
+        />
         <VoteAverage
+          marginRight="5px"
           fontWeight="400"
           fontColor="#D6182A"
           voteAverage={movie.vote_average}
         />
-        <Image
-          height="22.92px"
-          width="24px"
-          marginLeft="5px"
-          resizeMode="contain"
-          source={images.icons.rating_star}
-        />
+        <Text fontWeight="500" color="#D6182A">
+          ({movie.vote_count})
+        </Text>
       </HorizontalView>
     );
   }
@@ -316,8 +311,67 @@ export default function Movie() {
     );
   }
 
+  function LikeFavoriteComment() {
+    return (
+      <VerticalView justifyContent="center" alignItems="center">
+        <HorizontalView
+          style={{width: '80%'}}
+          marginTop="15px"
+          marginBottom="15px"
+          justifyContent="space-between">
+          <TouchableOpacity
+            onPress={() => alert('LIKE')}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginLeft: 20,
+              marginRight: 20,
+            }}>
+            <Image
+              width="54px"
+              height="54px"
+              source={images.icons.like_checked}
+            />
+            <Text marginTop="5px" color="#999999">
+              LIKE
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => alert('FAVORITE')}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 20,
+            }}>
+            <Image width="54px" height="54px" source={images.icons.favorite} />
+            <Text marginTop="5px" color="#999999">
+              FAVORITE
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Review', {id: movieId})}
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginRight: 20,
+            }}>
+            <Image width="54px" height="54px" source={images.icons.comment} />
+            <Text marginTop="5px" color="#999999">
+              COMMENT
+            </Text>
+          </TouchableOpacity>
+        </HorizontalView>
+      </VerticalView>
+    );
+  }
+
   const openCast = () => {
-    alert('SOON');
+    navigation.navigate('Cast', {
+      data: castCrew,
+      title: `${stringToUpperCase(movie.title)} (${getYearFromDate(
+        movie.release_date,
+      )}`,
+    });
   };
 
   const openMedia = (data, index) => {
@@ -417,6 +471,7 @@ export default function Movie() {
         </HorizontalView>
         <MovieOverview />
         <Cast />
+        <LikeFavoriteComment />
         <Media />
         <RBSheetDetail
           tag={refBSDetail}
@@ -427,3 +482,12 @@ export default function Movie() {
     </VerticalView>
   );
 }
+
+const styles = StyleSheet.create({
+  flatListContainer: {
+    paddingLeft: 10,
+    paddingTop: 5,
+    paddingRight: 15,
+    paddingBottom: 5,
+  },
+});

@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 const OUTLINE = '_outline';
 
-export default function HomeBottomTabStack() {
+export default function HomeBottomTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{

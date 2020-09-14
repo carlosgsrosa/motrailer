@@ -10,7 +10,6 @@ export default function CastList({data}) {
   const params = {
     title: data.name,
     id: data.id,
-    screen: 'Person',
   };
 
   return (

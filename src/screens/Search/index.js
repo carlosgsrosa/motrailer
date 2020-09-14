@@ -72,6 +72,7 @@ export default function Search() {
           style={styles.input}
           autoCorrect={false}
           onChangeText={(value) => setQuery(value)}
+          onSubmitEditing={() => getSearchMulti(1, true)}
           value={query}
         />
         <TouchableOpacity
@@ -92,15 +93,15 @@ export default function Search() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={GlobalStyles.content}
-        initialNumToRender={7}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
+        initialNumToRender={7}
         ListFooterComponent={loading && <Loading />}
         onEndReached={() => getSearchMulti()}
         onEndReachedThreshold={1}
         viewabilityConfig={{viewAreaCoveragePercentThreshold: 20}}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={(_, index) => String(index)}
         data={data}
-        renderItem={({item}) => <SearchList data={item} />}
+        renderItem={({item, index}) => <SearchList key={index} data={item} />}
       />
     </SafeAreaView>
   );

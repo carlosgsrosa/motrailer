@@ -5,11 +5,7 @@ import {VerticalView, Image, Text} from '../';
 
 export default function EmptyContent({image, message}) {
   return (
-    <VerticalView
-      flex={1}
-      justifyContent="center"
-      alignItems="center"
-      backgroundColor="#fff">
+    <VerticalView flex={1} justifyContent="center" alignItems="center">
       <Image
         style={{tintColor: '#ccc', opacity: 0.3}}
         resizeMode="contain"

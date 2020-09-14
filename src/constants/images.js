@@ -11,7 +11,6 @@ export const background = {
 
 export const icons = {
   bullet: require('../assets/icons/bullet.png'),
-  like: require('../assets/icons/like.png'),
   movies: require('../assets/icons/movies.png'),
   movies_outline: require('../assets/icons/movies_outline.png'),
   tv: require('../assets/icons/tv.png'),
@@ -31,6 +30,12 @@ export const icons = {
   logo: require('../assets/icons/logo.png'),
   zoom: require('../assets/icons/zoom.png'),
   tick: require('../assets/icons/tick.png'),
+  share: require('../assets/icons/share.png'),
+  comment: require('../assets/icons/comment.png'),
+  like: require('../assets/icons/like.png'),
+  like_checked: require('../assets/icons/like_checked.png'),
+  favorite: require('../assets/icons/favorite.png'),
+  favorite_checked: require('../assets/icons/favorite_checked.png'),
 };
 
 export default {background, icons};

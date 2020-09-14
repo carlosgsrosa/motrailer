@@ -2,11 +2,11 @@ import React, {useLayoutEffect} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
-import {Person, Filmography} from '../screens';
+import {Cast, Crew} from '../screens';
 
 const Tab = createMaterialTopTabNavigator();
 
-export default function PersonTopTabStack() {
+export default function CastCrewTopTabs() {
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -28,18 +28,18 @@ export default function PersonTopTabStack() {
         },
       }}>
       <Tab.Screen
-        name="Person"
-        component={Person}
+        name="Cast"
+        component={Cast}
         options={{
-          tabBarLabel: 'Personal Info',
+          tabBarLabel: 'Cast',
         }}
         initialParams={route.params}
       />
       <Tab.Screen
-        name="Filmography"
-        component={Filmography}
+        name="Crew"
+        component={Crew}
         options={{
-          tabBarLabel: 'Filmografia',
+          tabBarLabel: 'Crew',
         }}
         initialParams={route.params}
       />

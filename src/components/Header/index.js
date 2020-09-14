@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -60,6 +60,25 @@ export default function Header(props) {
     }
   };
 
+  const SearchBar = () => {
+    return (
+      <TouchableOpacity
+        style={[
+          styles.button,
+          {backgroundColor: title === 'PROFILE' ? '#fff' : '#EE7429'},
+        ]}
+        onPress={() => handleNavigation()}>
+        <Image
+          style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#fff'}}
+          width="24px"
+          height="24px"
+          resizeMode="contain"
+          source={getImageSource()}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <HorizontalView
       alignItems="center"
@@ -74,20 +93,7 @@ export default function Header(props) {
       </Text>
       <HorizontalView>
         <Avatar />
-        <TouchableOpacity
-          style={[
-            styles.button,
-            {backgroundColor: title === 'PROFILE' ? '#fff' : '#EE7429'},
-          ]}
-          onPress={() => handleNavigation()}>
-          <Image
-            style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#fff'}}
-            width="24px"
-            height="24px"
-            resizeMode="contain"
-            source={getImageSource()}
-          />
-        </TouchableOpacity>
+        <SearchBar />
       </HorizontalView>
     </HorizontalView>
   );
@@ -98,8 +104,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderWidth: 1,
-    borderColor: '#fff',
-    borderRadius: 40,
+    borderColor: '#EE7429',
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },

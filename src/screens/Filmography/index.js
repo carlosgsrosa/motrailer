@@ -44,7 +44,7 @@ export default function Filmography(props) {
           page: page,
           api_key: API_KEY,
           with_cast: personId,
-          sort_by: 'release_date.desc',
+          sort_by: 'primary_release_date.desc',
         },
       })
       .then((response) => {
@@ -70,13 +70,14 @@ export default function Filmography(props) {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      tabBarLabel: `Filmografia (${totalResults})`,
+      tabBarLabel: `Filmography (${totalResults})`,
     });
   }, [totalResults]);
 
   return (
     <SafeAreaView>
       <FlatList
+        bounces={false}
         showsVerticalScrollIndicator={false}
         numColumns={2}
         contentContainerStyle={GlobalStyles.content}

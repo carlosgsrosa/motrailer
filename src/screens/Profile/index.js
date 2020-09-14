@@ -116,9 +116,7 @@ export default function Profile() {
         }
         setWebViewVisible(!webViewVisible);
       })
-      .catch((e) => {
-        showError('getAuthentication', e.message);
-      });
+      .catch((e) => showError('getAuthentication', e.message));
   };
 
   const getUserAccount = async (sessionId) => {
@@ -127,6 +125,7 @@ export default function Profile() {
       .get(`/account?api_key=${API_KEY}&session_id=${sessionId}`)
       .then((response) => {
         response.data.session_id = sessionId;
+        response.data.access_token = token.request_token;
         setUser(response.data);
         saveLocalUser(JSON.stringify(response.data));
         setLoading(false);

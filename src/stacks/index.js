@@ -1,5 +1,6 @@
-import HomeBottomTabStack from './HomeBottomTabStack';
-import PersonTopTabStack from './PersonTopTabStack';
+import HomeBottomTabs from './HomeBottomTabs';
+import PersonTopTabs from './PersonTopTabs';
 import ProfileStack from './ProfileStack';
+import CastCrewTopTabs from './CastCrewTopTabs';
 
-export {HomeBottomTabStack, PersonTopTabStack, ProfileStack};
+export {HomeBottomTabs, PersonTopTabs, ProfileStack, CastCrewTopTabs};

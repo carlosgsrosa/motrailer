@@ -87,9 +87,7 @@ export default function Movies() {
       .then((response) => {
         showNotifyMessage(response.data.status_message);
       })
-      .catch((e) => {
-        showError('addToWatchList', e.message);
-      });
+      .catch((e) => showError('addToWatchList', e.message));
   };
 
   const toggleWatchList = (data, origin) => {
