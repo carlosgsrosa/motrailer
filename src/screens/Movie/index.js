@@ -36,7 +36,7 @@ import {
 } from '../../components';
 
 export default function Movie() {
-  const refBSDetail = useRef();
+  const refRBSheet = useRef();
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -108,7 +108,6 @@ export default function Movie() {
       .get(`/movie/${movieId}`, {
         params: {
           api_key: API_KEY,
-          language: 'en-US',
           append_to_response: 'release_dates',
         },
       })
@@ -118,27 +117,33 @@ export default function Movie() {
         setMovieCertification(
           filterCertification(response.data.release_dates.results, 'US'),
         );
-        setLoading(false);
+        getMovieCast();
       })
       .catch((e) => {
         setLoading(false);
-        showError(e.message);
+        showError('getMovie', e.message);
       });
   }
 
   async function getMovieCast() {
     setLoading(true);
-    try {
-      const response = await api.get(`/movie/${movieId}/credits`, {
+    await api
+      .get(`/movie/${movieId}/credits`, {
         API_KEY,
+      })
+      .then((response) => {
+        const sortOrder = (a, b) => a.order - b.order;
+        const topBilledCast = response.data.cast.sort(sortOrder).slice(0, 10);
+        setMovieCredit(topBilledCast);
+        const cast = response.data.cast.sort((a, b) => a.order - b.order);
+        const crew = response.data.crew;
+        setCastCrew({cast, crew});
+        getMovieMedia();
+      })
+      .catch((e) => {
+        setLoading(false);
+        showError('getMovieCast', e.message);
       });
-      setMovieCredit(response.data.cast.slice(0, 10));
-      setCastCrew(response.data);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      showError(e.message);
-    }
   }
 
   function Header() {
@@ -255,9 +260,9 @@ export default function Movie() {
 
   function MovieOverview() {
     return (
-      <TouchableOpacity onPress={() => refBSDetail.current.open()}>
+      <TouchableOpacity onPress={() => refRBSheet.current.open()}>
         <Text
-          color="#666666"
+          color="#666"
           marginTop="140px"
           marginLeft="15px"
           marginRight="15px"
@@ -274,7 +279,7 @@ export default function Movie() {
     return (
       <>
         <HorizontalView
-          style={{width: getWindowWidth()}}
+          style={{width: getWindowWidth(), justifyContent: 'space-between'}}
           backgroundColor="#f8f8f8"
           paddingLeft="15px"
           paddingRight="15px"
@@ -284,6 +289,11 @@ export default function Movie() {
           <Text fontWeight="500" fontSize="17px" color="#999999">
             Top Billed Cast
           </Text>
+          <TouchableOpacity onPress={openCast}>
+            <Text fontWeight="500" fontSize="17px" color="#999999">
+              ...
+            </Text>
+          </TouchableOpacity>
         </HorizontalView>
         <HorizontalView>
           <FlatList
@@ -295,7 +305,7 @@ export default function Movie() {
               <ShowMore width={90} height={131} onPress={openCast} />
             )}
             contentContainerStyle={{
-              paddingLeft: 10,
+              paddingLeft: 15,
               paddingTop: 15,
               paddingRight: 15,
             }}
@@ -349,7 +359,12 @@ export default function Movie() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('Review', {id: movieId})}
+            onPress={() =>
+              navigation.navigate('Review', {
+                movieId: movieId,
+                movieName: movie.title,
+              })
+            }
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -366,7 +381,7 @@ export default function Movie() {
   }
 
   const openCast = () => {
-    navigation.navigate('Cast', {
+    navigation.push('Cast', {
       data: castCrew,
       title: `${stringToUpperCase(movie.title)} (${getYearFromDate(
         movie.release_date,
@@ -387,7 +402,7 @@ export default function Movie() {
     return (
       <VerticalView>
         <HorizontalView
-          style={{width: getWindowWidth()}}
+          style={{width: getWindowWidth(), justifyContent: 'space-between'}}
           backgroundColor="#f8f8f8"
           paddingLeft="15px"
           paddingRight="15px"
@@ -397,6 +412,11 @@ export default function Movie() {
           <Text fontWeight="500" fontSize="17px" color="#999999">
             Media
           </Text>
+          <TouchableOpacity onPress={() => openMedia(moviePosters, 0)}>
+            <Text fontWeight="500" fontSize="17px" color="#999999">
+              ...
+            </Text>
+          </TouchableOpacity>
         </HorizontalView>
         <FlatList
           bounces={false}
@@ -412,7 +432,6 @@ export default function Movie() {
           renderItem={({item, index}) => (
             <VerticalView justifyContent="center" alignItems="center">
               <TouchableOpacity
-                activeOpacity={0.7}
                 onPress={() => openMedia(moviePosters, index)}
                 style={{
                   position: 'absolute',
@@ -435,9 +454,11 @@ export default function Movie() {
   };
 
   const getMovieMedia = async () => {
+    setLoading(true);
     try {
       const response = await api.get(`/movie/${movieId}/images`);
       setMovieImages([...response.data.posters, ...response.data.backdrops]);
+      setLoading(false);
     } catch (e) {
       setLoading(false);
       showError(e.message);
@@ -446,8 +467,6 @@ export default function Movie() {
 
   useEffect(() => {
     getMovie();
-    getMovieCast();
-    getMovieMedia();
   }, []);
 
   if (loading) {
@@ -474,7 +493,7 @@ export default function Movie() {
         <LikeFavoriteComment />
         <Media />
         <RBSheetDetail
-          tag={refBSDetail}
+          tag={refRBSheet}
           image={movie.poster_path}
           overview={movie.overview}
         />

@@ -41,7 +41,7 @@ function getRandomColor() {
 const HEADER_HEIGHT =
   Platform.OS === 'ios' ? 115 : 70 + StatusBar.currentHeight;
 
-const Header = () => {
+export default function AnimatedHeader() {
   const scrollY = new Animated.Value(0);
   const diffClampScrollY = Animated.diffClamp(scrollY, 0, HEADER_HEIGHT);
   const headerY = Animated.interpolate(diffClampScrollY, {
@@ -94,6 +94,4 @@ const Header = () => {
       </Animated.ScrollView>
     </View>
   );
-};
-
-export {Header};
+}

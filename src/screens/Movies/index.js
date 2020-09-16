@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {FlatList, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, FlatList, TouchableOpacity, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
 
-import {showError, getCardDimension, showNotifyMessage} from '../../util';
+import {showError, getCardWidthDimension, showNotifyMessage} from '../../util';
 
-import api, {API_KEY, USER_PERMISSION_URL} from '../../services/api';
+import api, {API_KEY} from '../../services/api';
 
 const NOW = 'now';
 
@@ -101,14 +101,13 @@ export default function Movies() {
           } else {
             setTrendingMovie(clone);
           }
-
           addWatchList(data.media_type, data.id, item.watchlist);
         }
       });
     } else {
       Alert.alert(
         'Atenção!',
-        'Deseja classificar ou adicionar este item a uma lista? Favor efetue Login!',
+        'Deseja adicionar este item a uma lista? Favor efetue Login!',
         [
           {text: 'CANCEL', onPress: () => {}, style: 'cancel'},
           {text: 'LOGIN', onPress: () => navigation.navigate('Profile')},
@@ -130,7 +129,7 @@ export default function Movies() {
     <SafeAreaView backgroundColor="#fff">
       <AppStatusBar barStyle="dark-content" />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header title="MOVIES" backgroundColor="#fff" />
+        <Header title="MOVIES" backgroundColor="#fff" borderColor="#EE7429" />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -141,17 +140,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text
-              fontSize="18px"
-              fontFamily="SFProDisplay-Bold"
-              color="#666666">
+            <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
               Now
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text
-                fontSize="18px"
-                fontFamily="SFProDisplay-Bold"
-                color="#666666">
+              <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -188,17 +181,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text
-              fontSize="18px"
-              fontFamily="SFProDisplay-Bold"
-              color="#666666">
+            <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
               Trending
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text
-                fontSize="18px"
-                fontFamily="SFProDisplay-Bold"
-                color="#666666">
+              <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -217,7 +204,7 @@ export default function Movies() {
               <MovieList
                 onPress={toggleWatchList}
                 marginRight="15px"
-                width={getCardDimension(15, 2)}
+                width={getCardWidthDimension(15, 2)}
                 height="270px"
                 origin="trending"
                 media_type="movie"

@@ -2,10 +2,12 @@ import React, {useLayoutEffect} from 'react';
 import {FlatList, TouchableOpacity} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
+import {getCardWidthDimension, getCardHeightDimension} from '../../util';
+
 import {
   SafeAreaView,
   VerticalView,
-  HorizontalView,
+  Wrapper,
   ItemSeparatorComponent,
   Text,
   GlobalStyles,
@@ -29,42 +31,47 @@ export default function Crew() {
       <VerticalView flex={1}>
         <FlatList
           bounces={false}
-          showsHorizontalScrollIndicator={false}
+          numColumns={4}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={GlobalStyles.content}
-          ItemSeparatorComponent={() => (
-            <ItemSeparatorComponent height="15px" />
-          )}
           data={data}
+          contentContainerStyle={GlobalStyles.content}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent width="5px" />}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => (
             <TouchableOpacity
+              style={{marginRight: 15}}
               onPress={() =>
-                navigation.navigate('Person', {title: item.name, id: item.id})
+                navigation.push('Person', {title: item.name, id: item.id})
               }>
-              <VerticalView key={item.id} style={GlobalStyles.shadow}>
-                <HorizontalView>
-                  <Poster
-                    width="100px"
-                    height="145px"
-                    resizeMode="cover"
-                    borderRadius="6px"
-                    type="person"
-                    source={item.profile_path}
-                  />
-                  <VerticalView
-                    flex={1}
-                    paddingLeft="15px"
-                    paddingTop="15px"
-                    paddingRight="15px"
-                    paddingBottom="15px">
-                    <Text fontSize="16px" fontWeight="bold">
-                      {item.name}
-                    </Text>
-                    <Text color="#b0b0b0">{item.job}</Text>
-                  </VerticalView>
-                </HorizontalView>
-              </VerticalView>
+              <Wrapper style={GlobalStyles.shadow}>
+                <Poster
+                  width={getCardWidthDimension(15, 3)}
+                  height={getCardHeightDimension(15, 3)}
+                  borderRadius="6px"
+                  gender={item.gender}
+                  type="person"
+                  resizeMode="cover"
+                  source={item.profile_path}
+                />
+              </Wrapper>
+
+              <Text
+                style={GlobalStyles.text}
+                fontSize="12px"
+                marginTop="3px"
+                numberOfLines={1}>
+                {item.name}
+              </Text>
+
+              <Text
+                style={GlobalStyles.text}
+                fontWeight="300"
+                fontSize="11px"
+                marginBottom="15px"
+                color="#656565"
+                numberOfLines={1}>
+                {item.job}
+              </Text>
             </TouchableOpacity>
           )}
         />

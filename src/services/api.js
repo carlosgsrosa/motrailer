@@ -18,11 +18,11 @@ import axios from 'axios';
 // YTS
 // https://yts.mx/api#user_get_key
 
-// WATCHLIST
+// WatchList
 // https://developers.themoviedb.org/3/movies/get-movie-account-states
 
 export const IMAGE_PATH = 'https://image.tmdb.org/t/p/w500';
-export const THUMBNAIL_PATH = 'http://0.gravatar.com/avatar/';
+export const AVATAR_PATH = 'http://0.gravatar.com/avatar/';
 // export const ORIGINAL_IMAGE_PATH = 'https://image.tmdb.org/t/p/original/f04e6f821ff1b1c5cc1f03c2e30e08ca';
 export const API_WEB = 'https://api.themoviedb.org/3/';
 export const WEB_HOST = 'https://www.themoviedb.org/';

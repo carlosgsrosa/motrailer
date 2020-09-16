@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FlatList, Alert, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {showError, getCardDimension} from '../../util';
+import {showError, getCardWidthDimension} from '../../util';
 
 import api, {API_KEY} from '../../services/api';
 
@@ -78,7 +78,7 @@ export default function Movies() {
       <AppStatusBar barStyle="dark-content" />
       <LoadingModal visible={loading} />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header title="TV" />
+        <Header title="TV" borderColor="#EE7429" />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -89,11 +89,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666666">
+            <Text fontSize="18px" fontWeight="bold" color="#666">
               Now
             </Text>
             <TouchableOpacity onPress={() => Alert.alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666666">
+              <Text fontSize="18px" fontWeight="bold" color="#666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -122,11 +122,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666666">
+            <Text fontSize="18px" fontWeight="bold" color="#666">
               Trending
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666666">
+              <Text fontSize="18px" fontWeight="bold" color="#666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -144,7 +144,7 @@ export default function Movies() {
             renderItem={({item}) => (
               <MovieList
                 marginRight="15px"
-                width={getCardDimension(15, 2)}
+                width={getCardWidthDimension(15, 2)}
                 height="270px"
                 {...item}
               />

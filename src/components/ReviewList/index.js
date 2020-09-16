@@ -26,7 +26,7 @@ export default function ReviewList(props) {
           paddingTop="7px"
           paddingBottom="7px">
           <Text
-            color="#666666"
+            color="#666"
             fontSize="16px"
             fontWeight="bold"
             numberOfLines={1}>
@@ -36,7 +36,7 @@ export default function ReviewList(props) {
             onPress={toggleNumberOfLines}
             numberOfLines={numberOfLines}
             marginBottom={Platform.OS === 'ios' ? '10px' : '3px'}
-            color="#999999">
+            color="#999">
             {content}
           </Text>
         </VerticalView>

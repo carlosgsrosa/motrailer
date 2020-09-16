@@ -33,9 +33,9 @@ export function getYearsOfAge(string) {
   try {
     let years_of_age = 0;
     if (string !== null) {
-      let year_of_bith_day = getYearFromDate(string);
+      let year_of_birth_day = getYearFromDate(string);
       let current_year = new Date();
-      years_of_age = current_year.getFullYear() - year_of_bith_day;
+      years_of_age = current_year.getFullYear() - year_of_birth_day;
     }
 
     return years_of_age;
@@ -86,15 +86,21 @@ export function formatDate(date) {
   }
 }
 
-export function getCardDimension(padding, columns) {
+export function getCardWidthDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
   const cardWidth = (getWindowWidth() - DIVISOR) / columns;
   return cardWidth + 'px';
 }
 
+export function getCardHeightDimension(padding, columns) {
+  const DIVISOR = (columns + 1) * padding;
+  const cardWidth = (getWindowWidth() - DIVISOR) / columns;
+  return cardWidth + 40 + 'px';
+}
+
 export function showError(method = '', message) {
   Alert.alert('Acorreu um erro inesperado!', message);
-  console.log(`${method}:`, message);
+  console.error(`${method}:`, message);
 }
 
 export function showNotifyMessage(message) {

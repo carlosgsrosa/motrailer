@@ -1,17 +1,15 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {FlatList, TextInput, TouchableOpacity} from 'react-native';
-import {useRoute} from '@react-navigation/native';
+import React, {useState, useEffect, useRef, useLayoutEffect} from 'react';
+import {StyleSheet, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
-import AuthContext from '../../contexts/auth';
+import api, {API_KEY} from '../../services/api';
 
-import api, {API_KEY, THUMBNAIL_PATH} from '../../services/api';
-
-import {images} from '../../constants';
-
-import {showError} from '../../util';
+import {showError, getWindowsHeight} from '../../util';
 
 import {
   SafeAreaView,
+  VerticalView,
   HorizontalView,
   GlobalStyles,
   ItemSeparatorComponent,
@@ -19,21 +17,20 @@ import {
   ReviewList,
   EmptyContent,
   Text,
-  Image,
+  Avatar,
 } from '../../components';
 
 export default function Review() {
   const [loading, setLoading] = useState(true);
+  const [totalResults, setTotalResults] = useState(0);
   const [data, setData] = useState([]);
-  const [message, setMessage] = useState(null);
+
+  const refRBSheet = useRef();
 
   const route = useRoute();
+  const navigation = useNavigation();
 
-  const {user} = useContext(AuthContext);
-
-  const avatar = user.avatar.gravatar.hash;
-
-  const movieId = route.params.id;
+  const {movieId, movieName} = route.params;
 
   const getReview = async () => {
     setLoading(true);
@@ -41,6 +38,7 @@ export default function Review() {
       .get(`/movie/${movieId}/reviews`, {API_KEY})
       .then((response) => {
         setData(response.data.results);
+        setTotalResults(response.data.total_results);
         setLoading(false);
       })
       .catch((e) => {
@@ -49,9 +47,61 @@ export default function Review() {
       });
   };
 
+  const RBSheetReview = () => {
+    return (
+      <RBSheet
+        ref={refRBSheet}
+        height={getWindowsHeight() - 100}
+        openDuration={250}
+        closeOnDragDown
+        closeOnPressMask
+        closeOnPressBack
+        customStyles={{
+          draggableIcon: {
+            backgroundColor: '#999',
+          },
+          container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
+        }}>
+        <VerticalView
+          flex={1}
+          marginLeft="15px"
+          marginRight="15px"
+          marginBottom="15px">
+          <TouchableOpacity
+            style={{
+              borderRadius: 6,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#EE7429',
+              marginBottom: 15,
+            }}
+            onPress={() => {}}>
+            <Text color="#fff" marginTop="15px" marginBottom="15px">
+              SUBMIT
+            </Text>
+          </TouchableOpacity>
+
+          <TextInput
+            style={styles.inputText}
+            autoFocus
+            multiline
+            numberOfLines={30}
+            placeholder="you can start writing your review here..."
+          />
+        </VerticalView>
+      </RBSheet>
+    );
+  };
+
   useEffect(() => {
     getReview();
   }, []);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: `Review (${totalResults})`,
+    });
+  }, [totalResults]);
 
   if (loading) {
     return <LoadingModal visible={loading} />;
@@ -59,6 +109,7 @@ export default function Review() {
 
   return (
     <SafeAreaView backgroundColor="#fff">
+      <RBSheetReview tag={refRBSheet} />
       <FlatList
         bounces={false}
         showsHorizontalScrollIndicator={false}
@@ -66,53 +117,53 @@ export default function Review() {
         contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListEmptyComponent={() => (
-          <EmptyContent message="We don't have any reviews for Pets United. Would you like to write one?" />
+          <EmptyContent
+            message={`We don't have any reviews for ${movieName}. Would you like to write one?`}
+          />
         )}
         data={data}
         keyExtractor={(item) => String(item.id)}
         renderItem={({item}) => <ReviewList key={item.id} {...item} />}
       />
-      <HorizontalView
+      <VerticalView
         style={{
           alignItems: 'center',
-          borderTopWidth: 0.6,
+          borderTopWidth: 0.8,
           borderTopColor: '#ccc',
-        }}
-        justifyContent="space-between"
-        paddingLeft="15px"
-        paddingTop="15px"
-        paddingRight="15px"
-        paddingBottom="15px">
-        <Image
-          width="32px"
-          height="32px"
-          marginRight="5px"
-          borderRadius="16px"
-          source={
-            avatar
-              ? {uri: THUMBNAIL_PATH + avatar}
-              : images.background.male_profile
-          }
-        />
-        <TextInput
-          style={{
-            flex: 1,
-            height: 25,
-            marginLeft: 5,
-            marginRight: 5,
-          }}
-          autoFocus
-          autoCorrect={false}
-          // onChangeText={(value) => setQuery(value)}
-          // onSubmitEditing={() => getSearchMulti(1, true)}
-          // value={query}
-        />
-        <TouchableOpacity>
-          <Text color="#D6182A" fontWeight="500">
-            SEND
-          </Text>
+        }}>
+        <TouchableOpacity onPress={() => refRBSheet.current.open()}>
+          <HorizontalView
+            alignItems="center"
+            justifyContent="space-between"
+            paddingLeft="15px"
+            paddingTop="15px"
+            paddingRight="15px"
+            paddingBottom="15px">
+            <Avatar
+              width="40px"
+              height="40px"
+              borderRadius="20px"
+              resizeMode="cover"
+              borderColor="#EE7429"
+            />
+            <Text color="#666" marginLeft="10px" marginRight="15px">
+              you can start writing your review click here...
+            </Text>
+          </HorizontalView>
         </TouchableOpacity>
-      </HorizontalView>
+      </VerticalView>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  inputText: {
+    flex: 1,
+    width: '100%',
+    paddingLeft: 15,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderRadius: 6,
+    backgroundColor: '#f5f5f5',
+  },
+});

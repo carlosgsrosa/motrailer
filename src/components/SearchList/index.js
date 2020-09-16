@@ -63,7 +63,7 @@ export default function SearchList({data}) {
       case 'person':
         const movies = data.known_for.map((item, index) => (
           <TouchableOpacity
-            activeOpacity={0.6}
+            activeOpacity={0.8}
             key={String(index)}
             onPress={() => navigation.navigate('Movie', {id: item.id})}>
             <Text numberOfLines={1} color="#999999" paddingTop="3px">

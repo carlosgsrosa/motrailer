@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Platform, StatusBar} from 'react-native';
+import {Platform, StatusBar} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 const images = [
@@ -42,7 +42,8 @@ const HEADER_HEIGHT =
   Platform.OS === 'ios' ? 115 : 70 + StatusBar.currentHeight;
 
 // import Toggle from './Toggle';
-import WebViewInjection from './WebViewInjection';
+// import WebViewInjection from './WebViewInjection';
+import BottomSheetExamples from './BottomSheetExamples';
 
 export default function Testes() {
   const scrollY = new Animated.Value(0);
@@ -53,7 +54,8 @@ export default function Testes() {
   });
 
   return (
-    <WebViewInjection />
+    <BottomSheetExamples />
+    // <WebViewInjection />
     // <Toggle />
     // <View style={{flex: 1}}>
     //   <Animated.View

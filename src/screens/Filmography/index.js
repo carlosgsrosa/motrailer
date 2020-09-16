@@ -4,21 +4,18 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 
 import api, {API_KEY} from '../../services/api';
 
-import {showError, getCardDimension} from '../../util';
+import {showError, getCardWidthDimension} from '../../util';
 
 import {
   SafeAreaView,
-  AppStatusBar,
-  HorizontalView,
   MovieList,
-  Text,
   ItemSeparatorComponent,
   GlobalStyles,
   Loading,
   EmptyContent,
 } from '../../components';
 
-export default function Filmography(props) {
+export default function Filmography() {
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -43,7 +40,7 @@ export default function Filmography(props) {
         params: {
           page: page,
           api_key: API_KEY,
-          with_cast: personId,
+          with_people: personId,
           sort_by: 'primary_release_date.desc',
         },
       })
@@ -94,7 +91,7 @@ export default function Filmography(props) {
           <MovieList
             onAddWatchList={onAddWatchList}
             marginRight="15px"
-            width={getCardDimension(15, 2)}
+            width={getCardWidthDimension(15, 2)}
             height="270px"
             {...item}
           />

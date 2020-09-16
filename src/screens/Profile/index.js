@@ -5,15 +5,11 @@ import {useNavigation} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
 
-import {showError, getWindowWidth, getCardDimension} from '../../util';
+import {showError, getWindowWidth, getCardWidthDimension} from '../../util';
 
 import {images} from '../../constants';
 
-import api, {
-  API_KEY,
-  USER_PERMISSION_URL,
-  THUMBNAIL_PATH,
-} from '../../services/api';
+import api, {API_KEY, USER_PERMISSION_URL} from '../../services/api';
 
 import {
   GlobalStyles,
@@ -24,7 +20,6 @@ import {
   LoadingModal,
   ImageBackground,
   Text,
-  Image,
   ItemSeparatorComponent,
   MovieList,
   ScrollView,
@@ -32,12 +27,11 @@ import {
   WebViewModal,
   EmptyContent,
   Loading,
+  Avatar,
 } from '../../components';
 
 export default function Profile() {
   const {user, setUser} = useContext(AuthContext);
-
-  const navigation = useNavigation();
 
   const [loading, setLoading] = useState(false);
   const [webViewVisible, setWebViewVisible] = useState(false);
@@ -48,8 +42,6 @@ export default function Profile() {
   const [totalResults, setTotalResults] = useState(0);
 
   function CustomImageBackground() {
-    const avatar = user ? user.avatar.gravatar.hash : null;
-
     const getName = () => {
       return user.name ? user.name : user.username;
     };
@@ -63,16 +55,12 @@ export default function Profile() {
         source={images.background.profile}>
         <TouchableOpacity onPress={() => setWebViewVisible(!webViewVisible)}>
           <VerticalView marginBottom="40px">
-            <Image
-              style={styles.image}
+            <Avatar
               width="110px"
               height="110px"
               borderRadius="55px"
-              source={
-                avatar
-                  ? {uri: THUMBNAIL_PATH + avatar}
-                  : images.background.male_profile
-              }
+              resizeMode="cover"
+              borderColor="#fff"
             />
           </VerticalView>
         </TouchableOpacity>
@@ -199,7 +187,12 @@ export default function Profile() {
         uri={USER_PERMISSION_URL + token.request_token}
       />
       <VerticalView flex={1} backgroundColor="#fff">
-        <Header color="#fff" title={'PROFILE'} backgroundColor="#EE7429" />
+        <Header
+          color="#fff"
+          title={'PROFILE'}
+          backgroundColor="#EE7429"
+          borderColor="#fff"
+        />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -269,7 +262,7 @@ export default function Profile() {
                 <MovieList
                   showLabels={false}
                   marginRight="15px"
-                  width={getCardDimension(15, 4)}
+                  width={getCardWidthDimension(15, 4)}
                   height="119px"
                   {...item}
                 />

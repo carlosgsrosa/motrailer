@@ -1,23 +1,20 @@
 import React from 'react';
 
 import {images} from '../../constants';
+
 import {VerticalView, Image, Text} from '../';
 
-export default function EmptyContent({image, message}) {
+export default function EmptyContent({message}) {
   return (
-    <VerticalView flex={1} justifyContent="center" alignItems="center">
-      <Image
-        style={{tintColor: '#ccc', opacity: 0.3}}
-        resizeMode="contain"
-        height="180px"
-        width="311px"
-        source={images.background.place_holder}
-      />
+    <VerticalView
+      justifyContent="center"
+      style={{alignItems: 'center', justifyContent: 'center'}}>
+      <Image height="150px" width="171px" source={images.icons.logo} />
       <Text
         marginTop="15px"
         fontWeight="200"
-        fontSize="17px"
-        color="#999"
+        fontSize="18px"
+        color="#666"
         textAlign="center">
         {message}
       </Text>

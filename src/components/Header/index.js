@@ -1,19 +1,13 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {THUMBNAIL_PATH} from '../../services/api';
-
-import AuthContext from '../../contexts/auth';
-
 import {images} from '../../constants';
 
-import {HorizontalView, Text, Image} from '../../components';
+import {HorizontalView, Text, Image, Avatar} from '../../components';
 
 export default function Header(props) {
-  const {title, backgroundColor} = props;
-
-  const {user} = useContext(AuthContext);
+  const {title, backgroundColor, borderColor} = props;
 
   const navigation = useNavigation();
 
@@ -36,27 +30,6 @@ export default function Header(props) {
         return images.icons.search;
       case 'PROFILE':
         return images.icons.settings;
-    }
-  };
-
-  const Avatar = () => {
-    if (user && title !== 'PROFILE') {
-      const avatar = user ? user.avatar.gravatar.hash : null;
-      return (
-        <TouchableOpacity
-          style={[styles.button, {marginRight: 5}]}
-          onPress={() => navigation.navigate('Profile')}>
-          <Image
-            width="39px"
-            height="39px"
-            borderRadius="19.5px"
-            resizeMode="contain"
-            source={{uri: THUMBNAIL_PATH + avatar}}
-          />
-        </TouchableOpacity>
-      );
-    } else {
-      return null;
     }
   };
 
@@ -92,7 +65,17 @@ export default function Header(props) {
         {title}
       </Text>
       <HorizontalView>
-        <Avatar />
+        <TouchableOpacity
+          style={{marginRight: 5}}
+          onPress={() => navigation.navigate('Profile')}>
+          <Avatar
+            width="40px"
+            height="40px"
+            borderRadius="20px"
+            resizeMode="cover"
+            borderColor={borderColor}
+          />
+        </TouchableOpacity>
         <SearchBar />
       </HorizontalView>
     </HorizontalView>

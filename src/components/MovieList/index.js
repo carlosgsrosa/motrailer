@@ -44,7 +44,7 @@ export default function MovieList(props) {
       {showLabels ? (
         <>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.8}
             onPress={() => onPress(data, origin)}
             style={{
               position: 'absolute',
@@ -80,7 +80,11 @@ export default function MovieList(props) {
         />
       </TouchableOpacity>
       {showLabels ? (
-        <VerticalView style={GlobalStyles.roundedAbsoluteView}>
+        <VerticalView
+          style={[
+            GlobalStyles.roundedAbsoluteView,
+            {width: '100%', backgroundColor: 'rgba(0,0,0,0.3)'},
+          ]}>
           <Text
             fontSize="13px"
             fontFamily="SFProDisplay-Bold"

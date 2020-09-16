@@ -11,16 +11,16 @@ export default function RBSheetDetail({tag, image, overview}) {
       ref={tag}
       height={getWindowsHeight() - 100}
       openDuration={250}
-      closeOnDragDown={true}
-      closeOnPressMask={true}
-      closeOnPressBack={true}
+      closeOnDragDown
+      closeOnPressMask
+      closeOnPressBack
       customStyles={{
         draggableIcon: {
           backgroundColor: '#9999',
         },
         container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
       }}>
-      <VerticalView marginLeft="15px" marginRight="15px" margiBottom="15px">
+      <VerticalView marginLeft="15px" marginRight="15px" marginBottom="15px">
         <Image
           width="100%"
           height="160px"
@@ -29,13 +29,7 @@ export default function RBSheetDetail({tag, image, overview}) {
           resizeMode="cover"
           source={{uri: getUri(image)}}
         />
-        <Text
-          textAlign="justify"
-          marginLeft="15px"
-          marginRight="15px"
-          fontSize="20px">
-          {overview}
-        </Text>
+        <Text textAlign="justify">{overview}</Text>
       </VerticalView>
     </RBSheet>
   );

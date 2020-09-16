@@ -19,6 +19,7 @@ import Header from './Header';
 import WebViewModal from './WebViewModal';
 import ShowMore from './ShowMore';
 import ReviewList from './ReviewList';
+import Avatar from './Avatar';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -255,4 +256,5 @@ export {
   WebViewModal,
   ShowMore,
   ReviewList,
+  Avatar,
 };
