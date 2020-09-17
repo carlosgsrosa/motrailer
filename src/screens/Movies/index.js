@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {StyleSheet, FlatList, TouchableOpacity, Alert} from 'react-native';
+import {FlatList, TouchableOpacity, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';

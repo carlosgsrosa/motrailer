@@ -36,6 +36,8 @@ export const icons = {
   like_checked: require('../assets/icons/like_checked.png'),
   favorite: require('../assets/icons/favorite.png'),
   favorite_checked: require('../assets/icons/favorite_checked.png'),
+  netflix: require('../assets/icons/netflix.png'),
+  disney_plus: require('../assets/icons/disney_plus.png'),
 };
 
 export default {background, icons};

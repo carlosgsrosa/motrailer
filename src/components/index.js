@@ -60,7 +60,6 @@ const VerticalView = styled.View`
 
   background-color: ${(props) => props.backgroundColor || 'transparent'};
 
-  /* align-items: ${(props) => props.alignItems || 'flex-start'}; */
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
 
   margin-left: ${(props) => props.marginLeft || '0px'};
@@ -208,11 +207,6 @@ const GlobalStyles = StyleSheet.create({
   shadow: elevationShadowStyle(4),
   content: {
     padding: 15,
-  },
-  absoluteView: {
-    zIndex: 1,
-    position: 'absolute',
-    top: 220,
   },
   roundedAbsoluteView: {
     flex: 1,

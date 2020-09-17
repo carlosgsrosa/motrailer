@@ -45,8 +45,9 @@ export default function Movie() {
   const [genres, setGenres] = useState([]);
   const [movieCredit, setMovieCredit] = useState([]);
   const [castCrew, setCastCrew] = useState([]);
-  const [movieCertification, setMovieCertification] = useState([]);
+  const [movieCertification, setMovieCertification] = useState({});
   const [moviePosters, setMovieImages] = useState([]);
+  const [note, setNote] = useState(null);
 
   const movieId = route.params.id;
 
@@ -90,11 +91,12 @@ export default function Movie() {
     );
   }
 
-  function filterCertification(data, country) {
+  function getCertification(data, country) {
     try {
       return data
         .filter((item) => item.iso_3166_1 === country)
         .map((item) => {
+          setNote(item.release_dates[0].note);
           return item.release_dates[0];
         });
     } catch (e) {
@@ -114,9 +116,8 @@ export default function Movie() {
       .then((response) => {
         setMovie(response.data);
         setGenres(response.data.genres);
-        setMovieCertification(
-          filterCertification(response.data.release_dates.results, 'US'),
-        );
+        const release_dates = response.data.release_dates.results;
+        setMovieCertification(getCertification(release_dates, 'US'));
         getMovieCast();
       })
       .catch((e) => {
@@ -132,8 +133,8 @@ export default function Movie() {
         API_KEY,
       })
       .then((response) => {
-        const sortOrder = (a, b) => a.order - b.order;
-        const topBilledCast = response.data.cast.sort(sortOrder).slice(0, 10);
+        const sortByOrder = (a, b) => a.order - b.order;
+        const topBilledCast = response.data.cast.sort(sortByOrder).slice(0, 10);
         setMovieCredit(topBilledCast);
         const cast = response.data.cast.sort((a, b) => a.order - b.order);
         const crew = response.data.crew;
@@ -165,6 +166,7 @@ export default function Movie() {
     return (
       <Wrapper marginLeft="15px" style={GlobalStyles.shadow}>
         <Poster
+          note={note}
           resizeMode="center"
           width="120px"
           height="180px"
@@ -258,12 +260,12 @@ export default function Movie() {
     );
   }
 
-  function MovieOverview() {
+  function Overview() {
     return (
       <TouchableOpacity onPress={() => refRBSheet.current.open()}>
         <Text
           color="#666"
-          marginTop="140px"
+          marginTop={note ? '160px' : '140px'}
           marginLeft="15px"
           marginRight="15px"
           fontSize="17px"
@@ -478,7 +480,7 @@ export default function Movie() {
       <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
-        <HorizontalView style={GlobalStyles.absoluteView}>
+        <HorizontalView style={styles.absoluteView}>
           <MoviePoster />
           <VerticalView flex={1}>
             <Name />
@@ -488,7 +490,7 @@ export default function Movie() {
             <Rating />
           </VerticalView>
         </HorizontalView>
-        <MovieOverview />
+        <Overview />
         <Cast />
         <LikeFavoriteComment />
         <Media />
@@ -508,5 +510,10 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     paddingRight: 15,
     paddingBottom: 5,
+  },
+  absoluteView: {
+    zIndex: 1,
+    position: 'absolute',
+    top: 220,
   },
 });

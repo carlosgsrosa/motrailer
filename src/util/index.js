@@ -2,6 +2,11 @@ import {Alert, Dimensions, Platform, ToastAndroid} from 'react-native';
 
 import {IMAGE_PATH} from '../services/api';
 
+import {images} from '../constants';
+
+const NETFLIX = 'Netflix';
+const DISNEY_PLUS = 'Disney+ Premier Access';
+
 export function getUri(path) {
   return IMAGE_PATH + path;
 }
@@ -108,5 +113,14 @@ export function showNotifyMessage(message) {
     Alert.alert(message);
   } else {
     ToastAndroid.show(message, ToastAndroid.SHORT);
+  }
+}
+
+export function getStreaming(streamingCompany) {
+  switch (streamingCompany) {
+    case NETFLIX:
+      return images.icons.netflix;
+    case DISNEY_PLUS:
+      return images.icons.disney_plus;
   }
 }
