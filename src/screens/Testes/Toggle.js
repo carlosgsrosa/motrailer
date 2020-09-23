@@ -46,7 +46,7 @@ const Item = (props) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#cccccc',
+        backgroundColor: '#CCCCCC',
         flexDirection: 'row',
         padding: 20,
       }}>
@@ -58,7 +58,7 @@ const Item = (props) => {
           borderRadius: 5,
         }}
         onPress={() => props.toggle(props.id)}>
-        <Text style={{color: '#ffffff', fontWeight: '400', fontSize: 17}}>
+        <Text style={{color: '#FFFFFF', fontWeight: '400', fontSize: 17}}>
           {String(props.status)}
         </Text>
       </TouchableOpacity>

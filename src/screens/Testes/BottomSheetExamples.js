@@ -185,7 +185,7 @@ export default class BottomSheetExamples extends Component {
           animationType="none"
           openDuration={200}
           customStyles={{
-            wrapper: {backgroundColor: '#ffffff'},
+            wrapper: {backgroundColor: '#FFFFFF'},
           }}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonTitle: {
-    color: '#ffffff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   dateHeaderContainer: {
     height: 45,
     borderBottomWidth: 1,
-    borderColor: '#cccccc',
+    borderColor: '#CCCCCC',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderTopWidth: 1.5,
-    borderTopColor: '#cccccc',
+    borderTopColor: '#CCCCCC',
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
@@ -395,6 +395,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3385ff',
   },
   messageButtonTextRight: {
-    color: '#ffffff',
+    color: '#FFFFFF',
   },
 });

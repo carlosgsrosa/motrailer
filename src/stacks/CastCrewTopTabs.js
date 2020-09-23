@@ -19,12 +19,12 @@ export default function CastCrewTopTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#ffffff',
+        activeTintColor: '#FFFFFF',
         style: {
           backgroundColor: '#EE7429',
         },
         indicatorStyle: {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#FFFFFF',
         },
       }}>
       <Tab.Screen

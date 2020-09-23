@@ -284,5 +284,5 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   imageBackground: {justifyContent: 'center', alignItems: 'center'},
-  image: {borderWidth: 1, borderColor: '#ffffff', overflow: 'hidden'},
+  image: {borderWidth: 1, borderColor: '#FFFFFF', overflow: 'hidden'},
 });

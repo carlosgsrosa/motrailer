@@ -117,7 +117,7 @@ const ItemSeparatorComponent = styled.View`
 const Text = styled.Text`
   font-size: ${(props) => props.fontSize || '15px'};
 
-  color: ${(props) => props.color || '#000'};
+  color: ${(props) => props.color || '#000000'};
 
   text-align: ${(props) => props.textAlign || 'auto'};
 
@@ -161,14 +161,14 @@ export const Button = styled.TouchableOpacity`
   height: 54px;
   width: 192px;
   border-width: ${(props) => props.borderWidth || '2px'};
-  border-color: ${(props) => props.borderColor || '#ffffff'};
+  border-color: ${(props) => props.borderColor || '#FFFFFF'};
   border-radius: 27px;
   background-color: ${(props) => props.backgroundColor || 'transparent'};
   margin-top: 50px;
 `;
 
 export const ImageBackground = styled.ImageBackground`
-  background-color: #000;
+  background-color: #000000;
   width: ${(props) => props.width || '24px'};
   height: ${(props) => props.height || '24px'};
   justify-content: center;
@@ -179,11 +179,11 @@ function elevationShadowStyle(elevation) {
   return {
     borderRadius: 6,
     elevation,
-    shadowColor: '#000',
+    shadowColor: '#000000',
     shadowOffset: {width: 0, height: 0.5 * elevation},
     shadowOpacity: 0.3,
     shadowRadius: 0.8 * elevation,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
   };
 }
 

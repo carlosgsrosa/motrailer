@@ -5,7 +5,7 @@ import {getUri, getStreamingSource} from '../../util';
 
 import {images, FEMALE_GENDER} from '../../constants';
 
-import {VerticalView, HorizontalView, Image} from '../../components';
+import {ImageBackground, HorizontalView, Image} from '../../components';
 
 export default function Poster({
   resizeMode,
@@ -50,11 +50,12 @@ export default function Poster({
   };
 
   return (
-    <VerticalView
-      borderRadius={borderRadius}
-      alignItems="center"
-      style={{overflow: 'hidden'}}
-      backgroundColor="#002844">
+    <ImageBackground
+      style={{overflow: 'hidden', borderRadius: 6}}
+      width={width}
+      height={height}
+      resizeMode="cover"
+      source={images.background.place_holder}>
       <Image
         resizeMode={resizeMode}
         width={width}
@@ -62,7 +63,7 @@ export default function Poster({
         source={source ? {uri: getUri(source)} : getImage()}
       />
       <StreamingSource />
-    </VerticalView>
+    </ImageBackground>
   );
 }
 

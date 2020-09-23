@@ -119,14 +119,17 @@ export default function TVDetail() {
         params: {
           api_key: API_KEY,
           append_to_response: 'release_dates',
+          language: 'en-US',
         },
       });
+      console.warn('TV', JSON.stringify(response.data));
       setData(response.data);
       setGenres(response.data.genres);
-      const release_dates = response.data.release_dates.results;
-      setMovieCertification(getCertification(release_dates, 'US'));
+      // const release_dates = response.data.release_dates.results;
+      // setMovieCertification(getCertification(release_dates, 'US'));
       getMovieCast();
-      getMovieState();
+      // getMovieState();
+      setLoading(false);
     } catch (e) {
       setLoading(false);
       showError('getMovie', e.message);
@@ -264,7 +267,8 @@ export default function TVDetail() {
         fontSize="20px"
         color="#FFFFFF"
         numberOfLines={2}>
-        {stringToUpperCase(daa.title)} ({getYearFromDate(data.release_date)})
+        {stringToUpperCase(data.original_name)} (
+        {getYearFromDate(data.first_air_date)})
       </Text>
     );
   }
@@ -450,8 +454,8 @@ export default function TVDetail() {
   const openCast = () => {
     navigation.push('Cast', {
       data: castCrew,
-      title: `${stringToUpperCase(data.title)} (${getYearFromDate(
-        data.release_date,
+      title: `${stringToUpperCase(data.original_name)} (${getYearFromDate(
+        data.first_air_date,
       )}`,
     });
   };
@@ -536,7 +540,7 @@ export default function TVDetail() {
           <MoviePoster />
           <VerticalView flex={1}>
             <Name />
-            <Certification />
+            {/* <Certification /> */}
             <Popularity />
             <Genre />
             <Rating />

@@ -45,6 +45,7 @@ export default function Filmography() {
         },
       })
       .then((response) => {
+        console.warn('MOVIES', JSON.stringify(response.data));
         setData([...data, ...response.data.results]);
         setPage(response.data.page + 1);
         setTotalPages(response.data.total_pages);
