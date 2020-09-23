@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 
-import {getUri, getStreaming} from '../../util';
+import {getUri, getStreamingSource} from '../../util';
 
 import {images, FEMALE_GENDER} from '../../constants';
 
@@ -28,7 +28,7 @@ export default function Poster({
     return images.background.place_holder;
   };
 
-  const Note = () => {
+  const StreamingSource = () => {
     if (!note) {
       return null;
     }
@@ -41,9 +41,9 @@ export default function Poster({
         <Image
           borderRadius="3px"
           resizeMode="contain"
-          width="24px"
-          height="24px"
-          source={getStreaming(note)}
+          width="50px"
+          height="27.19px"
+          source={getStreamingSource(note)}
         />
       </HorizontalView>
     );
@@ -61,7 +61,7 @@ export default function Poster({
         height={height}
         source={source ? {uri: getUri(source)} : getImage()}
       />
-      <Note />
+      <StreamingSource />
     </VerticalView>
   );
 }

@@ -10,6 +10,7 @@ export const background = {
 };
 
 export const icons = {
+  logo: require('../assets/icons/logo.png'),
   bullet: require('../assets/icons/bullet.png'),
   movies: require('../assets/icons/movies.png'),
   movies_outline: require('../assets/icons/movies_outline.png'),
@@ -25,19 +26,21 @@ export const icons = {
   profile_outline: require('../assets/icons/profile_outline.png'),
   settings: require('../assets/icons/settings.png'),
   close: require('../assets/icons/close.png'),
-  bookmark: require('../assets/icons/bookmark.png'),
-  bookmark_checked: require('../assets/icons/bookmark_checked.png'),
-  logo: require('../assets/icons/logo.png'),
+  watchlist: require('../assets/icons/watchlist.png'),
+  watchlist_checked: require('../assets/icons/watchlist_checked.png'),
+  movie_watchlist: require('../assets/icons/movie_whatlist.png'),
+  movie_watchlist_checked: require('../assets/icons/movie_whatlist_checked.png'),
   zoom: require('../assets/icons/zoom.png'),
   tick: require('../assets/icons/tick.png'),
   share: require('../assets/icons/share.png'),
   comment: require('../assets/icons/comment.png'),
-  like: require('../assets/icons/like.png'),
-  like_checked: require('../assets/icons/like_checked.png'),
+  rated: require('../assets/icons/rated.png'),
+  rated_checked: require('../assets/icons/rated_checked.png'),
   favorite: require('../assets/icons/favorite.png'),
   favorite_checked: require('../assets/icons/favorite_checked.png'),
   netflix: require('../assets/icons/netflix.png'),
   disney_plus: require('../assets/icons/disney_plus.png'),
+  filter: require('../assets/icons/filter.png'),
 };
 
 export default {background, icons};

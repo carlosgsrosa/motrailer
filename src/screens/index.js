@@ -1,10 +1,12 @@
 import Splash from '../screens/Splash';
 import Intro from '../screens/Intro';
+import AllMovies from '../screens/AllMovies';
 import Movies from '../screens/Movies';
 import Movie from '../screens/Movie';
 import Person from '../screens/Person';
 import Filmography from '../screens/Filmography';
 import Tv from '../screens/Tv';
+import TVDetail from '../screens/TVDetail';
 import Trailer from '../screens/Trailer';
 import Search from '../screens/Search';
 import Profile from '../screens/Profile';
@@ -18,11 +20,13 @@ import Testes from '../screens/Testes';
 export {
   Splash,
   Intro,
+  AllMovies,
   Movies,
   Movie,
   Person,
   Filmography,
   Tv,
+  TVDetail,
   Trailer,
   Search,
   Profile,

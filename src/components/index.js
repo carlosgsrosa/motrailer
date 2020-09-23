@@ -28,8 +28,6 @@ const SafeAreaView = styled.SafeAreaView`
 
 const Wrapper = styled.View`
   margin-left: ${(props) => props.marginLeft || '0px'};
-  /* width: ${(props) => props.width || '140px'}; */
-  /* height: ${(props) => props.height || '210px'}; */
 
   margin-left: ${(props) => props.marginLeft || '0px'};
   margin-top: ${(props) => props.marginTop || '0px'};
@@ -163,7 +161,7 @@ export const Button = styled.TouchableOpacity`
   height: 54px;
   width: 192px;
   border-width: ${(props) => props.borderWidth || '2px'};
-  border-color: ${(props) => props.borderColor || '#fff'};
+  border-color: ${(props) => props.borderColor || '#ffffff'};
   border-radius: 27px;
   background-color: ${(props) => props.backgroundColor || 'transparent'};
   margin-top: 50px;
@@ -185,7 +183,7 @@ function elevationShadowStyle(elevation) {
     shadowOffset: {width: 0, height: 0.5 * elevation},
     shadowOpacity: 0.3,
     shadowRadius: 0.8 * elevation,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   };
 }
 

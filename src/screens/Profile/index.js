@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 
 import AuthContext from '../../contexts/auth';
 
@@ -41,6 +41,8 @@ export default function Profile() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
 
+  const isFocused = useIsFocused();
+
   function CustomImageBackground() {
     const getName = () => {
       return user.name ? user.name : user.username;
@@ -60,7 +62,7 @@ export default function Profile() {
               height="110px"
               borderRadius="55px"
               resizeMode="cover"
-              borderColor="#fff"
+              borderColor="#FFFFFF"
             />
           </VerticalView>
         </TouchableOpacity>
@@ -110,7 +112,12 @@ export default function Profile() {
   const getUserAccount = async (sessionId) => {
     setLoading(true);
     await api
-      .get(`/account?api_key=${API_KEY}&session_id=${sessionId}`)
+      .get('/account', {
+        params: {
+          api_key: API_KEY,
+          session_id: sessionId,
+        },
+      })
       .then((response) => {
         response.data.session_id = sessionId;
         response.data.access_token = token.request_token;
@@ -137,32 +144,32 @@ export default function Profile() {
   };
 
   const getWatchList = async () => {
-    setLoading(true);
+    try {
+      // setLoading(true);
 
-    if (totalPages && page > totalPages) {
-      setLoading(false);
-      return;
-    }
+      console.log('getWatchList', String(totalPages && page > totalPages));
+      if (totalPages && page > totalPages) {
+        setLoading(false);
+        return;
+      }
 
-    await api
-      .get(`/account/${user.id}/watchlist/movies`, {
+      const response = await api.get(`/account/${user.id}/watchlist/movies`, {
         params: {
-          page: page,
           api_key: API_KEY,
-          session_id: user ? user.session_id : null,
+          session_id: user.session_id,
+          sort_by: 'created_at.desc',
+          page: page,
         },
-      })
-      .then((response) => {
-        setWatchList([...watchList, ...response.data.results]);
-        setPage(response.data.page + 1);
-        setTotalPages(response.data.total_pages);
-        setTotalResults(response.data.total_results);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-        showError('getWatchList', e.message);
       });
+      setWatchList([...watchList, ...response.data.results]);
+      setPage(response.data.page + 1);
+      setTotalPages(response.data.total_pages);
+      setTotalResults(response.data.total_results);
+      // setLoading(false);
+    } catch (e) {
+      setLoading(false);
+      showError('getWatchList', e.message);
+    }
   };
 
   useEffect(() => {
@@ -186,12 +193,12 @@ export default function Profile() {
         visible={webViewVisible}
         uri={USER_PERMISSION_URL + token.request_token}
       />
-      <VerticalView flex={1} backgroundColor="#fff">
+      <VerticalView flex={1} backgroundColor="#FFFFFF">
         <Header
-          color="#fff"
-          title={'PROFILE'}
+          color="#FFFFFF"
+          title="PROFILE"
           backgroundColor="#EE7429"
-          borderColor="#fff"
+          borderColor="#FFFFFF"
         />
         <ScrollView
           bounces={false}
@@ -199,7 +206,7 @@ export default function Profile() {
           showsVerticalScrollIndicator={false}>
           <CustomImageBackground />
           <VerticalView
-            backgroundColor="#ffff"
+            backgroundColor="#FFFFFF"
             paddingLeft="15px"
             paddingTop="15px"
             paddingRight="15px">
@@ -241,7 +248,7 @@ export default function Profile() {
               </TouchableOpacity>
             </HorizontalView>
           </VerticalView>
-          <VerticalView backgroundColor="#ffff">
+          <VerticalView backgroundColor="#FFFFFF">
             <FlatList
               bounces={false}
               showsVerticalScrollIndicator={false}
@@ -277,5 +284,5 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   imageBackground: {justifyContent: 'center', alignItems: 'center'},
-  image: {borderWidth: 1, borderColor: '#fff', overflow: 'hidden'},
+  image: {borderWidth: 1, borderColor: '#ffffff', overflow: 'hidden'},
 });

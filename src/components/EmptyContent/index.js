@@ -14,7 +14,7 @@ export default function EmptyContent({message}) {
         marginTop="15px"
         fontWeight="200"
         fontSize="18px"
-        color="#666"
+        color="#666666"
         textAlign="center">
         {message}
       </Text>

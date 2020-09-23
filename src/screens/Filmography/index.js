@@ -77,6 +77,7 @@ export default function Filmography() {
         bounces={false}
         showsVerticalScrollIndicator={false}
         numColumns={2}
+        initialNumToRender={10}
         contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListFooterComponent={loading && <Loading />}

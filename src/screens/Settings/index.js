@@ -39,7 +39,7 @@ export default function Settings() {
           paddingTop="15px"
           paddingRight="15px"
           paddingBottom="15px"
-          backgroundColor="#cccc">
+          backgroundColor="#CCCCCC">
           <Text>Deslogar</Text>
         </HorizontalView>
       </TouchableOpacity>

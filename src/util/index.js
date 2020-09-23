@@ -116,8 +116,9 @@ export function showNotifyMessage(message) {
   }
 }
 
-export function getStreaming(streamingCompany) {
-  switch (streamingCompany) {
+export function getStreamingSource(companyName) {
+  console.warn('getStreamingSource', companyName);
+  switch (companyName) {
     case NETFLIX:
       return images.icons.netflix;
     case DISNEY_PLUS:

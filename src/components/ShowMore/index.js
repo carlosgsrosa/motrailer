@@ -17,7 +17,7 @@ export default function ShowMore(props) {
         justifyContent="center"
         alignItems="center"
         style={{height: height, width: width}}>
-        <Text color="#fff" fontWeight="700" fontSize="20px">
+        <Text color="#FFFFFF" fontWeight="700" fontSize="20px">
           MORE
         </Text>
       </VerticalView>

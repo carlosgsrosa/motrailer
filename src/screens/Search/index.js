@@ -94,7 +94,7 @@ export default function Search() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
-        initialNumToRender={7}
+        initialNumToRender={10}
         ListFooterComponent={loading && <Loading />}
         onEndReached={() => getSearchMulti()}
         onEndReachedThreshold={1}
@@ -112,9 +112,9 @@ const styles = StyleSheet.create({
     height: 40,
     width: '100%',
     paddingLeft: 10,
-    borderColor: '#fff',
+    borderColor: '#ffffff',
     borderRadius: 18,
     borderWidth: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
   },
 });

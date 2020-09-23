@@ -13,7 +13,7 @@ export default function ProfileStack() {
       }}
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTintColor: '#fff',
+        headerTintColor: '#ffffff',
         headerBackTitle: null,
         headerStyle: {
           backgroundColor: '#EE7429',
@@ -25,7 +25,7 @@ export default function ProfileStack() {
         options={{
           headerBackTitle: null,
           headerTitle: null,
-          headerTintColor: '#fff',
+          headerTintColor: '#ffffff',
           headerTransparent: true,
         }}
         name="Profile"

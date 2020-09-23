@@ -15,7 +15,7 @@ import {
   Image,
 } from '../../components';
 
-const Media = () => {
+export default function Media() {
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -32,7 +32,7 @@ const Media = () => {
           key={`render-text-${index}`}
           fontSize="18px"
           fontWeight="500"
-          color="#fff">
+          color="#FFFFFF">
           {index + 1}/{total}
         </Text>
       </HorizontalView>
@@ -42,11 +42,9 @@ const Media = () => {
   return (
     <SafeAreaView flex={1} backgroundColor="#EE7429">
       <VerticalView paddingLeft="15px" paddingTop="15px" paddingBottom="15px">
-        <TouchableOpacity
-          // style={styles.button}
-          onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            style={{tintColor: '#fff'}}
+            style={{tintColor: '#FFFFFF'}}
             width="24px"
             height="24px"
             resizeMode="contain"
@@ -75,17 +73,4 @@ const Media = () => {
       </Swiper>
     </SafeAreaView>
   );
-};
-
-const styles = StyleSheet.create({
-  button: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-export default Media;
+}

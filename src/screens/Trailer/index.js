@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Alert, FlatList} from 'react-native';
+import {SafeAreaView, FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
 import api, {API_KEY} from '../../services/api';
@@ -12,6 +12,7 @@ import {
   GlobalStyles,
   ItemSeparatorComponent,
   TrailerList,
+  EmptyContent,
 } from '../../components';
 
 export default function Trailer() {
@@ -20,7 +21,7 @@ export default function Trailer() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  const movieId = route.params;
+  const {movieId, movieName} = route.params;
 
   async function getTrailer() {
     try {
@@ -49,6 +50,11 @@ export default function Trailer() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={GlobalStyles.content}
           ItemSeparatorComponent={() => <ItemSeparatorComponent height="3px" />}
+          ListEmptyComponent={() => (
+            <EmptyContent
+              message={`There are no English trailers added to ${movieName}.`}
+            />
+          )}
           data={data}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => <TrailerList data={item} />}

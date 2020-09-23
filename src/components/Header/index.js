@@ -38,11 +38,11 @@ export default function Header(props) {
       <TouchableOpacity
         style={[
           styles.button,
-          {backgroundColor: title === 'PROFILE' ? '#fff' : '#EE7429'},
+          {backgroundColor: title === 'PROFILE' ? '#ffffff' : '#EE7429'},
         ]}
         onPress={() => handleNavigation()}>
         <Image
-          style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#fff'}}
+          style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#ffffff'}}
           width="24px"
           height="24px"
           resizeMode="contain"

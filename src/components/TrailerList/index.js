@@ -19,7 +19,7 @@ export default function TrailerList({data}) {
         paddingRight="5px"
         paddingBottom="5px"
         backgroundColor="#000"
-        color="#fff"
+        color="#FFFFFF"
         numberOfLines={1}
         fontSize="16px"
         fontWeight="300">

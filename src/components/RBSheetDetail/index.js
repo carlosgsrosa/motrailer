@@ -16,7 +16,7 @@ export default function RBSheetDetail({tag, image, overview}) {
       closeOnPressBack
       customStyles={{
         draggableIcon: {
-          backgroundColor: '#9999',
+          backgroundColor: '#999999',
         },
         container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
       }}>

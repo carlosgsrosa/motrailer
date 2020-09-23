@@ -37,7 +37,7 @@ import {
   ShowMore,
 } from '../../components';
 
-export default function Movie() {
+export default function TVDetail() {
   const {user} = useContext(AuthContext);
 
   const refRBSheet = useRef();
@@ -45,20 +45,19 @@ export default function Movie() {
   const navigation = useNavigation();
 
   const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState({});
+  const [data, setData] = useState({});
   const [genres, setGenres] = useState([]);
   const [movieCredit, setMovieCredit] = useState([]);
   const [castCrew, setCastCrew] = useState([]);
   const [movieCertification, setMovieCertification] = useState({});
   const [moviePosters, setMovieImages] = useState([]);
-  const [movieState, setMovieState] = useState([]);
   const [note, setNote] = useState(null);
 
   const [favorite, setFavorite] = useState(false);
   const [rated, setRated] = useState(false);
   const [watchlist, setWatchlist] = useState(false);
 
-  const movieId = route.params.id;
+  const id = route.params.id;
 
   function StringList({data}) {
     return (
@@ -113,16 +112,16 @@ export default function Movie() {
     }
   }
 
-  const getMovie = async () => {
+  const getDetails = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/movie/${movieId}`, {
+      const response = await api.get(`/tv/${id}`, {
         params: {
           api_key: API_KEY,
           append_to_response: 'release_dates',
         },
       });
-      setMovie(response.data);
+      setData(response.data);
       setGenres(response.data.genres);
       const release_dates = response.data.release_dates.results;
       setMovieCertification(getCertification(release_dates, 'US'));
@@ -136,7 +135,7 @@ export default function Movie() {
 
   const getMovieCast = async () => {
     try {
-      const response = await api.get(`/movie/${movieId}/credits`, {
+      const response = await api.get(`/tv/${id}/credits`, {
         API_KEY,
       });
       const sortByOrder = (a, b) => a.order - b.order;
@@ -154,7 +153,7 @@ export default function Movie() {
 
   const getMovieMedia = async () => {
     try {
-      const response = await api.get(`/movie/${movieId}/images`);
+      const response = await api.get(`/tv/${id}/images`);
       setMovieImages([...response.data.posters, ...response.data.backdrops]);
     } catch (e) {
       setLoading(false);
@@ -165,7 +164,7 @@ export default function Movie() {
   const getMovieState = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/movie/${movieId}/account_states`, {
+      const response = await api.get(`/tv/${id}/account_states`, {
         params: {
           api_key: API_KEY,
           session_id: user.session_id,
@@ -187,7 +186,7 @@ export default function Movie() {
         `/account/${user.id}/favorite?api_key=${API_KEY}&session_id=${user.session_id}`,
         {
           media_type: 'movie',
-          media_id: movieId,
+          media_id: id,
           favorite: !favorite,
         },
       );
@@ -206,7 +205,7 @@ export default function Movie() {
         `/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
         {
           media_type: 'movie',
-          media_id: movieId,
+          media_id: id,
           watchlist: !watchlist,
         },
       );
@@ -225,12 +224,12 @@ export default function Movie() {
         width={getWindowWidth() + 'px'}
         height="280px"
         resizeMode="cover"
-        source={{uri: getUri(movie.backdrop_path)}}>
+        source={{uri: getUri(data.backdrop_path)}}>
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Trailer', {
-              movieId,
-              movieName: movie.title,
+              id,
+              movieName: data.title,
             })
           }>
           <Image width="54px" height="54px" source={images.icons.youtube} />
@@ -249,7 +248,7 @@ export default function Movie() {
           height="180px"
           borderRadius="6px"
           type="movie"
-          source={movie.poster_path}
+          source={data.poster_path}
         />
       </Wrapper>
     );
@@ -265,7 +264,7 @@ export default function Movie() {
         fontSize="20px"
         color="#FFFFFF"
         numberOfLines={2}>
-        {stringToUpperCase(movie.title)} ({getYearFromDate(movie.release_date)})
+        {stringToUpperCase(daa.title)} ({getYearFromDate(data.release_date)})
       </Text>
     );
   }
@@ -283,7 +282,7 @@ export default function Movie() {
           data={movieCertification}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => (
-            <CertificationList data={item} runtime={movie.runtime} />
+            <CertificationList data={item} runtime={data.runtime} />
           )}
         />
       </HorizontalView>
@@ -293,7 +292,7 @@ export default function Movie() {
   function Popularity() {
     return (
       <Text marginTop="5px" fontWeight="300" marginLeft="10px" fontSize="15px">
-        {movie.popularity} People wathing
+        {data.popularity} People wathing
       </Text>
     );
   }
@@ -330,10 +329,10 @@ export default function Movie() {
           marginRight="5px"
           fontWeight="400"
           fontColor="#D6182A"
-          voteAverage={movie.vote_average}
+          voteAverage={data.vote_average}
         />
         <Text fontWeight="500" color="#D6182A">
-          ({movie.vote_count})
+          ({data.vote_count})
         </Text>
       </HorizontalView>
     );
@@ -350,7 +349,7 @@ export default function Movie() {
           fontSize="17px"
           textAlign="justify"
           numberOfLines={4}>
-          {movie.overview}
+          {data.overview}
         </Text>
       </TouchableOpacity>
     );
@@ -432,8 +431,8 @@ export default function Movie() {
             style={styles.space}
             onPress={() =>
               navigation.navigate('Review', {
-                movieId,
-                movieName: movie.title,
+                id,
+                movieName: data.title,
               })
             }>
             <Image
@@ -451,8 +450,8 @@ export default function Movie() {
   const openCast = () => {
     navigation.push('Cast', {
       data: castCrew,
-      title: `${stringToUpperCase(movie.title)} (${getYearFromDate(
-        movie.release_date,
+      title: `${stringToUpperCase(data.title)} (${getYearFromDate(
+        data.release_date,
       )}`,
     });
   };
@@ -521,7 +520,7 @@ export default function Movie() {
   };
 
   useEffect(() => {
-    getMovie();
+    getDetails();
   }, []);
 
   if (loading) {
@@ -549,8 +548,8 @@ export default function Movie() {
         <Media />
         <RBSheetDetail
           tag={refRBSheet}
-          image={movie.poster_path}
-          overview={movie.overview}
+          image={data.poster_path}
+          overview={data.overview}
         />
       </ScrollView>
     </VerticalView>

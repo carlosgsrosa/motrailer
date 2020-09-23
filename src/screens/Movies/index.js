@@ -8,7 +8,7 @@ import {showError, getCardWidthDimension, showNotifyMessage} from '../../util';
 
 import api, {API_KEY} from '../../services/api';
 
-const NOW = 'now';
+import {NOW, TRENDING_MOVIE_DAY} from '../../constants';
 
 import {
   ScrollView,
@@ -28,6 +28,7 @@ import {
 const params = {
   params: {
     api_key: API_KEY,
+    language: 'en-US',
     page: 1,
     sort_by: 'popularity.desc',
   },
@@ -77,7 +78,7 @@ export default function Movies() {
   const addWatchList = async (media_type, media_id, watchlist) => {
     await api
       .post(
-        `https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
+        `/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
         {
           media_type,
           media_id,
@@ -126,10 +127,14 @@ export default function Movies() {
   }
 
   return (
-    <SafeAreaView backgroundColor="#fff">
+    <SafeAreaView backgroundColor="#FFFFFF">
       <AppStatusBar barStyle="dark-content" />
-      <VerticalView flex={1} backgroundColor="#fff">
-        <Header title="MOVIES" backgroundColor="#fff" borderColor="#EE7429" />
+      <VerticalView flex={1} backgroundColor="#FFFFFF">
+        <Header
+          title="MOVIES"
+          backgroundColor="#FFFFFF"
+          borderColor="#EE7429"
+        />
         <ScrollView
           bounces={false}
           scrollEventThrottle={16}
@@ -140,11 +145,22 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
+            <Text
+              fontSize="22px"
+              fontFamily="SFProDisplay-Bold"
+              color="#666666">
               Now
             </Text>
-            <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('AllMovies', {
+                  endpoint: TRENDING_MOVIE_DAY,
+                })
+              }>
+              <Text
+                fontSize="22px"
+                fontFamily="SFProDisplay-Bold"
+                color="#666666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -181,11 +197,17 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
+            <Text
+              fontSize="22px"
+              fontFamily="SFProDisplay-Bold"
+              color="#666666">
               Trending
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text fontSize="22px" fontFamily="SFProDisplay-Bold" color="#666">
+              <Text
+                fontSize="22px"
+                fontFamily="SFProDisplay-Bold"
+                color="#666666">
                 ...
               </Text>
             </TouchableOpacity>

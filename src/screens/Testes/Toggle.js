@@ -27,7 +27,7 @@ export default function Toggle() {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: '#999'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#999999'}}>
       <ScrollView>
         <View style={{padding: 15}}>
           <FlatList
@@ -46,7 +46,7 @@ const Item = (props) => {
     <View
       style={{
         flex: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: '#cccccc',
         flexDirection: 'row',
         padding: 20,
       }}>
@@ -58,7 +58,7 @@ const Item = (props) => {
           borderRadius: 5,
         }}
         onPress={() => props.toggle(props.id)}>
-        <Text style={{color: '#fff', fontWeight: '400', fontSize: 17}}>
+        <Text style={{color: '#ffffff', fontWeight: '400', fontSize: 17}}>
           {String(props.status)}
         </Text>
       </TouchableOpacity>

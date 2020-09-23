@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Platform, View} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -30,7 +30,7 @@ export default function Intro() {
           key={`title-${index}`}
           fontSize="36px"
           alignSelf="center"
-          color="#fff"
+          color="#FFFFFF"
           fontFamily="SFProDisplay-Bold">
           {screen.title.text}
         </Text>
@@ -38,7 +38,7 @@ export default function Intro() {
           key={`description-${index}`}
           fontSize="34px"
           alignSelf="center"
-          color="#fff"
+          color="#FFFFFF"
           fontFamily="SFProDisplay-Ultralight">
           {screen.description.text}
         </Text>
@@ -78,7 +78,7 @@ export default function Intro() {
             key={`text-button-${index}`}
             fontSize="20px"
             fontFamily="SFProDisplay-Regular"
-            color="#fff">
+            color="#FFFFFF">
             {button.label}
           </Text>
         </Button>
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   dot: {marginLeft: 5, marginBottom: 120},
   absolute: {
     zIndex: 1,
-    bottom: 120,
+    bottom: Platform.OS === 'ios' ? 30 : 15,
     width: '100%',
     position: 'absolute',
     alignItems: 'center',

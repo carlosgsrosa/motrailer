@@ -4,8 +4,10 @@ import colors from './colors';
 import fonts from './fonts';
 
 const FEMALE_GENDER = 2;
+const TRENDING_MOVIE_DAY = '/trending/movie/day';
+const NOW = 'now';
 
-export {images, intro, colors, fonts, FEMALE_GENDER};
+export {images, intro, colors, fonts, FEMALE_GENDER, TRENDING_MOVIE_DAY, NOW};
 
 /*
     "@react-native-community/async-storage": "^1.12.0",

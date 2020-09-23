@@ -43,6 +43,7 @@ export default function HomeBottomTabs() {
         }}
         name="Profile"
         component={ProfileStack}
+        initialParams={{date: new Date()}}
       />
       {/* <Tab.Screen name="Testes" component={Testes} /> */}
     </Tab.Navigator>

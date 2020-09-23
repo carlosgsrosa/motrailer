@@ -14,7 +14,7 @@ import {
   HorizontalView,
   Header,
   ItemSeparatorComponent,
-  MovieList,
+  TvList,
   Text,
   GlobalStyles,
   LoadingModal,
@@ -74,10 +74,10 @@ export default function Movies() {
   }, []);
 
   return (
-    <SafeAreaView backgroundColor="#fff">
+    <SafeAreaView backgroundColor="#FFFFFF">
       <AppStatusBar barStyle="dark-content" />
       <LoadingModal visible={loading} />
-      <VerticalView flex={1} backgroundColor="#fff">
+      <VerticalView flex={1} backgroundColor="#FFFFFF">
         <Header title="TV" borderColor="#EE7429" />
         <ScrollView
           bounces={false}
@@ -89,11 +89,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666">
+            <Text fontSize="18px" fontWeight="bold" color="#666666">
               Now
             </Text>
             <TouchableOpacity onPress={() => Alert.alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666">
+              <Text fontSize="18px" fontWeight="bold" color="#666666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -113,7 +113,7 @@ export default function Movies() {
             data={movie}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
-              <MovieList width="140px" height="210px" {...item} />
+              <TvList width="140px" height="210px" {...item} />
             )}
           />
 
@@ -122,11 +122,11 @@ export default function Movies() {
             marginRight="15px"
             justifyContent="space-between"
             alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666">
+            <Text fontSize="18px" fontWeight="bold" color="#666666">
               Trending
             </Text>
             <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666">
+              <Text fontSize="18px" fontWeight="bold" color="#666666">
                 ...
               </Text>
             </TouchableOpacity>
@@ -142,7 +142,7 @@ export default function Movies() {
             data={trendingMovie}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
-              <MovieList
+              <TvList
                 marginRight="15px"
                 width={getCardWidthDimension(15, 2)}
                 height="270px"

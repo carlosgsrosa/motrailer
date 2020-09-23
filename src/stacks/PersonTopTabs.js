@@ -19,12 +19,12 @@ export default function PersonTopTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#fff',
+        activeTintColor: '#ffffff',
         style: {
           backgroundColor: '#EE7429',
         },
         indicatorStyle: {
-          backgroundColor: '#fff',
+          backgroundColor: '#ffffff',
         },
       }}>
       <Tab.Screen

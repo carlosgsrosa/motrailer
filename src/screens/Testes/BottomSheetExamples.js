@@ -185,7 +185,7 @@ export default class BottomSheetExamples extends Component {
           animationType="none"
           openDuration={200}
           customStyles={{
-            wrapper: {backgroundColor: '#fff'},
+            wrapper: {backgroundColor: '#ffffff'},
           }}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   buttonTitle: {
-    color: '#FFFFFF',
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
   listTitle: {
     fontSize: 16,
     marginBottom: 20,
-    color: '#666',
+    color: '#666666',
   },
   listButton: {
     flexDirection: 'row',
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   },
   listIcon: {
     fontSize: 26,
-    color: '#666',
+    color: '#666666',
     width: 60,
   },
   listLabel: {
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   dateHeaderContainer: {
     height: 45,
     borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#cccccc',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   dateHeaderButtonCancel: {
     fontSize: 18,
-    color: '#666',
+    color: '#666666',
     fontWeight: '400',
   },
   dateHeaderButtonDone: {
@@ -339,14 +339,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderTopWidth: 1.5,
-    borderTopColor: '#ccc',
+    borderTopColor: '#cccccc',
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
   },
   inputIcon: {
     fontSize: 24,
-    color: '#666',
+    color: '#666666',
     marginHorizontal: 5,
   },
   inputIconSend: {
@@ -395,6 +395,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#3385ff',
   },
   messageButtonTextRight: {
-    color: '#fff',
+    color: '#ffffff',
   },
 });

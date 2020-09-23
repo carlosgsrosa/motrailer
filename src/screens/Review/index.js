@@ -58,7 +58,7 @@ export default function Review() {
         closeOnPressBack
         customStyles={{
           draggableIcon: {
-            backgroundColor: '#999',
+            backgroundColor: '#999999',
           },
           container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
         }}>
@@ -76,7 +76,7 @@ export default function Review() {
               marginBottom: 15,
             }}
             onPress={() => {}}>
-            <Text color="#fff" marginTop="15px" marginBottom="15px">
+            <Text color="#FFFFFF" marginTop="15px" marginBottom="15px">
               SUBMIT
             </Text>
           </TouchableOpacity>
@@ -108,7 +108,7 @@ export default function Review() {
   }
 
   return (
-    <SafeAreaView backgroundColor="#fff">
+    <SafeAreaView backgroundColor="#FFFFFF">
       <RBSheetReview tag={refRBSheet} />
       <FlatList
         bounces={false}
@@ -129,7 +129,7 @@ export default function Review() {
         style={{
           alignItems: 'center',
           borderTopWidth: 0.8,
-          borderTopColor: '#ccc',
+          borderTopColor: '#cccccc',
         }}>
         <TouchableOpacity onPress={() => refRBSheet.current.open()}>
           <HorizontalView
@@ -146,7 +146,7 @@ export default function Review() {
               resizeMode="cover"
               borderColor="#EE7429"
             />
-            <Text color="#666" marginLeft="10px" marginRight="15px">
+            <Text color="#666666" marginLeft="10px" marginRight="15px">
               you can start writing your review click here...
             </Text>
           </HorizontalView>
