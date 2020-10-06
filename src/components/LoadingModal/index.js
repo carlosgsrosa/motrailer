@@ -6,7 +6,11 @@ import {VerticalView, Loading} from '../';
 export default function LoadingModal({visible}) {
   return (
     <Modal visible={visible}>
-      <VerticalView flex={1} justifyContent="center" alignItems="center">
+      <VerticalView
+        backgroundColor="#434343"
+        flex={1}
+        justifyContent="center"
+        alignItems="center">
         <Loading />
       </VerticalView>
     </Modal>

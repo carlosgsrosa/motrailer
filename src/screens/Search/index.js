@@ -5,7 +5,7 @@ import {images} from '../../constants';
 
 import {showError} from '../../util';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {
   SafeAreaView,
@@ -18,14 +18,14 @@ import {
   Loading,
 } from '../../components';
 
-export default function Search() {
+export default () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [query, setQuery] = useState(null);
 
-  async function getSearchMulti(pageNumber = page, research = false) {
+  const getSearchMulti = async (pageNumber = page, research = false) => {
     if (totalPages && pageNumber > totalPages) {
       return;
     }
@@ -54,7 +54,7 @@ export default function Search() {
         setLoading(false);
         showError(e.message);
       });
-  }
+  };
 
   return (
     <SafeAreaView>
@@ -105,7 +105,7 @@ export default function Search() {
       />
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   input: {

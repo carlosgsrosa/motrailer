@@ -3,24 +3,31 @@ import {StyleSheet} from 'react-native';
 
 import {getUri, getStreamingSource} from '../../util';
 
-import {images, FEMALE_GENDER} from '../../constants';
+import {images, FEMALE} from '../../constants';
 
-import {ImageBackground, HorizontalView, Image} from '../../components';
+import {
+  VerticalView,
+  ImageBackground,
+  HorizontalView,
+  Image,
+} from '../../components';
 
-export default function Poster({
-  resizeMode,
-  width,
-  height,
-  borderRadius,
-  source,
-  gender,
-  type,
-  note,
-}) {
+export default function Poster(props) {
+  const {
+    width,
+    height,
+    source,
+    resizeMode,
+    gender,
+    type,
+    note,
+    borderRadius,
+  } = props;
+
   const getImage = () => {
     if (type === 'person') {
       if (gender !== null) {
-        return gender === FEMALE_GENDER
+        return gender === FEMALE
           ? images.background.female_profile
           : images.background.male_profile;
       }
@@ -29,7 +36,9 @@ export default function Poster({
   };
 
   const StreamingSource = () => {
-    if (!note) {
+    const {horizontalView} = styles;
+
+    if (!getStreamingSource(note)) {
       return null;
     }
 
@@ -37,9 +46,8 @@ export default function Poster({
       <HorizontalView
         justifyContent="center"
         alignItems="center"
-        style={styles.horizontalView}>
+        style={horizontalView}>
         <Image
-          borderRadius="3px"
           resizeMode="contain"
           width="50px"
           height="27.19px"
@@ -50,20 +58,22 @@ export default function Poster({
   };
 
   return (
-    <ImageBackground
-      style={{overflow: 'hidden', borderRadius: 6}}
-      width={width}
-      height={height}
-      resizeMode="cover"
-      source={images.background.place_holder}>
-      <Image
-        resizeMode={resizeMode}
+    <VerticalView borderRadius={borderRadius} style={styles.overflow}>
+      <ImageBackground
+        resizeMode="cover"
         width={width}
         height={height}
-        source={source ? {uri: getUri(source)} : getImage()}
-      />
+        source={images.background.place_holder}>
+        <Image
+          borderRadius={borderRadius}
+          resizeMode={resizeMode}
+          width={width}
+          height={height}
+          source={source ? {uri: getUri(source)} : getImage()}
+        />
+      </ImageBackground>
       <StreamingSource />
-    </ImageBackground>
+    </VerticalView>
   );
 }
 
@@ -74,4 +84,5 @@ const styles = StyleSheet.create({
     paddingRight: 3,
     paddingBottom: 3,
   },
+  overflow: {overflow: 'hidden'},
 });

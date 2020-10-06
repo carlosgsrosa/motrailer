@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, FlatList, Alert, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect, useLayoutEffect} from 'react';
+import {FlatList} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {
   showError,
@@ -10,11 +10,12 @@ import {
   getCardHeightDimension,
 } from '../../util';
 
+import {colors} from '../../constants';
+
 import {
   SafeAreaView,
-  HorizontalView,
-  Text,
   MovieList,
+  TvList,
   ItemSeparatorComponent,
   GlobalStyles,
   Loading,
@@ -23,15 +24,17 @@ import {
 
 export default function AllMovies() {
   const route = useRoute();
+  const navigation = useNavigation();
 
   const endpoint = route.params.endpoint;
+  const title = route.params.title;
+  const type = route.params.type;
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalResults, setTotalResults] = useState(0);
-  const [movieGenre, setMovieGenre] = useState([]);
 
   const params = {
     params: {
@@ -43,12 +46,10 @@ export default function AllMovies() {
 
   const getMovies = async () => {
     setLoading(true);
-
     if (totalPages && page > totalPages) {
       setLoading(false);
       return;
     }
-
     await api
       .get(endpoint, params)
       .then((response) => {
@@ -63,6 +64,12 @@ export default function AllMovies() {
         showError(error.message);
       });
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title,
+    });
+  }, []);
 
   // const Genre = () => {
   //   return (
@@ -121,44 +128,53 @@ export default function AllMovies() {
     getMovies();
   }, []);
 
+  const Item = (item) => {
+    if (type === 'tv') {
+      return (
+        <TvList
+          // onAddWatchList={onAddWatchList}
+          showLabels={false}
+          marginRight="15px"
+          width={getCardWidthDimension(15, 2)}
+          height={getCardHeightDimension(15, 2)}
+          {...item}
+        />
+      );
+    }
+
+    return (
+      <MovieList
+        // onAddWatchList={onAddWatchList}
+        resizeMode="contain"
+        showLabels={false}
+        marginRight="15px"
+        width={getCardWidthDimension(15, 3)}
+        height={getCardHeightDimension(15, 2)}
+        {...item}
+      />
+    );
+  };
+
   return (
-    <SafeAreaView>
+    <SafeAreaView backgroundColor={colors.swamp}>
       {/* <Genre /> */}
       <FlatList
         bounces={false}
         showsVerticalScrollIndicator={false}
+        scrollEventThrottle={16}
         numColumns={3}
-        initialNumToRender={10}
         contentContainerStyle={GlobalStyles.content}
         ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
         ListFooterComponent={loading && <Loading />}
-        onEndReached={getMovies}
-        onEndReachedThreshold={1}
+        // onEndReached={getMovies}
+        // onEndReachedThreshold={1}
         data={data}
         keyExtractor={(_, index) => String(index)}
         ListEmptyComponent={() => (
           <EmptyContent message="No content was found!" />
         )}
-        renderItem={({item}) => (
-          <MovieList
-            // onAddWatchList={onAddWatchList}
-            showLabels={false}
-            marginRight="15px"
-            width={getCardWidthDimension(15, 3)}
-            height={getCardHeightDimension(15, 3)}
-            {...item}
-          />
-        )}
+        renderItem={({item}) => <Item {...item} />}
       />
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  flatListContainer: {
-    paddingLeft: 10,
-    paddingTop: 5,
-    paddingRight: 15,
-    paddingBottom: 5,
-  },
-});

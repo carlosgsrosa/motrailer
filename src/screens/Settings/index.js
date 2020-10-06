@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import {TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/userContext';
 
 import {showError, showNotifyMessage} from '../../util';
 
@@ -21,11 +21,13 @@ export default function Settings() {
   const logOut = async () => {
     setLoading(true);
     try {
-      setUser(null);
       await AsyncStorage.removeItem('@MoTrailer:user').then(() => {
+        setUser(null);
         showNotifyMessage('Logout efetuado com sucesso!');
+        setLoading(false);
       });
     } catch (e) {
+      setLoading(false);
       showError('logOut', e.message);
     }
   };

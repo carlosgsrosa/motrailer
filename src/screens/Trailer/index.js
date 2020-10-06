@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, FlatList} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {showError} from '../../util';
 
@@ -52,7 +52,7 @@ export default function Trailer() {
           ItemSeparatorComponent={() => <ItemSeparatorComponent height="3px" />}
           ListEmptyComponent={() => (
             <EmptyContent
-              message={`There are no English trailers added to ${movieName}.`}
+              message={`There are no trailers added to ${movieName}.`}
             />
           )}
           data={data}

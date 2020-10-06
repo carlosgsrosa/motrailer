@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
@@ -13,6 +13,8 @@ import {
   HorizontalView,
   Text,
   Image,
+  ImageBackground,
+  AppStatusBar,
 } from '../../components';
 
 export default function Media() {
@@ -28,11 +30,7 @@ export default function Media() {
         justifyContent="center"
         paddingTop="15px"
         paddingBottom="15px">
-        <Text
-          key={`render-text-${index}`}
-          fontSize="18px"
-          fontWeight="500"
-          color="#FFFFFF">
+        <Text key={`render-text-${index}`} fontSize="18px" fontWeight="500">
           {index + 1}/{total}
         </Text>
       </HorizontalView>
@@ -40,37 +38,41 @@ export default function Media() {
   };
 
   return (
-    <SafeAreaView flex={1} backgroundColor="#EE7429">
-      <VerticalView paddingLeft="15px" paddingTop="15px" paddingBottom="15px">
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            style={{tintColor: '#FFFFFF'}}
-            width="24px"
-            height="24px"
-            resizeMode="contain"
-            source={images.icons.close}
-          />
-        </TouchableOpacity>
-      </VerticalView>
-      <Swiper
-        loop={false}
-        index={indexRef}
-        dot={<View />}
-        activeDot={<View />}
-        renderPagination={renderPagination}>
-        {data.map((item, i) => {
-          return (
-            <VerticalView key={`vertical-view-${i}`}>
-              <Image
-                resizeMode="contain"
-                style={{height: '100%', width: '100%'}}
-                key={`Image-${i}`}
-                source={{uri: getUri(item.file_path)}}
-              />
-            </VerticalView>
-          );
-        })}
-      </Swiper>
+    <SafeAreaView backgroundColor="#FFFFFF">
+      <AppStatusBar barStyle="light-content" />
+      <ImageBackground
+        style={{width: '100%', height: '100%'}}
+        source={images.background.place_holder}>
+        <VerticalView paddingLeft="15px" paddingTop="15px" paddingBottom="15px">
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Image
+              width="24px"
+              height="24px"
+              resizeMode="contain"
+              source={images.icons.close}
+            />
+          </TouchableOpacity>
+        </VerticalView>
+        <Swiper
+          loop={false}
+          index={indexRef}
+          dot={<View />}
+          activeDot={<View />}
+          renderPagination={renderPagination}>
+          {data.map((item, i) => {
+            return (
+              <VerticalView key={`vertical-view-${i}`}>
+                <Image
+                  key={`image-${i}`}
+                  resizeMode="contain"
+                  style={{height: '100%', width: '100%'}}
+                  source={{uri: getUri(item.file_path)}}
+                />
+              </VerticalView>
+            );
+          })}
+        </Swiper>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

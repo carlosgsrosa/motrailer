@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {Image} from '../components';
 
-import {images} from '../constants';
+import {images, colors} from '../constants';
 
 import {Movies, Tv, Testes} from '../screens';
 
@@ -17,6 +17,10 @@ export default function HomeBottomTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{
+        style: {
+          backgroundColor: colors.black,
+          borderTopColor: colors.black,
+        },
         showLabel: false,
       }}
       screenOptions={({route}) => ({
@@ -43,7 +47,6 @@ export default function HomeBottomTabs() {
         }}
         name="Profile"
         component={ProfileStack}
-        initialParams={{date: new Date()}}
       />
       {/* <Tab.Screen name="Testes" component={Testes} /> */}
     </Tab.Navigator>

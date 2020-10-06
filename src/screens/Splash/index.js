@@ -2,7 +2,7 @@ import React, {useEffect, useContext} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/userContext';
 
 import {images} from '../../constants';
 

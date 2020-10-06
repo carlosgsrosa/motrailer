@@ -5,6 +5,8 @@ import {getUri, getWindowsHeight} from '../../util';
 
 import {VerticalView, Image, Text} from '../../components';
 
+import {colors} from '../../constants';
+
 export default function RBSheetDetail({tag, image, overview}) {
   return (
     <RBSheet
@@ -16,7 +18,7 @@ export default function RBSheetDetail({tag, image, overview}) {
       closeOnPressBack
       customStyles={{
         draggableIcon: {
-          backgroundColor: '#999999',
+          backgroundColor: colors.nobel,
         },
         container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
       }}>

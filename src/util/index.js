@@ -6,6 +6,7 @@ import {images} from '../constants';
 
 const NETFLIX = 'Netflix';
 const DISNEY_PLUS = 'Disney+ Premier Access';
+const DISNEY_PLUS_ORIGINAL = 'Disney+ Original';
 
 export function getUri(path) {
   return IMAGE_PATH + path;
@@ -94,13 +95,14 @@ export function formatDate(date) {
 export function getCardWidthDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
   const cardWidth = (getWindowWidth() - DIVISOR) / columns;
+  // getCardWidthDimension 118
   return cardWidth + 'px';
 }
 
 export function getCardHeightDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
-  const cardWidth = (getWindowWidth() - DIVISOR) / columns;
-  return cardWidth + 40 + 'px';
+  const cardHeight = (getWindowWidth() - DIVISOR) / columns;
+  return cardHeight - 7 + 'px';
 }
 
 export function showError(method = '', message) {
@@ -117,11 +119,14 @@ export function showNotifyMessage(message) {
 }
 
 export function getStreamingSource(companyName) {
-  console.warn('getStreamingSource', companyName);
+  // console.warn('getStreamingSource', companyName);
   switch (companyName) {
     case NETFLIX:
       return images.icons.netflix;
+    case DISNEY_PLUS_ORIGINAL:
     case DISNEY_PLUS:
       return images.icons.disney_plus;
+    default:
+      return null;
   }
 }

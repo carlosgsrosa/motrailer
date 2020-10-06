@@ -2,7 +2,7 @@ import Splash from '../screens/Splash';
 import Intro from '../screens/Intro';
 import AllMovies from '../screens/AllMovies';
 import Movies from '../screens/Movies';
-import Movie from '../screens/Movie';
+import MovieDetail from '../screens/MovieDetail';
 import Person from '../screens/Person';
 import Filmography from '../screens/Filmography';
 import Tv from '../screens/Tv';
@@ -22,7 +22,7 @@ export {
   Intro,
   AllMovies,
   Movies,
-  Movie,
+  MovieDetail,
   Person,
   Filmography,
   Tv,

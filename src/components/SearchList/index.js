@@ -24,7 +24,7 @@ export default function SearchList({data}) {
   function handleNavigation() {
     switch (data.media_type) {
       case 'movie':
-        navigation.navigate('Movie', params);
+        navigation.navigate('MovieDetail', params);
         break;
       case 'tv':
         navigation.navigate('Tv', params);
@@ -65,7 +65,7 @@ export default function SearchList({data}) {
           <TouchableOpacity
             activeOpacity={0.8}
             key={String(index)}
-            onPress={() => navigation.navigate('Movie', {id: item.id})}>
+            onPress={() => navigation.navigate('MovieDetail', {id: item.id})}>
             <Text numberOfLines={1} color="#999999" paddingTop="3px">
               • {item.original_title || item.original_name}
             </Text>

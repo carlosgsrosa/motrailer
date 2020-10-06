@@ -2,7 +2,7 @@ import React, {useState, useEffect, useLayoutEffect} from 'react';
 import {FlatList, Alert} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {showError, getCardWidthDimension} from '../../util';
 
@@ -45,7 +45,7 @@ export default function Filmography() {
         },
       })
       .then((response) => {
-        console.warn('MOVIES', JSON.stringify(response.data));
+        // console.warn('MOVIES', JSON.stringify(response.data));
         setData([...data, ...response.data.results]);
         setPage(response.data.page + 1);
         setTotalPages(response.data.total_pages);

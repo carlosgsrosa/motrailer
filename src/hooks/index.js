@@ -9,6 +9,7 @@ const useFetch = (url, params) => {
       throw error;
     });
 
-  const { data, error } = useSWR(url, fetcher);
-  return { data, error };
-}
+  const {data, error} = useSWR(url, fetcher);
+
+  return {data, error};
+};

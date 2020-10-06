@@ -1,125 +1,109 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {FlatList, TouchableOpacity, Alert} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  StyleSheet,
+  Platform,
+  RefreshControl,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import AuthContext from '../../contexts/auth';
+import userFetch from '../../services/userFetch';
 
-import {showError, getCardWidthDimension, showNotifyMessage} from '../../util';
+import {images, colors} from '../../constants';
 
-import api, {API_KEY} from '../../services/api';
-
-import {NOW, TRENDING_MOVIE_DAY} from '../../constants';
+import {showError, getUri, getWindowWidth} from '../../util';
 
 import {
   ScrollView,
-  SafeAreaView,
   AppStatusBar,
-  VerticalView,
-  HorizontalView,
-  Header,
-  ItemSeparatorComponent,
-  MovieList,
-  Text,
-  GlobalStyles,
   LoadingModal,
-  ShowMore,
+  Header,
+  VerticalView,
+  MovieTVSections,
+  ImageBackground,
+  Text,
+  Image,
 } from '../../components';
 
-const params = {
-  params: {
-    api_key: API_KEY,
-    language: 'en-US',
-    page: 1,
-    sort_by: 'popularity.desc',
-  },
-};
+export default () => {
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-export default function Movies() {
+  const [popular, setPopular] = useState([]);
+  const [trending, setTrending] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [topRated, setTopRated] = useState([]);
+  const [featuredMovie, setFeaturedMovie] = useState([]);
+
   const navigation = useNavigation();
 
-  const {user} = useContext(AuthContext);
-
-  const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState([]);
-  const [trendingMovie, setTrendingMovie] = useState([]);
-
-  const getMoviePlaying = async () => {
-    setLoading(true);
-    await api
-      .get('/movie/now_playing', params)
-      .then((response) => {
-        setMovie(response.data.results);
+  const getMovieList = async () => {
+    try {
+      setLoading(true);
+      await userFetch.getMovies().then((response) => {
+        setPopular(response.popular);
+        setTrending(response.trending);
+        setUpcoming(response.upcoming);
+        setTopRated(response.top_rated);
+        setFeaturedMovie(response.featured_movie.data);
         setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-        showError('getMoviePlaying', e.message);
       });
-  };
-
-  const getTrendingMovie = async () => {
-    setLoading(true);
-    await api
-      .get('/trending/movie/day', params)
-      .then((response) => {
-        setTrendingMovie(response.data.results);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
-        showError('getTrendingMovie', e.message);
-      });
-  };
-
-  const onNavigateMore = () => {
-    navigation.navigate('AllMovies');
-  };
-
-  const addWatchList = async (media_type, media_id, watchlist) => {
-    await api
-      .post(
-        `/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
-        {
-          media_type,
-          media_id,
-          watchlist,
-        },
-      )
-      .then((response) => {
-        showNotifyMessage(response.data.status_message);
-      })
-      .catch((e) => showError('addToWatchList', e.message));
-  };
-
-  const toggleWatchList = (data, origin) => {
-    if (user) {
-      const clone = origin === NOW ? [...movie] : [...trendingMovie];
-      clone.filter((item) => {
-        if (item.id === data.id) {
-          item.watchlist = !item.watchlist;
-          if (origin === NOW) {
-            setMovie(clone);
-          } else {
-            setTrendingMovie(clone);
-          }
-          addWatchList(data.media_type, data.id, item.watchlist);
-        }
-      });
-    } else {
-      Alert.alert(
-        'Atenção!',
-        'Deseja adicionar este item a uma lista? Favor efetue Login!',
-        [
-          {text: 'CANCEL', onPress: () => {}, style: 'cancel'},
-          {text: 'LOGIN', onPress: () => navigation.navigate('Profile')},
-        ],
-      );
+    } catch (e) {
+      setLoading(false);
+      showError(e.message);
     }
   };
 
+  const FeaturedMovie = () => {
+    return (
+      <ImageBackground
+        width={getWindowWidth() + 'px'}
+        height="280px"
+        resizeMode="cover"
+        source={{uri: getUri(featuredMovie.backdrop_path)}}>
+        <LinearGradient
+          style={StyleSheet.absoluteFill}
+          start={{x: 0, y: 0.3}}
+          end={{x: 0, y: 1}}
+          colors={[colors.transparent, 'rgba(24,25,26, 0.3)', colors.swamp]}
+        />
+        <VerticalView
+          paddingLeft="15px"
+          paddingRight="15px"
+          style={{height: '100%', justifyContent: 'center'}}>
+          <Text color={colors.white} fontSize="25px" fontWeight="bold">
+            {featuredMovie.title}
+          </Text>
+          <Text marginTop="15px" color={colors.veryLightGrey} numberOfLines={4}>
+            {featuredMovie.overview}
+          </Text>
+          <TouchableOpacity
+            style={styles.moreInfoButton}
+            onPress={() =>
+              navigation.navigate('MovieDetail', {
+                id: featuredMovie.id,
+              })
+            }>
+            <Image width="24px" height="24px" source={images.icons.info} />
+            <Text color={colors.white} fontWeight="bold" marginLeft="10px">
+              More Info
+            </Text>
+          </TouchableOpacity>
+        </VerticalView>
+      </ImageBackground>
+    );
+  };
+
+  const onRefresh = () => {
+    setRefreshing(false);
+    getMovieList();
+  };
+
   useEffect(() => {
-    getMoviePlaying();
-    getTrendingMovie();
+    getMovieList();
+
+    return () => {};
   }, []);
 
   if (loading) {
@@ -127,115 +111,69 @@ export default function Movies() {
   }
 
   return (
-    <SafeAreaView backgroundColor="#FFFFFF">
-      <AppStatusBar barStyle="dark-content" />
-      <VerticalView flex={1} backgroundColor="#FFFFFF">
-        <Header
-          title="MOVIES"
-          backgroundColor="#FFFFFF"
-          borderColor="#EE7429"
+    <VerticalView backgroundColor={colors.swamp}>
+      <AppStatusBar barStyle="light-content" />
+      <LoadingModal visible={loading} />
+      <Header borderColor={colors.orange} style={styles.header} />
+
+      <ScrollView
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <FeaturedMovie />
+        <MovieTVSections
+          width="140px"
+          height="210px"
+          borderRadius="6px"
+          type="movie"
+          {...popular}
         />
-        <ScrollView
-          bounces={false}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}>
-          <HorizontalView
-            marginTop="15px"
-            marginLeft="15px"
-            marginRight="15px"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text
-              fontSize="22px"
-              fontFamily="SFProDisplay-Bold"
-              color="#666666">
-              Now
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('AllMovies', {
-                  endpoint: TRENDING_MOVIE_DAY,
-                })
-              }>
-              <Text
-                fontSize="22px"
-                fontFamily="SFProDisplay-Bold"
-                color="#666666">
-                ...
-              </Text>
-            </TouchableOpacity>
-          </HorizontalView>
-
-          <FlatList
-            bounces={false}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            horizontal
-            contentContainerStyle={GlobalStyles.content}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent width="5px" />
-            )}
-            ListFooterComponent={() => (
-              <ShowMore width={140} height={210} onPress={onNavigateMore} />
-            )}
-            data={movie}
-            keyExtractor={(_, index) => String(index)}
-            renderItem={({item}) => (
-              <MovieList
-                onPress={toggleWatchList}
-                width="140px"
-                height="210px"
-                origin="now"
-                media_type="movie"
-                {...item}
-              />
-            )}
-          />
-
-          <HorizontalView
-            marginLeft="15px"
-            marginRight="15px"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text
-              fontSize="22px"
-              fontFamily="SFProDisplay-Bold"
-              color="#666666">
-              Trending
-            </Text>
-            <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text
-                fontSize="22px"
-                fontFamily="SFProDisplay-Bold"
-                color="#666666">
-                ...
-              </Text>
-            </TouchableOpacity>
-          </HorizontalView>
-
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={GlobalStyles.content}
-            numColumns={2}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent height="15px" />
-            )}
-            data={trendingMovie}
-            keyExtractor={(_, index) => String(index)}
-            renderItem={({item}) => (
-              <MovieList
-                onPress={toggleWatchList}
-                marginRight="15px"
-                width={getCardWidthDimension(15, 2)}
-                height="270px"
-                origin="trending"
-                media_type="movie"
-                {...item}
-              />
-            )}
-          />
-        </ScrollView>
-      </VerticalView>
-    </SafeAreaView>
+        <MovieTVSections
+          width="140px"
+          height="210px"
+          borderRadius="6px"
+          type="movie"
+          {...trending}
+        />
+        <MovieTVSections
+          width="140px"
+          height="210px"
+          borderRadius="6px"
+          type="movie"
+          {...upcoming}
+        />
+        <MovieTVSections
+          width="140px"
+          height="210px"
+          borderRadius="6px"
+          type="movie"
+          {...topRated}
+        />
+      </ScrollView>
+    </VerticalView>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  moreInfoButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 130,
+    marginTop: 15,
+    paddingTop: 7,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingBottom: 7,
+    borderRadius: 6,
+    backgroundColor: 'rgba(255, 255,255, .3)',
+  },
+  header: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 30 : 0,
+    right: 0,
+    zIndex: 99,
+  },
+});

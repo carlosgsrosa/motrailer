@@ -5,6 +5,8 @@ import {StatusBar, Platform} from 'react-native';
 // dark-content
 // light-content
 
+import {colors} from '../../constants';
+
 export default function AppStatusBar(props) {
   const style = props.barStyle;
 
@@ -15,5 +17,7 @@ export default function AppStatusBar(props) {
     return 'light-content';
   }
 
-  return <StatusBar barStyle={getStyleByOS()} backgroundColor="#EE7429" />;
+  return (
+    <StatusBar barStyle={getStyleByOS()} backgroundColor={colors.orange} />
+  );
 }

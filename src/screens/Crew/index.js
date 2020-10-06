@@ -46,7 +46,7 @@ export default function Crew() {
               <Wrapper style={GlobalStyles.shadow}>
                 <Poster
                   width={getCardWidthDimension(15, 3)}
-                  height={getCardHeightDimension(15, 3)}
+                  height={getCardHeightDimension(15, 2)}
                   borderRadius="6px"
                   gender={item.gender}
                   type="person"

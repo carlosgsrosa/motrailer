@@ -1,157 +1,95 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Alert, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {RefreshControl} from 'react-native';
 
-import {showError, getCardWidthDimension} from '../../util';
+import userFetch from '../../services/userFetch';
 
-import api, {API_KEY} from '../../services/api';
+import {showError} from '../../util';
 
 import {
-  ScrollView,
   SafeAreaView,
   AppStatusBar,
-  VerticalView,
-  HorizontalView,
   Header,
-  ItemSeparatorComponent,
-  TvList,
-  Text,
-  GlobalStyles,
+  ScrollView,
   LoadingModal,
-  ShowMore,
+  MovieTVSections,
 } from '../../components';
 
-const params = {
-  params: {
-    api_key: API_KEY,
-    page: 1,
-    include_adult: false,
-    primary_release_year: 2020,
-    year: 2020,
-    append_to_response: 'trailers',
-    sort_by: 'popularity.desc',
-  },
-};
+const CARD_WIDTH = '140px';
+const CARD_HEIGHT = '210px';
 
-export default function Movies() {
-  const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState([]);
-  const [trendingMovie, setTrendingMovie] = useState([]);
+export default () => {
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const navigation = useNavigation();
+  const [popular, setPopular] = useState([]);
+  const [airingToday, setAiringToday] = useState([]);
+  const [currentlyAiring, setCurrentAiring] = useState([]);
+  const [topRated, setTopRated] = useState([]);
 
-  async function getDiscover() {
+  const getTVList = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/discover/tv', params);
-      setMovie(response.data.results);
+      const response = await userFetch.getTVShows();
+      setPopular(response.popular);
+      setAiringToday(response.airing_today);
+      setCurrentAiring(response.currently_airing);
+      setTopRated(response.top_rated);
       setLoading(false);
     } catch (e) {
       setLoading(false);
       showError(e.message);
     }
-  }
+  };
 
-  async function getPopular() {
-    try {
-      setLoading(true);
-      const response = await api.get('/trending/tv/day', params);
-      setTrendingMovie(response.data.results);
-      setLoading(false);
-    } catch (e) {
-      setLoading(false);
-      showError(e.message);
-    }
-  }
-
-  function onNavigateMore() {
-    navigation.navigate('TvAll');
-  }
+  const onRefresh = () => {
+    setRefreshing(false);
+    getTVList();
+  };
 
   useEffect(() => {
-    getDiscover();
-    getPopular();
+    getTVList();
   }, []);
 
+  if (loading) {
+    return <LoadingModal visible={loading} />;
+  }
+
   return (
-    <SafeAreaView backgroundColor="#FFFFFF">
+    <SafeAreaView backgroundColor="#FFF">
       <AppStatusBar barStyle="dark-content" />
-      <LoadingModal visible={loading} />
-      <VerticalView flex={1} backgroundColor="#FFFFFF">
-        <Header title="TV" borderColor="#EE7429" />
-        <ScrollView
-          bounces={false}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}>
-          <HorizontalView
-            marginTop="15px"
-            marginLeft="15px"
-            marginRight="15px"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666666">
-              Now
-            </Text>
-            <TouchableOpacity onPress={() => Alert.alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666666">
-                ...
-              </Text>
-            </TouchableOpacity>
-          </HorizontalView>
-
-          <FlatList
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            horizontal
-            contentContainerStyle={GlobalStyles.content}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent width="5px" />
-            )}
-            ListFooterComponent={() => (
-              <ShowMore width={140} height={210} onPress={onNavigateMore} />
-            )}
-            data={movie}
-            keyExtractor={(_, index) => String(index)}
-            renderItem={({item}) => (
-              <TvList width="140px" height="210px" {...item} />
-            )}
-          />
-
-          <HorizontalView
-            marginLeft="15px"
-            marginRight="15px"
-            justifyContent="space-between"
-            alignItems="center">
-            <Text fontSize="18px" fontWeight="bold" color="#666666">
-              Trending
-            </Text>
-            <TouchableOpacity onPress={() => alert('Soon')}>
-              <Text fontSize="18px" fontWeight="bold" color="#666666">
-                ...
-              </Text>
-            </TouchableOpacity>
-          </HorizontalView>
-
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={GlobalStyles.content}
-            numColumns={2}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent height="15px" />
-            )}
-            data={trendingMovie}
-            keyExtractor={(_, index) => String(index)}
-            renderItem={({item}) => (
-              <TvList
-                marginRight="15px"
-                width={getCardWidthDimension(15, 2)}
-                height="270px"
-                {...item}
-              />
-            )}
-          />
-        </ScrollView>
-      </VerticalView>
+      <ScrollView
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <LoadingModal visible={loading} />
+        <Header title="TV" backgroundColor="#FFF" borderColor="#EE7429" />
+        <MovieTVSections
+          width={CARD_WIDTH}
+          height={CARD_HEIGHT}
+          type="tv"
+          {...popular}
+        />
+        <MovieTVSections
+          width={CARD_WIDTH}
+          height={CARD_HEIGHT}
+          type="tv"
+          {...airingToday}
+        />
+        <MovieTVSections
+          width={CARD_WIDTH}
+          height={CARD_HEIGHT}
+          type="tv"
+          {...currentlyAiring}
+        />
+        <MovieTVSections
+          width={CARD_WIDTH}
+          height={CARD_HEIGHT}
+          type="tv"
+          {...topRated}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
-}
+};

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {Platform} from 'react-native';
 
+import {colors} from '../../constants';
+
 import {
   VerticalView,
   HorizontalView,
@@ -26,7 +28,7 @@ export default function ReviewList(props) {
           paddingTop="7px"
           paddingBottom="7px">
           <Text
-            color="#666666"
+            color={colors.veryLightGrey}
             fontSize="16px"
             fontWeight="bold"
             numberOfLines={1}>
@@ -36,7 +38,7 @@ export default function ReviewList(props) {
             onPress={toggleNumberOfLines}
             numberOfLines={numberOfLines}
             marginBottom={Platform.OS === 'ios' ? '10px' : '3px'}
-            color="#999999">
+            color={colors.nobel}>
             {content}
           </Text>
         </VerticalView>

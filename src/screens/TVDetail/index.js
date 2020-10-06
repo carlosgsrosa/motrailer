@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef, useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, FlatList, TouchableOpacity, Platform} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/userContext';
 
 import {
   showError,
@@ -10,13 +10,11 @@ import {
   getWindowWidth,
   getYearFromDate,
   stringToUpperCase,
-  minutesInHours,
-  formatDate,
 } from '../../util';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
-import {images} from '../../constants';
+import {images, colors} from '../../constants';
 
 import {
   ScrollView,
@@ -28,7 +26,6 @@ import {
   Image,
   AppStatusBar,
   CastList,
-  RBSheetDetail,
   VoteAverage,
   GlobalStyles,
   Wrapper,
@@ -40,17 +37,16 @@ import {
 export default function TVDetail() {
   const {user} = useContext(AuthContext);
 
-  const refRBSheet = useRef();
   const route = useRoute();
   const navigation = useNavigation();
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState({});
   const [genres, setGenres] = useState([]);
-  const [movieCredit, setMovieCredit] = useState([]);
+  const [cast, setCast] = useState([]);
   const [castCrew, setCastCrew] = useState([]);
-  const [movieCertification, setMovieCertification] = useState({});
-  const [moviePosters, setMovieImages] = useState([]);
+  const [tvCertification, setTvCertification] = useState([]);
+  const [tvImages, setTvImages] = useState([]);
   const [note, setNote] = useState(null);
 
   const [favorite, setFavorite] = useState(false);
@@ -59,7 +55,7 @@ export default function TVDetail() {
 
   const id = route.params.id;
 
-  function StringList({data}) {
+  function StringList(props) {
     return (
       <HorizontalView
         alignItems="center"
@@ -71,45 +67,30 @@ export default function TVDetail() {
         paddingRight="10px"
         backgroundColor="#F0F0F0">
         <Text fontWeight="300" fontSize="15px">
-          {data.name}
+          {props.name}
         </Text>
       </HorizontalView>
     );
   }
 
-  function CertificationList({data, runtime}) {
+  function CertificationList(props) {
     return (
       <HorizontalView
         marginTop="15px"
         alignItems="center"
         justifyContent="center">
         <VerticalView
-          backgroundColor="#FF0000"
+          backgroundColor={colors.red}
           paddingLeft="5px"
           paddingRight="5px"
           borderRadius="3px">
-          <Text fontWeight="bold" color="#FFFFFF" fontSize="15px">
-            {data.certification ? data.certification : null}
+          <Text fontWeight="bold" color={colors.white} fontSize="15px">
+            {props.rating}
           </Text>
         </VerticalView>
-        <Text marginLeft="5px">
-          {formatDate(data.release_date)} (US) • {minutesInHours(runtime)}
-        </Text>
+        <Text marginLeft="5px">{data.first_air_date} (US)</Text>
       </HorizontalView>
     );
-  }
-
-  function getCertification(data, country) {
-    try {
-      return data
-        .filter((item) => item.iso_3166_1 === country)
-        .map((item) => {
-          setNote(item.release_dates[0].note);
-          return item.release_dates[0];
-        });
-    } catch (e) {
-      showError(e.message);
-    }
   }
 
   const getDetails = async () => {
@@ -122,13 +103,11 @@ export default function TVDetail() {
           language: 'en-US',
         },
       });
-      console.warn('TV', JSON.stringify(response.data));
       setData(response.data);
       setGenres(response.data.genres);
-      // const release_dates = response.data.release_dates.results;
-      // setMovieCertification(getCertification(release_dates, 'US'));
-      getMovieCast();
-      // getMovieState();
+      getContentRatings();
+      getCredits();
+      getAccountStates();
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -136,37 +115,49 @@ export default function TVDetail() {
     }
   };
 
-  const getMovieCast = async () => {
+  const getContentRatings = async () => {
+    try {
+      const response = await api.get(`/tv/${id}/content_ratings`);
+      const filteredCertification = response.data.results.filter(
+        (item) => item.iso_3166_1 === 'US',
+      );
+      setTvCertification(filteredCertification);
+    } catch (e) {
+      setLoading(false);
+      showError('getContentRatings', e.message);
+    }
+  };
+
+  const getCredits = async () => {
     try {
       const response = await api.get(`/tv/${id}/credits`, {
         API_KEY,
       });
       const sortByOrder = (a, b) => a.order - b.order;
       const topBilledCast = response.data.cast.sort(sortByOrder).slice(0, 10);
-      setMovieCredit(topBilledCast);
-      const cast = response.data.cast.sort((a, b) => a.order - b.order);
+      setCast(topBilledCast);
+      const castSorted = response.data.cast.sort((a, b) => a.order - b.order);
       const crew = response.data.crew;
-      setCastCrew({cast, crew});
-      getMovieMedia();
+      setCastCrew({castSorted, crew});
+      getImages();
     } catch (e) {
       setLoading(false);
       showError('getMovieCast', e.message);
     }
   };
 
-  const getMovieMedia = async () => {
+  const getImages = async () => {
     try {
       const response = await api.get(`/tv/${id}/images`);
-      setMovieImages([...response.data.posters, ...response.data.backdrops]);
+      setTvImages([...response.data.posters, ...response.data.backdrops]);
     } catch (e) {
       setLoading(false);
       showError('getMovieMedia', e.message);
     }
   };
 
-  const getMovieState = async () => {
+  const getAccountStates = async () => {
     try {
-      setLoading(true);
       const response = await api.get(`/tv/${id}/account_states`, {
         params: {
           api_key: API_KEY,
@@ -176,10 +167,9 @@ export default function TVDetail() {
       setFavorite(response.data.favorite);
       setRated(response.data.rated);
       setWatchlist(response.data.watchlist);
-      setLoading(false);
     } catch (e) {
       setLoading(false);
-      showError('getMovieState', e.message);
+      showError('getAccountStates', e.message);
     }
   };
 
@@ -246,7 +236,7 @@ export default function TVDetail() {
       <Wrapper marginLeft="15px" style={GlobalStyles.shadow}>
         <Poster
           note={note}
-          resizeMode="center"
+          resizeMode="contain"
           width="120px"
           height="180px"
           borderRadius="6px"
@@ -265,7 +255,7 @@ export default function TVDetail() {
         marginRight="15px"
         fontWeight="600"
         fontSize="20px"
-        color="#FFFFFF"
+        color={colors.white}
         numberOfLines={2}>
         {stringToUpperCase(data.original_name)} (
         {getYearFromDate(data.first_air_date)})
@@ -283,11 +273,9 @@ export default function TVDetail() {
           horizontal
           contentContainerStyle={styles.flatListContainer}
           ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
-          data={movieCertification}
+          data={tvCertification}
           keyExtractor={(_, index) => String(index)}
-          renderItem={({item}) => (
-            <CertificationList data={item} runtime={data.runtime} />
-          )}
+          renderItem={({item}) => <CertificationList {...item} />}
         />
       </HorizontalView>
     );
@@ -313,7 +301,7 @@ export default function TVDetail() {
           ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
           data={genres}
           keyExtractor={(_, index) => String(index)}
-          renderItem={({item}) => <StringList data={item} />}
+          renderItem={({item}) => <StringList {...item} />}
         />
       </HorizontalView>
     );
@@ -332,10 +320,10 @@ export default function TVDetail() {
         <VoteAverage
           marginRight="5px"
           fontWeight="400"
-          fontColor="#D6182A"
+          fontColor={colors.pinkRed}
           voteAverage={data.vote_average}
         />
-        <Text fontWeight="500" color="#D6182A">
+        <Text fontWeight="500" color={colors.pinkRed}>
           ({data.vote_count})
         </Text>
       </HorizontalView>
@@ -344,18 +332,16 @@ export default function TVDetail() {
 
   function Overview() {
     return (
-      <TouchableOpacity onPress={() => refRBSheet.current.open()}>
-        <Text
-          color="#666666"
-          marginTop={note ? '160px' : '140px'}
-          marginLeft="15px"
-          marginRight="15px"
-          fontSize="17px"
-          textAlign="justify"
-          numberOfLines={4}>
-          {data.overview}
-        </Text>
-      </TouchableOpacity>
+      <Text
+        color={colors.shade}
+        marginTop={note ? '160px' : '140px'}
+        marginLeft="15px"
+        marginRight="15px"
+        fontSize="17px"
+        textAlign="justify"
+        numberOfLines={4}>
+        {data.overview}
+      </Text>
     );
   }
 
@@ -396,7 +382,7 @@ export default function TVDetail() {
             ItemSeparatorComponent={() => (
               <ItemSeparatorComponent width="5px" />
             )}
-            data={movieCredit}
+            data={cast}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => <CastList data={item} />}
           />
@@ -414,11 +400,7 @@ export default function TVDetail() {
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={
-                watchlist
-                  ? images.icons.movie_watchlist_checked
-                  : images.icons.movie_watchlist
-              }
+              source={watchlist ? images.icons.saved : images.icons.save}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.space} onPress={onFavorite}>
@@ -426,9 +408,7 @@ export default function TVDetail() {
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={
-                favorite ? images.icons.favorite_checked : images.icons.favorite
-              }
+              source={favorite ? images.icons.liked : images.icons.like}
             />
           </TouchableOpacity>
           <TouchableOpacity
@@ -443,7 +423,7 @@ export default function TVDetail() {
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={images.icons.comment}
+              source={images.icons.overview}
             />
           </TouchableOpacity>
         </HorizontalView>
@@ -461,12 +441,10 @@ export default function TVDetail() {
   };
 
   const openMedia = (data, index) => {
-    const params = {
+    navigation.navigate('Media', {
       indexRef: index,
       data,
-    };
-
-    navigation.navigate('Media', params);
+    });
   };
 
   const Media = () => {
@@ -482,7 +460,7 @@ export default function TVDetail() {
           <Text fontSize="22px" fontWeight="500" color="#000">
             Media
           </Text>
-          <TouchableOpacity onPress={() => openMedia(moviePosters, 0)}>
+          <TouchableOpacity onPress={() => openMedia(tvImages, 0)}>
             <Text fontSize="22px" fontWeight="500" color="#000">
               ...
             </Text>
@@ -497,12 +475,12 @@ export default function TVDetail() {
             paddingTop: 15,
             paddingBottom: Platform.OS === 'ios' ? 30 : 15,
           }}
-          data={moviePosters}
+          data={tvImages}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item, index}) => (
             <VerticalView justifyContent="center" alignItems="center">
               <TouchableOpacity
-                onPress={() => openMedia(moviePosters, index)}
+                onPress={() => openMedia(tvImages, index)}
                 style={{
                   position: 'absolute',
                   zIndex: 1,
@@ -532,7 +510,7 @@ export default function TVDetail() {
   }
 
   return (
-    <VerticalView backgroundColor="#FFFFFF">
+    <VerticalView backgroundColor={colors.white}>
       <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
@@ -540,7 +518,7 @@ export default function TVDetail() {
           <MoviePoster />
           <VerticalView flex={1}>
             <Name />
-            {/* <Certification /> */}
+            <Certification />
             <Popularity />
             <Genre />
             <Rating />
@@ -550,11 +528,6 @@ export default function TVDetail() {
         <Cast />
         <LikeFavoriteComment />
         <Media />
-        <RBSheetDetail
-          tag={refRBSheet}
-          image={data.poster_path}
-          overview={data.overview}
-        />
       </ScrollView>
     </VerticalView>
   );

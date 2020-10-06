@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
 import {StyleSheet, FlatList, TouchableOpacity, Platform} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/userContext';
 
 import {
   showError,
@@ -14,9 +15,9 @@ import {
   formatDate,
 } from '../../util';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
-import {images} from '../../constants';
+import {images, colors} from '../../constants';
 
 import {
   ScrollView,
@@ -51,7 +52,6 @@ export default function Movie() {
   const [castCrew, setCastCrew] = useState([]);
   const [movieCertification, setMovieCertification] = useState({});
   const [moviePosters, setMovieImages] = useState([]);
-  const [movieState, setMovieState] = useState([]);
   const [note, setNote] = useState(null);
 
   const [favorite, setFavorite] = useState(false);
@@ -65,13 +65,13 @@ export default function Movie() {
       <HorizontalView
         alignItems="center"
         justifyContent="center"
-        borderRadius="40px"
-        paddingTop="3px"
+        borderWidth="0.7px"
+        borderColor={colors.nobel}
+        borderRadius="6px"
         paddingLeft="10px"
-        paddingBottom="3px"
-        paddingRight="10px"
-        backgroundColor="#F0F0F0">
-        <Text fontWeight="300" fontSize="15px">
+        paddingBottom="2px"
+        paddingRight="10px">
+        <Text fontSize="15px" color={colors.white}>
           {data.name}
         </Text>
       </HorizontalView>
@@ -85,15 +85,15 @@ export default function Movie() {
         alignItems="center"
         justifyContent="center">
         <VerticalView
-          backgroundColor="#FF0000"
+          backgroundColor={colors.red}
           paddingLeft="5px"
           paddingRight="5px"
           borderRadius="3px">
-          <Text fontWeight="bold" color="#FFFFFF" fontSize="15px">
+          <Text fontWeight="bold" color={colors.whiteSmoke} fontSize="15px">
             {data.certification ? data.certification : null}
           </Text>
         </VerticalView>
-        <Text marginLeft="5px">
+        <Text marginLeft="5px" color={colors.whiteSmoke} fontWeight="300">
           {formatDate(data.release_date)} (US) • {minutesInHours(runtime)}
         </Text>
       </HorizontalView>
@@ -181,7 +181,7 @@ export default function Movie() {
     }
   };
 
-  const onFavorite = async () => {
+  const onFavoriteClick = async () => {
     try {
       const response = await api.post(
         `/account/${user.id}/favorite?api_key=${API_KEY}&session_id=${user.session_id}`,
@@ -200,7 +200,7 @@ export default function Movie() {
     }
   };
 
-  const onWatchList = async () => {
+  const onWatchListClick = async () => {
     try {
       const response = await api.post(
         `/account/${user.id}/watchlist?api_key=${API_KEY}&session_id=${user.session_id}`,
@@ -226,6 +226,12 @@ export default function Movie() {
         height="280px"
         resizeMode="cover"
         source={{uri: getUri(movie.backdrop_path)}}>
+        <LinearGradient
+          style={StyleSheet.absoluteFill}
+          start={{x: 0, y: 0.3}}
+          end={{x: 0, y: 1}}
+          colors={[colors.transparent, 'rgba(24,25,26, 0.3)', colors.swamp]}
+        />
         <TouchableOpacity
           onPress={() =>
             navigation.navigate('Trailer', {
@@ -241,10 +247,13 @@ export default function Movie() {
 
   function MoviePoster() {
     return (
-      <Wrapper marginLeft="15px" style={GlobalStyles.shadow}>
+      <Wrapper
+        marginLeft="15px"
+        borderRadius="6px"
+        backgroundColor={colors.white}>
         <Poster
           note={note}
-          resizeMode="center"
+          resizeMode="contain"
           width="120px"
           height="180px"
           borderRadius="6px"
@@ -258,12 +267,11 @@ export default function Movie() {
   function Name() {
     return (
       <Text
-        style={{height: 50}}
         marginLeft="10px"
         marginRight="15px"
-        fontWeight="600"
+        fontWeight="bold"
         fontSize="20px"
-        color="#FFFFFF"
+        color={colors.white}
         numberOfLines={2}>
         {stringToUpperCase(movie.title)} ({getYearFromDate(movie.release_date)})
       </Text>
@@ -292,8 +300,13 @@ export default function Movie() {
 
   function Popularity() {
     return (
-      <Text marginTop="5px" fontWeight="300" marginLeft="10px" fontSize="15px">
-        {movie.popularity} People wathing
+      <Text
+        marginTop="5px"
+        fontWeight="300"
+        marginLeft="10px"
+        fontSize="15px"
+        color={colors.whiteSmoke}>
+        {movie.popularity} People watching
       </Text>
     );
   }
@@ -329,10 +342,10 @@ export default function Movie() {
         <VoteAverage
           marginRight="5px"
           fontWeight="400"
-          fontColor="#D6182A"
+          fontColor={colors.fireEngineRed}
           voteAverage={movie.vote_average}
         />
-        <Text fontWeight="500" color="#D6182A">
+        <Text fontWeight="500" color={colors.fireEngineRed}>
           ({movie.vote_count})
         </Text>
       </HorizontalView>
@@ -343,7 +356,7 @@ export default function Movie() {
     return (
       <TouchableOpacity onPress={() => refRBSheet.current.open()}>
         <Text
-          color="#666666"
+          color={colors.whiteSmoke}
           marginTop={note ? '160px' : '140px'}
           marginLeft="15px"
           marginRight="15px"
@@ -367,11 +380,11 @@ export default function Movie() {
           paddingTop="10px"
           paddingBottom="10px"
           marginTop="15px">
-          <Text fontSize="22px" fontWeight="500" color="#000">
-            Top Billed Cast
+          <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
+            Top-Billed Cast
           </Text>
-          <TouchableOpacity onPress={openCast}>
-            <Text fontSize="22px" fontWeight="500" color="#000">
+          <TouchableOpacity onPress={openCastClick}>
+            <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
               ...
             </Text>
           </TouchableOpacity>
@@ -383,7 +396,7 @@ export default function Movie() {
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
             ListFooterComponent={() => (
-              <ShowMore width={90} height={131} onPress={openCast} />
+              <ShowMore width={90} height={131} onPress={openCastClick} />
             )}
             contentContainerStyle={{
               paddingLeft: 15,
@@ -395,38 +408,47 @@ export default function Movie() {
             )}
             data={movieCredit}
             keyExtractor={(_, index) => String(index)}
-            renderItem={({item}) => <CastList data={item} />}
+            renderItem={({item}) => (
+              <CastList
+                resizeMode="cover"
+                width="90px"
+                height="131px"
+                borderRadius="6px"
+                type="person"
+                {...item}
+              />
+            )}
           />
         </HorizontalView>
       </>
     );
   }
 
-  function LikeFavoriteComment() {
+  function UserActionButtons() {
     return (
       <VerticalView>
-        <HorizontalView justifyContent="center" backgroundColor="#F5F5F5">
-          <TouchableOpacity style={styles.space} onPress={onWatchList}>
+        <HorizontalView justifyContent="center">
+          <TouchableOpacity style={styles.space} onPress={onWatchListClick}>
             <Image
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={
-                watchlist
-                  ? images.icons.movie_watchlist_checked
-                  : images.icons.movie_watchlist
-              }
+              source={watchlist ? images.icons.saved : images.icons.save}
             />
+            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+              {watchlist ? 'Saved' : 'Save'}
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.space} onPress={onFavorite}>
+          <TouchableOpacity style={styles.space} onPress={onFavoriteClick}>
             <Image
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={
-                favorite ? images.icons.favorite_checked : images.icons.favorite
-              }
+              source={favorite ? images.icons.liked : images.icons.like}
             />
+            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+              {favorite ? 'Liked' : 'Like'}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.space}
@@ -440,20 +462,23 @@ export default function Movie() {
               width="54px"
               height="54px"
               resizeMode="contain"
-              source={images.icons.comment}
+              source={images.icons.overview}
             />
+            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+              Review
+            </Text>
           </TouchableOpacity>
         </HorizontalView>
       </VerticalView>
     );
   }
 
-  const openCast = () => {
+  const openCastClick = () => {
     navigation.push('Cast', {
       data: castCrew,
       title: `${stringToUpperCase(movie.title)} (${getYearFromDate(
         movie.release_date,
-      )}`,
+      )})`,
     });
   };
 
@@ -466,7 +491,7 @@ export default function Movie() {
     navigation.navigate('Media', params);
   };
 
-  const Media = () => {
+  const Images = () => {
     return (
       <VerticalView>
         <HorizontalView
@@ -476,11 +501,11 @@ export default function Movie() {
           paddingRight="15px"
           paddingBottom="10px"
           marginTop="15px">
-          <Text fontSize="22px" fontWeight="500" color="#000">
+          <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
             Media
           </Text>
           <TouchableOpacity onPress={() => openMedia(moviePosters, 0)}>
-            <Text fontSize="22px" fontWeight="500" color="#000">
+            <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
               ...
             </Text>
           </TouchableOpacity>
@@ -529,7 +554,7 @@ export default function Movie() {
   }
 
   return (
-    <VerticalView backgroundColor="#FFFFFF">
+    <VerticalView backgroundColor={colors.swamp}>
       <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
@@ -543,10 +568,11 @@ export default function Movie() {
             <Rating />
           </VerticalView>
         </HorizontalView>
+        <VerticalView />
         <Overview />
         <Cast />
-        <LikeFavoriteComment />
-        <Media />
+        <UserActionButtons />
+        <Images />
         <RBSheetDetail
           tag={refRBSheet}
           image={movie.poster_path}
@@ -571,5 +597,7 @@ const styles = StyleSheet.create({
   },
   space: {
     margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

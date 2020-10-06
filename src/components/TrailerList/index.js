@@ -3,9 +3,13 @@ import {WebView} from 'react-native-webview';
 
 import {VerticalView, Text} from '../../components';
 
+import {colors} from '../../constants';
+
 export default function TrailerList({data}) {
-  const getUri = () => {
-    return `https://www.youtube.com/embed/${data.key}?rel=0&autoplay=0&showinfo=0&controls=0`;
+  const {key, name} = data;
+
+  const getMovieUri = () => {
+    return `https://www.youtube.com/embed/${key}?rel=0&autoplay=0&showinfo=0&controls=0`;
   };
 
   return (
@@ -18,16 +22,16 @@ export default function TrailerList({data}) {
         paddingTop="5px"
         paddingRight="5px"
         paddingBottom="5px"
-        backgroundColor="#000000"
-        color="#FFFFFF"
+        backgroundColor={colors.black}
+        color={colors.white}
         numberOfLines={1}
         fontSize="16px"
         fontWeight="300">
-        {data.name}
+        {name}
       </Text>
       <WebView
         source={{
-          uri: getUri(),
+          uri: getMovieUri(),
         }}
       />
     </VerticalView>

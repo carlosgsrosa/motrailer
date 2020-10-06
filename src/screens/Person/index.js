@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {ScrollView} from 'react-native';
 import {useRoute} from '@react-navigation/native';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {showError, getYearsOfAge} from '../../util';
 

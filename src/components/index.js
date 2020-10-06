@@ -2,6 +2,8 @@ import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {colors} from '../constants';
+
 import RBSheetDetail from './RBSheetDetail';
 import AppStatusBar from './AppStatusBar';
 import TrailerList from './TrailerList';
@@ -20,10 +22,11 @@ import WebViewModal from './WebViewModal';
 import ShowMore from './ShowMore';
 import ReviewList from './ReviewList';
 import Avatar from './Avatar';
+import MovieTVSections from './MovieTVSections';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
 `;
 
 const Wrapper = styled.View`
@@ -33,10 +36,12 @@ const Wrapper = styled.View`
   margin-top: ${(props) => props.marginTop || '0px'};
   margin-right: ${(props) => props.marginRight || '0px'};
   margin-bottom: ${(props) => props.marginBottom || '0px'};
+
+  border-radius: ${(props) => props.borderRadius || '0px'};
 `;
 
 const ScrollView = styled.ScrollView`
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
 
   margin-left: ${(props) => props.marginLeft || '0px'};
   margin-top: ${(props) => props.marginTop || '0px'};
@@ -50,13 +55,12 @@ const ScrollView = styled.ScrollView`
 
   border-width: ${(props) => props.borderWidth || '0px'};
   border-color: ${(props) => props.borderColor || '0px'};
-  border-radius: ${(props) => props.borderRadius || '0px'};
 `;
 
 const VerticalView = styled.View`
   flex: ${(props) => props.flex || 'none'};
 
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
 
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
 
@@ -76,11 +80,12 @@ const VerticalView = styled.View`
   border-right-width: ${(props) => props.borderRightWidth || '0px'};
   border-bottom-width: ${(props) => props.borderBottomWidth || '0px'};
 
-  border-color: ${(props) => props.borderColor || 'transparent'};
-  border-left-color: ${(props) => props.borderLeftColor || 'transparent'};
-  border-top-color: ${(props) => props.borderTopColor || 'transparent'};
-  border-right-color: ${(props) => props.borderRightColor || 'transparent'};
-  border-bottom-color: ${(props) => props.borderColor || 'transparent'};
+  border-color: ${(props) => props.borderColor || colors.transparent};
+  border-left-color: ${(props) => props.borderLeftColor || colors.transparent};
+  border-top-color: ${(props) => props.borderTopColor || colors.transparent};
+  border-right-color: ${(props) =>
+    props.borderRightColor || colors.transparent};
+  border-bottom-color: ${(props) => props.borderColor || colors.transparent};
 
   border-radius: ${(props) => props.borderRadius || '0px'};
 `;
@@ -90,7 +95,7 @@ const HorizontalView = styled.View`
 
   flex-direction: row;
 
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
   align-items: ${(props) => props.alignItems || 'flex-start'};
 
@@ -105,7 +110,7 @@ const HorizontalView = styled.View`
   padding-bottom: ${(props) => props.paddingBottom || '0px'};
 
   border-width: ${(props) => props.borderWidth || '0px'};
-  border-color: ${(props) => props.borderColor || 'transparent'};
+  border-color: ${(props) => props.borderColor || colors.transparent};
   border-radius: ${(props) => props.borderRadius || '0px'};
 `;
 
@@ -117,13 +122,13 @@ const ItemSeparatorComponent = styled.View`
 const Text = styled.Text`
   font-size: ${(props) => props.fontSize || '15px'};
 
-  color: ${(props) => props.color || '#000000'};
+  color: ${(props) => props.color || colors.black};
 
   text-align: ${(props) => props.textAlign || 'auto'};
 
   font-family: ${(props) => props.fontFamily || 'System'};
 
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
 
   font-weight: ${(props) => props.fontWeight || 'normal'};
 
@@ -138,7 +143,7 @@ const Text = styled.Text`
   padding-bottom: ${(props) => props.paddingBottom || '0px'};
 
   border-width: ${(props) => props.borderWidth || '0px'};
-  border-color: ${(props) => props.borderColor || 'transparent'};
+  border-color: ${(props) => props.borderColor || colors.transparent};
   border-radius: ${(props) => props.borderRadius || '0px'};
 `;
 
@@ -161,29 +166,30 @@ export const Button = styled.TouchableOpacity`
   height: 54px;
   width: 192px;
   border-width: ${(props) => props.borderWidth || '2px'};
-  border-color: ${(props) => props.borderColor || '#FFFFFF'};
+  border-color: ${(props) => props.borderColor || colors.white};
   border-radius: 27px;
-  background-color: ${(props) => props.backgroundColor || 'transparent'};
+  background-color: ${(props) => props.backgroundColor || colors.transparent};
   margin-top: 50px;
 `;
 
 export const ImageBackground = styled.ImageBackground`
-  background-color: #000000;
+  border-radius: ${(props) => props.borderRadius || 0};
   width: ${(props) => props.width || '24px'};
   height: ${(props) => props.height || '24px'};
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 function elevationShadowStyle(elevation) {
   return {
     borderRadius: 6,
     elevation,
-    shadowColor: '#000000',
+    shadowColor: colors.veryLightGrey,
     shadowOffset: {width: 0, height: 0.5 * elevation},
     shadowOpacity: 0.3,
     shadowRadius: 0.8 * elevation,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.white,
   };
 }
 
@@ -249,4 +255,5 @@ export {
   ShowMore,
   ReviewList,
   Avatar,
+  MovieTVSections,
 };

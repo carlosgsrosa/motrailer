@@ -2,7 +2,9 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
-import {images} from '../../constants';
+import {stringToUpperCase, getYearFromDate} from '../../util';
+
+import {colors} from '../../constants';
 
 import {
   VerticalView,
@@ -10,54 +12,22 @@ import {
   GlobalStyles,
   Poster,
   GradientCircle,
-  Image,
+  Text,
 } from '../../components';
 
 export default function MovieList(props) {
-  const navigation = useNavigation();
+  const {marginRight, showLabels = true} = props;
 
-  const {
-    marginRight,
-    width,
-    height,
-    showLabels = true,
-    onPress,
-    origin,
-    media_type,
-  } = props;
+  const navigation = useNavigation();
 
   const data = {
     id: props.id,
-    original_title: props.original_title,
+    title: props.title,
     watchlist: props.watchlist || false,
     vote_average: props.vote_average,
     poster_path: props.poster_path,
     release_date: props.release_date,
-    media_type: media_type,
-  };
-
-  const WhatListToggle = () => {
-    if (!showLabels) {
-      return null;
-    }
-
-    return (
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => onPress(data, origin)}
-        style={styles.whatlist}>
-        <Image
-          resizeMode="contain"
-          height="46px"
-          width="32px"
-          source={
-            data.watchlist
-              ? images.icons.watchlist_checked
-              : images.icons.watchlist
-          }
-        />
-      </TouchableOpacity>
-    );
+    media_type: props.media_type,
   };
 
   const VoteAverageCircle = () => {
@@ -74,29 +44,47 @@ export default function MovieList(props) {
     );
   };
 
+  const MovieDescription = () => {
+    return (
+      <VerticalView style={styles.movieDescription}>
+        <Text color={colors.whiteSmoke} fontSize="12px">
+          {getYearFromDate(data.release_date)}
+        </Text>
+        <Text
+          color={colors.white}
+          fontSize="12px"
+          fontWeight="bold"
+          numberOfLines={3}>
+          {stringToUpperCase(data.title)}
+        </Text>
+      </VerticalView>
+    );
+  };
+
   return (
-    <VerticalView marginRight={marginRight} style={[GlobalStyles.shadow]}>
-      <WhatListToggle />
-      <VoteAverageCircle />
-      <TouchableOpacity onPress={() => navigation.push('Movie', {id: data.id})}>
-        <Poster
-          resizeMode="cover"
-          width={width}
-          height={height}
-          borderRadius="6px"
-          type="movie"
-          source={data.poster_path}
-        />
-      </TouchableOpacity>
+    <VerticalView style={styles.container}>
+      <VerticalView marginRight={marginRight} style={GlobalStyles.shadow}>
+        <VoteAverageCircle />
+        <TouchableOpacity
+          onPress={() => navigation.push('MovieDetail', {id: data.id})}>
+          <Poster {...props} source={data.poster_path} />
+        </TouchableOpacity>
+        <MovieDescription />
+      </VerticalView>
     </VerticalView>
   );
 }
 
 const styles = StyleSheet.create({
-  whatlist: {
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  watchlist: {
     position: 'absolute',
     top: 0,
     left: 6,
     zIndex: 1,
   },
+  movieDescription: {position: 'absolute', bottom: 5, left: 5, right: 5},
 });

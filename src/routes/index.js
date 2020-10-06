@@ -10,7 +10,7 @@ import {
   Splash,
   Intro,
   AllMovies,
-  Movie,
+  MovieDetail,
   TVDetail,
   Search,
   Trailer,
@@ -79,8 +79,8 @@ export default function Routes() {
             </TouchableOpacity>
           ),
         }}
-        name="Movie"
-        component={Movie}
+        name="MovieDetail"
+        component={MovieDetail}
       />
       <Stack.Screen
         options={{
@@ -107,7 +107,6 @@ export default function Routes() {
         name="Media"
         component={Media}
       />
-
       <Stack.Screen
         name="AllMovies"
         options={{

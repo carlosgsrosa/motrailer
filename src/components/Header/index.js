@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {images} from '../../constants';
 
-import {HorizontalView, Text, Image, Avatar} from '../../components';
+import {HorizontalView, Image, Avatar} from '../../components';
 
 export default function Header(props) {
   const {title, backgroundColor, borderColor} = props;
@@ -54,16 +54,14 @@ export default function Header(props) {
 
   return (
     <HorizontalView
+      {...props}
       alignItems="center"
       paddingLeft="15px"
       paddingTop="15px"
       paddingRight="15px"
       paddingBottom="5px"
       backgroundColor={backgroundColor}
-      justifyContent="space-between">
-      <Text color={props.color} fontSize="24px" fontFamily="SFProDisplay-Bold">
-        {title}
-      </Text>
+      justifyContent="flex-end">
       <HorizontalView>
         <TouchableOpacity
           style={{marginRight: 5}}
@@ -76,7 +74,7 @@ export default function Header(props) {
             borderColor={borderColor}
           />
         </TouchableOpacity>
-        <SearchBar />
+        {/* <SearchBar /> */}
       </HorizontalView>
     </HorizontalView>
   );

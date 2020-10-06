@@ -3,9 +3,11 @@ import {StyleSheet, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
-import api, {API_KEY} from '../../services/api';
+import {api, API_KEY} from '../../services/api';
 
 import {showError, getWindowsHeight} from '../../util';
+
+import {colors} from '../../constants';
 
 import {
   SafeAreaView,
@@ -58,7 +60,7 @@ export default function Review() {
         closeOnPressBack
         customStyles={{
           draggableIcon: {
-            backgroundColor: '#999999',
+            backgroundColor: colors.nobel,
           },
           container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
         }}>
@@ -72,11 +74,11 @@ export default function Review() {
               borderRadius: 6,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: '#EE7429',
+              backgroundColor: colors.orange,
               marginBottom: 15,
             }}
             onPress={() => {}}>
-            <Text color="#FFFFFF" marginTop="15px" marginBottom="15px">
+            <Text color={colors.white} marginTop="15px" marginBottom="15px">
               SUBMIT
             </Text>
           </TouchableOpacity>
@@ -108,7 +110,7 @@ export default function Review() {
   }
 
   return (
-    <SafeAreaView backgroundColor="#FFFFFF">
+    <SafeAreaView backgroundColor={colors.white}>
       <RBSheetReview tag={refRBSheet} />
       <FlatList
         bounces={false}
@@ -129,7 +131,7 @@ export default function Review() {
         style={{
           alignItems: 'center',
           borderTopWidth: 0.8,
-          borderTopColor: '#cccccc',
+          borderTopColor: colors.veryLightGrey,
         }}>
         <TouchableOpacity onPress={() => refRBSheet.current.open()}>
           <HorizontalView
@@ -144,9 +146,9 @@ export default function Review() {
               height="40px"
               borderRadius="20px"
               resizeMode="cover"
-              borderColor="#EE7429"
+              borderColor={colors.orange}
             />
-            <Text color="#666666" marginLeft="10px" marginRight="15px">
+            <Text color={colors.shade} marginLeft="10px" marginRight="15px">
               you can start writing your review click here...
             </Text>
           </HorizontalView>
@@ -164,6 +166,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     borderRadius: 6,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.lightShade,
   },
 });

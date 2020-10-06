@@ -24,6 +24,7 @@ export default function TvList(props) {
     onPress,
     origin,
     media_type,
+    borderRadius,
   } = props;
 
   const data = {

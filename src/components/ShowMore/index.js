@@ -12,7 +12,7 @@ export default function ShowMore(props) {
       onPress={onPress}
       activeOpacity={0.8}>
       <VerticalView
-        backgroundColor="#FECB2F"
+        backgroundColor="#F5D547"
         borderRadius="6px"
         justifyContent="center"
         alignItems="center"

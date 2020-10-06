@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 
-import AuthContext from '../../contexts/auth';
+import AuthContext from '../../contexts/userContext';
 
 import {images} from '../../constants';
 
@@ -8,13 +8,7 @@ import {Image} from '../../components';
 
 import {AVATAR_PATH} from '../../services/api';
 
-export default function Avatar({
-  resizeMode,
-  width,
-  height,
-  borderRadius,
-  borderColor,
-}) {
+export default ({resizeMode, width, height, borderRadius, borderColor}) => {
   const {user} = useContext(AuthContext);
 
   const avatar = user ? user.avatar.gravatar.hash : null;
@@ -31,4 +25,4 @@ export default function Avatar({
       }
     />
   );
-}
+};
