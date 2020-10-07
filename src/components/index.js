@@ -185,7 +185,7 @@ function elevationShadowStyle(elevation) {
   return {
     borderRadius: 6,
     elevation,
-    shadowColor: colors.veryLightGrey,
+    shadowColor: colors.white,
     shadowOffset: {width: 0, height: 0.5 * elevation},
     shadowOpacity: 0.3,
     shadowRadius: 0.8 * elevation,

@@ -66,7 +66,7 @@ export default () => {
           style={StyleSheet.absoluteFill}
           start={{x: 0, y: 0.3}}
           end={{x: 0, y: 1}}
-          colors={[colors.transparent, 'rgba(24,25,26, 0.3)', colors.swamp]}
+          colors={[colors.transparent, 'rgba(0,0,0,0.3)', colors.black]}
         />
         <VerticalView
           paddingLeft="15px"
@@ -111,7 +111,7 @@ export default () => {
   }
 
   return (
-    <VerticalView backgroundColor={colors.swamp}>
+    <VerticalView backgroundColor={colors.black}>
       <AppStatusBar barStyle="light-content" />
       <LoadingModal visible={loading} />
       <Header borderColor={colors.orange} style={styles.header} />
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingBottom: 7,
     borderRadius: 6,
-    backgroundColor: 'rgba(255, 255,255, .3)',
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   header: {
     position: 'absolute',

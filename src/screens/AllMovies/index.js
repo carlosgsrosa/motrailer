@@ -133,6 +133,7 @@ export default function AllMovies() {
       return (
         <TvList
           // onAddWatchList={onAddWatchList}
+          borderRadius="6px"
           showLabels={false}
           marginRight="15px"
           width={getCardWidthDimension(15, 2)}
@@ -145,6 +146,7 @@ export default function AllMovies() {
     return (
       <MovieList
         // onAddWatchList={onAddWatchList}
+        borderRadius="6px"
         resizeMode="contain"
         showLabels={false}
         marginRight="15px"
@@ -157,7 +159,6 @@ export default function AllMovies() {
 
   return (
     <SafeAreaView backgroundColor={colors.swamp}>
-      {/* <Genre /> */}
       <FlatList
         bounces={false}
         showsVerticalScrollIndicator={false}

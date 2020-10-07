@@ -12,6 +12,7 @@ export default {
 
   swamp: '#202222',
   blackPearl: '#18191A',
+  blackRussian: '#131315',
   black: '#000000',
   nero: '#222222',
 

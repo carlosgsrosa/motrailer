@@ -2,7 +2,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {images} from '../constants';
+import {images, colors} from '../constants';
 
 import {Image} from '../components';
 
@@ -27,17 +27,17 @@ const introScreenOptions = {
   headerShown: false,
   headerBackTitle: null,
   headerTitle: null,
-  headerTintColor: '#ffffff',
+  headerTintColor: colors.white,
   headerTransparent: true,
 };
 
 const homeScreenOptions = {
   headerTitleAlign: 'center',
-  headerTintColor: '#ffffff',
+  headerTintColor: colors.white,
   headerBackTitle: null,
   headerStyle: {
-    backgroundColor: '#EE7429',
-    shadowColor: '#EE7429',
+    backgroundColor: colors.swamp,
+    shadowColor: colors.swamp,
     elevation: 0,
   },
 };

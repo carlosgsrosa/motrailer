@@ -6,6 +6,8 @@ import {api, API_KEY} from '../../services/api';
 
 import {showError, getYearsOfAge} from '../../util';
 
+import {colors} from '../../constants';
+
 import {
   SafeAreaView,
   AppStatusBar,
@@ -69,8 +71,8 @@ export default function Person() {
   }, []);
 
   return (
-    <SafeAreaView flex={1}>
-      <AppStatusBar />
+    <SafeAreaView backgroundColor={colors.swamp}>
+      <AppStatusBar barStyle="light-content" />
       <LoadingModal visible={loading} />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <HorizontalView
@@ -97,29 +99,31 @@ export default function Person() {
                 instagram_id={social.instagram_id}
               />
             </VerticalView>
-            <Text fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop="15px">
               Known for
             </Text>
-            <Text>{data.known_for_department}</Text>
-            <Text fontWeight="bold" marginTop="15px">
+            <Text color={colors.dimGray}>{data.known_for_department}</Text>
+            <Text color={colors.white} fontWeight="bold" marginTop="15px">
               Birthday
             </Text>
-            <Text>
+            <Text color={colors.dimGray}>
               {data.birthday} ({getYearsOfAge(data.birthday)} years old)
             </Text>
-            <Text fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop="15px">
               Place of Birth
             </Text>
-            <Text>{data.place_of_birth}</Text>
-            <Text fontWeight="bold" marginTop="15px">
+            <Text color={colors.dimGray}>{data.place_of_birth}</Text>
+            <Text color={colors.white} fontWeight="bold" marginTop="15px">
               Also Known As
             </Text>
             {alsoKnownAs.map((item, index) => (
-              <Text key={index}>{item.trim()}</Text>
+              <Text color={colors.dimGray} key={index}>
+                {item.trim()}
+              </Text>
             ))}
           </VerticalView>
           <VerticalView flex={1} paddingLeft="15px">
-            <Text>{data.biography}</Text>
+            <Text color={colors.white}>{data.biography}</Text>
           </VerticalView>
         </HorizontalView>
       </ScrollView>

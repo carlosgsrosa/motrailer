@@ -19,7 +19,8 @@ export default function HomeBottomTabs() {
       tabBarOptions={{
         style: {
           backgroundColor: colors.black,
-          borderTopColor: colors.black,
+          borderTopColor: colors.nero,
+          borderTopWidth: 1,
         },
         showLabel: false,
       }}

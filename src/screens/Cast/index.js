@@ -4,6 +4,8 @@ import {useRoute, useNavigation} from '@react-navigation/native';
 
 import {getCardWidthDimension, getCardHeightDimension} from '../../util';
 
+import {colors} from '../../constants';
+
 import {
   SafeAreaView,
   VerticalView,
@@ -27,7 +29,7 @@ export default function Cast() {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView backgroundColor={colors.swamp}>
       <VerticalView flex={1}>
         <FlatList
           bounces={false}
@@ -57,6 +59,7 @@ export default function Cast() {
 
               <Text
                 style={GlobalStyles.text}
+                color={colors.white}
                 fontSize="12px"
                 marginTop="3px"
                 numberOfLines={1}>
@@ -68,7 +71,7 @@ export default function Cast() {
                 fontWeight="300"
                 fontSize="11px"
                 marginBottom="15px"
-                color="#656565"
+                color={colors.dimGray}
                 numberOfLines={1}>
                 {item.character}
               </Text>

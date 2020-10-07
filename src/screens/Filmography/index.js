@@ -6,6 +6,8 @@ import {api, API_KEY} from '../../services/api';
 
 import {showError, getCardWidthDimension} from '../../util';
 
+import {colors} from '../../constants';
+
 import {
   SafeAreaView,
   MovieList,
@@ -58,10 +60,6 @@ export default function Filmography() {
       });
   };
 
-  const onAddWatchList = (movieId) => {
-    Alert.alert('movieId: ' + movieId);
-  };
-
   useEffect(() => {
     getMovies();
   }, []);
@@ -73,7 +71,7 @@ export default function Filmography() {
   }, [totalResults]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView backgroundColor={colors.swamp}>
       <FlatList
         bounces={false}
         showsVerticalScrollIndicator={false}
@@ -91,7 +89,7 @@ export default function Filmography() {
         )}
         renderItem={({item}) => (
           <MovieList
-            onAddWatchList={onAddWatchList}
+            borderRadius="6px"
             marginRight="15px"
             width={getCardWidthDimension(15, 2)}
             height="270px"

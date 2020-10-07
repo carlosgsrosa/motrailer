@@ -68,8 +68,9 @@ export default function Movie() {
         borderWidth="0.7px"
         borderColor={colors.nobel}
         borderRadius="6px"
+        paddingTop="3px"
         paddingLeft="10px"
-        paddingBottom="2px"
+        paddingBottom="3px"
         paddingRight="10px">
         <Text fontSize="15px" color={colors.white}>
           {data.name}
@@ -357,9 +358,10 @@ export default function Movie() {
       <TouchableOpacity onPress={() => refRBSheet.current.open()}>
         <Text
           color={colors.whiteSmoke}
-          marginTop={note ? '160px' : '140px'}
+          marginTop={note ? '170px' : '140px'}
           marginLeft="15px"
           marginRight="15px"
+          marginBottom="15px"
           fontSize="17px"
           textAlign="justify"
           numberOfLines={4}>
@@ -377,14 +379,13 @@ export default function Movie() {
           alignItems="center"
           paddingLeft="15px"
           paddingRight="15px"
-          paddingTop="10px"
           paddingBottom="10px"
           marginTop="15px">
-          <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
+          <Text fontSize="22px" fontWeight="bold" color={colors.white}>
             Top-Billed Cast
           </Text>
           <TouchableOpacity onPress={openCastClick}>
-            <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
+            <Text fontSize="22px" fontWeight="bold" color={colors.white}>
               ...
             </Text>
           </TouchableOpacity>
@@ -428,6 +429,17 @@ export default function Movie() {
     return (
       <VerticalView>
         <HorizontalView justifyContent="center">
+          {/* <TouchableOpacity style={styles.space} onPress={onWatchListClick}>
+            <Image
+              width="54px"
+              height="54px"
+              resizeMode="contain"
+              source={watchlist ? images.icons.saved : images.icons.rate}
+            />
+            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
+              {watchlist ? 'Saved' : 'Save'}
+            </Text>
+          </TouchableOpacity> */}
           <TouchableOpacity style={styles.space} onPress={onWatchListClick}>
             <Image
               width="54px"
@@ -435,7 +447,7 @@ export default function Movie() {
               resizeMode="contain"
               source={watchlist ? images.icons.saved : images.icons.save}
             />
-            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
               {watchlist ? 'Saved' : 'Save'}
             </Text>
           </TouchableOpacity>
@@ -446,7 +458,7 @@ export default function Movie() {
               resizeMode="contain"
               source={favorite ? images.icons.liked : images.icons.like}
             />
-            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
               {favorite ? 'Liked' : 'Like'}
             </Text>
           </TouchableOpacity>
@@ -464,7 +476,7 @@ export default function Movie() {
               resizeMode="contain"
               source={images.icons.overview}
             />
-            <Text color={colors.white} fontWeight="bold" style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
               Review
             </Text>
           </TouchableOpacity>
@@ -554,7 +566,7 @@ export default function Movie() {
   }
 
   return (
-    <VerticalView backgroundColor={colors.swamp}>
+    <VerticalView flex={1} backgroundColor={colors.swamp}>
       <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
@@ -568,11 +580,11 @@ export default function Movie() {
             <Rating />
           </VerticalView>
         </HorizontalView>
-        <VerticalView />
         <Overview />
+        <VerticalView />
         <Cast />
         <UserActionButtons />
-        <Images />
+        {/* <Images /> */}
         <RBSheetDetail
           tag={refRBSheet}
           image={movie.poster_path}

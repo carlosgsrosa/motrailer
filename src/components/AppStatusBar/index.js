@@ -18,6 +18,9 @@ export default function AppStatusBar(props) {
   }
 
   return (
-    <StatusBar barStyle={getStyleByOS()} backgroundColor={colors.orange} />
+    <StatusBar
+      barStyle={getStyleByOS()}
+      backgroundColor={colors.blackRussian}
+    />
   );
 }

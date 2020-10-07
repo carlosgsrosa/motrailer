@@ -32,7 +32,7 @@ export default function CastList(props) {
       <Text
         style={GlobalStyles.text}
         fontWeight="300"
-        fontSize="11px"
+        fontSize="10px"
         marginBottom="15px"
         color={colors.dimGray}
         numberOfLines={1}>

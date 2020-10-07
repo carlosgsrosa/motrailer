@@ -2,6 +2,8 @@ import React, {useLayoutEffect} from 'react';
 import {useRoute, useNavigation} from '@react-navigation/native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 
+import {colors} from '../constants';
+
 import {Cast, Crew} from '../screens';
 
 const Tab = createMaterialTopTabNavigator();
@@ -19,12 +21,12 @@ export default function CastCrewTopTabs() {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: '#FFFFFF',
+        activeTintColor: colors.white,
         style: {
-          backgroundColor: '#EE7429',
+          backgroundColor: colors.blackRussian,
         },
         indicatorStyle: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: colors.white,
         },
       }}>
       <Tab.Screen

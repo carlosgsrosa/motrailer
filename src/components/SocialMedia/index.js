@@ -3,9 +3,9 @@ import {TouchableOpacity, Linking} from 'react-native';
 
 import {HorizontalView, Image} from '../';
 
-import {images} from '../../constants';
+import {images, colors} from '../../constants';
 
-function openURL(type, id) {
+const openURL = (type, id) => {
   const media = {
     facebook: {
       url: `https://m.facebook.com/${id}`,
@@ -27,11 +27,16 @@ function openURL(type, id) {
         Linking.openURL(media[type].url);
       }}>
       <HorizontalView marginLeft="15px" marginTop="15px" marginBottom="15px">
-        <Image height="24px" width="24px" source={media[type].source} />
+        <Image
+          height="24px"
+          width="24px"
+          style={{tintColor: colors.dimGray}}
+          source={media[type].source}
+        />
       </HorizontalView>
     </TouchableOpacity>
   ) : null;
-}
+};
 
 export default function SocialMedia({twitter_id, facebook_id, instagram_id}) {
   return (
