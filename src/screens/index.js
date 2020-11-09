@@ -5,6 +5,7 @@ import Movies from '../screens/Movies';
 import MovieDetail from '../screens/MovieDetail';
 import Person from '../screens/Person';
 import Filmography from '../screens/Filmography';
+import TVShows from '../screens/TVShows';
 import Tv from '../screens/Tv';
 import TVDetail from '../screens/TVDetail';
 import Trailer from '../screens/Trailer';
@@ -25,6 +26,7 @@ export {
   MovieDetail,
   Person,
   Filmography,
+  TVShows,
   Tv,
   TVDetail,
   Trailer,

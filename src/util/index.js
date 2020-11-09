@@ -51,11 +51,11 @@ export function getYearsOfAge(string) {
 }
 
 export function getWindowsHeight() {
-  return Math.round(Dimensions.get('window').height);
+  return Math.round(Dimensions.get('screen').height);
 }
 
 export function getWindowWidth() {
-  return Math.round(Dimensions.get('window').width);
+  return Math.round(Dimensions.get('screen').width);
 }
 
 export function stringToUpperCase(string) {

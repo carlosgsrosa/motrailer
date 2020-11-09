@@ -7,31 +7,21 @@ const basicFetch = async (endpoint) => {
   return data.results;
 };
 
-const fetchFeaturedMovie = async (endpoint) => {
-  const response = await fetch(`${BASE_URL}${endpoint}`);
-  const {results} = await response.json();
-
-  const index = Math.floor(Math.random() * results.length - 1);
-  const movie = results[index];
-
-  return movie;
-};
-
 export default {
-  getMovies: async (language = 'en-US') => {
+  getMovies: async (language = 'pt-BR') => {
     const queryString = `api_key=${API_KEY}&page=1&language=${language}`;
     return {
       featured_movie: {
         slug: 'featured_movie',
         title: 'Featured Movie',
-        data: await fetchFeaturedMovie(`/trending/movie/day?${queryString}`),
+        data: await basicFetch(`/trending/movie/day?${queryString}`),
       },
-      popular: {
-        slug: 'popular',
-        title: 'Popular',
-        endpoint: '/movie/popular',
+      originals: {
+        slug: 'originals',
+        title: 'Originais do Netflix',
+        endpoint: `/discover/movie?with_networks=231&api_key=${API_KEY}&sort_by=popularity.desc&page=1include_null_first_air_dates=false`,
         data: await basicFetch(
-          `/movie/popular?${queryString}&sort_by=popularity.desc`,
+          `/discover/movie?with_networks=231&api_key=${API_KEY}&sort_by=popularity.desc&page=1include_null_first_air_dates=false`,
         ),
       },
       trending: {

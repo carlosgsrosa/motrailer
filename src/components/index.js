@@ -58,11 +58,13 @@ const ScrollView = styled.ScrollView`
 `;
 
 const VerticalView = styled.View`
-  flex: ${(props) => props.flex || 'none'};
+  ${(props) => props.flex && `flex: ${props.flex}`};
+  ${(props) =>
+    props.backgroundColor && `background-color: ${props.backgroundColor}`};
 
-  background-color: ${(props) => props.backgroundColor || colors.transparent};
-
-  justify-content: ${(props) => props.justifyContent || 'flex-start'};
+  ${(props) => props.alignItems && `align-items: ${props.alignItems}`};
+  ${(props) =>
+    props.justifyContent && `justify-content: ${props.justifyContent}`};
 
   margin-left: ${(props) => props.marginLeft || '0px'};
   margin-top: ${(props) => props.marginTop || '0px'};
@@ -91,13 +93,15 @@ const VerticalView = styled.View`
 `;
 
 const HorizontalView = styled.View`
-  flex: ${(props) => props.flex || 'none'};
+  ${(props) => props.flex && `flex: ${props.flex}`};
 
   flex-direction: row;
 
-  background-color: ${(props) => props.backgroundColor || colors.transparent};
-  justify-content: ${(props) => props.justifyContent || 'flex-start'};
-  align-items: ${(props) => props.alignItems || 'flex-start'};
+  ${(props) =>
+    props.backgroundColor && `background-color: ${props.backgroundColor}`};
+  ${(props) => props.alignItems && `align-items: ${props.alignItems}`};
+  ${(props) =>
+    props.justifyContent && `justify-content: ${props.justifyContent}`};
 
   margin-top: ${(props) => props.marginTop || '0px'};
   margin-left: ${(props) => props.marginLeft || '0px'};
@@ -121,6 +125,8 @@ const ItemSeparatorComponent = styled.View`
 
 const Text = styled.Text`
   font-size: ${(props) => props.fontSize || '15px'};
+
+  ${(props) => props.width && `width: ${props.width}`};
 
   color: ${(props) => props.color || colors.black};
 
@@ -173,7 +179,8 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ImageBackground = styled.ImageBackground`
-  border-radius: ${(props) => props.borderRadius || 0};
+  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}`};
+
   width: ${(props) => props.width || '24px'};
   height: ${(props) => props.height || '24px'};
   justify-content: center;

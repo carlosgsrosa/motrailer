@@ -18,7 +18,7 @@ import {
   Loading,
 } from '../../components';
 
-export default () => {
+export default function Search() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -105,7 +105,7 @@ export default () => {
       />
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   input: {

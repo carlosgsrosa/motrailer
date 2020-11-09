@@ -23,7 +23,7 @@ export default function Media() {
 
   const {data, indexRef} = route.params;
 
-  const renderPagination = (index, total, context) => {
+  const _renderPagination = (index, total, context) => {
     return (
       <HorizontalView
         key={`horizontal-view-${index}`}
@@ -58,12 +58,12 @@ export default function Media() {
           index={indexRef}
           dot={<View />}
           activeDot={<View />}
-          renderPagination={renderPagination}>
+          renderPagination={_renderPagination}>
           {data.map((item, i) => {
             return (
               <VerticalView key={`vertical-view-${i}`}>
                 <Image
-                  key={`image-${i}`}
+                  key={`media-image-${i}`}
                   resizeMode="contain"
                   style={{height: '100%', width: '100%'}}
                   source={{uri: getUri(item.file_path)}}

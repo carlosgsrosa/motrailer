@@ -38,10 +38,10 @@ export default (props) => {
         justifyContent="space-between"
         alignItems="center">
         <Text
-          fontSize="22px"
+          fontSize="28px"
           fontFamily="SFProDisplay-Medium"
-          fontWeight="bold"
-          color={colors.orange}>
+          fontWeight="400"
+          color={colors.white}>
           {title}
         </Text>
         <TouchableOpacity

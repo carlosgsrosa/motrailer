@@ -17,7 +17,7 @@ import {
   EmptyContent,
 } from '../../components';
 
-export default function Filmography() {
+export default function TVShows() {
   const route = useRoute();
   const navigation = useNavigation();
 
@@ -37,8 +37,10 @@ export default function Filmography() {
       return;
     }
 
+    // https://www.themoviedb.org/person/6885-charlize-theron/remote/credits?credit_media_type=tv
+
     api
-      .get('/discover/movie', {
+      .get('/discover/tv', {
         params: {
           page: page,
           api_key: API_KEY,
@@ -63,7 +65,7 @@ export default function Filmography() {
   useEffect(() => getMovies(), []);
 
   useLayoutEffect(() => {
-    navigation.setOptions({tabBarLabel: `Movies (${totalResults})`});
+    navigation.setOptions({tabBarLabel: `TV Shows (${totalResults})`});
   }, [totalResults]);
 
   return (

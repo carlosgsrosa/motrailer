@@ -26,15 +26,15 @@ import {
   Image,
 } from '../../components';
 
-export default () => {
+export default function Movies() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const [popular, setPopular] = useState([]);
+  const [featuredMovie, setFeaturedMovie] = useState([]);
+  const [originals, setOriginals] = useState([]);
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
-  const [featuredMovie, setFeaturedMovie] = useState([]);
 
   const navigation = useNavigation();
 
@@ -42,11 +42,14 @@ export default () => {
     try {
       setLoading(true);
       await userFetch.getMovies().then((response) => {
-        setPopular(response.popular);
+        setOriginals(response.originals);
         setTrending(response.trending);
         setUpcoming(response.upcoming);
         setTopRated(response.top_rated);
-        setFeaturedMovie(response.featured_movie.data);
+        const index = Math.floor(
+          Math.random() * response.featured_movie.data.length - 1,
+        );
+        setFeaturedMovie(response.featured_movie.data[index]);
         setLoading(false);
       });
     } catch (e) {
@@ -102,7 +105,6 @@ export default () => {
 
   useEffect(() => {
     getMovieList();
-
     return () => {};
   }, []);
 
@@ -122,39 +124,51 @@ export default () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }>
-        <FeaturedMovie />
-        <MovieTVSections
-          width="140px"
-          height="210px"
-          borderRadius="6px"
-          type="movie"
-          {...popular}
-        />
-        <MovieTVSections
-          width="140px"
-          height="210px"
-          borderRadius="6px"
-          type="movie"
-          {...trending}
-        />
-        <MovieTVSections
-          width="140px"
-          height="210px"
-          borderRadius="6px"
-          type="movie"
-          {...upcoming}
-        />
-        <MovieTVSections
-          width="140px"
-          height="210px"
-          borderRadius="6px"
-          type="movie"
-          {...topRated}
-        />
+        {featuredMovie && <FeaturedMovie />}
+
+        {originals && (
+          <MovieTVSections
+            width="140px"
+            height="210px"
+            borderRadius="6px"
+            type="movie"
+            {...originals}
+          />
+        )}
+
+        {trending && (
+          <MovieTVSections
+            width="140px"
+            height="210px"
+            borderRadius="6px"
+            type="movie"
+            {...trending}
+          />
+        )}
+
+        {upcoming && (
+          <MovieTVSections
+            width="140px"
+            height="210px"
+            borderRadius="6px"
+            type="movie"
+            {...upcoming}
+          />
+        )}
+
+        {topRated && (
+          <MovieTVSections
+            width="140px"
+            height="210px"
+            borderRadius="6px"
+            type="movie"
+            {...topRated}
+          />
+        )}
       </ScrollView>
     </VerticalView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   moreInfoButton: {

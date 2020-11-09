@@ -7,6 +7,7 @@ import {VerticalView, Image, Text} from '../';
 export default function EmptyContent({message}) {
   return (
     <VerticalView
+      flex={1}
       justifyContent="center"
       style={{alignItems: 'center', justifyContent: 'center'}}>
       <Image height="150px" width="171px" source={images.icons.logo} />

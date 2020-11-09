@@ -17,7 +17,7 @@ import {
 const CARD_WIDTH = '140px';
 const CARD_HEIGHT = '210px';
 
-export default () => {
+export default function Tv() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -92,4 +92,4 @@ export default () => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}

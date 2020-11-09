@@ -4,7 +4,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 
 import {colors} from '../constants';
 
-import {Person, Filmography} from '../screens';
+import {Person, Filmography, TVShows} from '../screens';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -42,6 +42,14 @@ export default function PersonTopTabs() {
         component={Filmography}
         options={{
           tabBarLabel: 'Filmography',
+        }}
+        initialParams={route.params}
+      />
+      <Tab.Screen
+        name="TVShows"
+        component={TVShows}
+        options={{
+          tabBarLabel: 'TV Shows',
         }}
         initialParams={route.params}
       />

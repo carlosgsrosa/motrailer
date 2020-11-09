@@ -47,10 +47,11 @@ export default function MovieList(props) {
   const MovieDescription = () => {
     return (
       <VerticalView style={styles.movieDescription}>
-        <Text color={colors.whiteSmoke} fontSize="12px">
+        <Text color={colors.dimGray} fontSize="12px">
           {getYearFromDate(data.release_date)}
         </Text>
         <Text
+          width={props.width}
           color={colors.white}
           fontSize="12px"
           fontWeight="bold"
@@ -62,8 +63,8 @@ export default function MovieList(props) {
   };
 
   return (
-    <VerticalView style={styles.container}>
-      <VerticalView marginRight={marginRight} style={GlobalStyles.shadow}>
+    <VerticalView alignItems="center">
+      <VerticalView marginRight={marginRight}>
         <VoteAverageCircle />
         <TouchableOpacity
           onPress={() => navigation.push('MovieDetail', {id: data.id})}>
@@ -76,15 +77,13 @@ export default function MovieList(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   watchlist: {
     position: 'absolute',
     top: 0,
     left: 6,
     zIndex: 1,
   },
-  movieDescription: {position: 'absolute', bottom: 5, left: 5, right: 5},
+  movieDescription: {
+    marginTop: 5,
+  },
 });

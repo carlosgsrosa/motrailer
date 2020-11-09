@@ -4,7 +4,7 @@ import Swiper from 'react-native-swiper';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {images, intro} from '../../constants';
+import {images, intro, colors} from '../../constants';
 
 import {showError, getWindowWidth} from '../../util';
 
@@ -30,7 +30,7 @@ export default function Intro() {
           key={`title-${index}`}
           fontSize="36px"
           alignSelf="center"
-          color="#FFFFFF"
+          color={colors.white}
           fontFamily="SFProDisplay-Bold">
           {screen.title.text}
         </Text>
@@ -38,7 +38,7 @@ export default function Intro() {
           key={`description-${index}`}
           fontSize="34px"
           alignSelf="center"
-          color="#FFFFFF"
+          color={colors.white}
           fontFamily="SFProDisplay-Ultralight">
           {screen.description.text}
         </Text>
@@ -78,7 +78,7 @@ export default function Intro() {
             key={`text-button-${index}`}
             fontSize="20px"
             fontFamily="SFProDisplay-Regular"
-            color="#FFFFFF">
+            color={colors.white}>
             {button.label}
           </Text>
         </Button>
@@ -132,7 +132,7 @@ export default function Intro() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: colors.black,
   },
   image: {
     width: getWindowWidth(),

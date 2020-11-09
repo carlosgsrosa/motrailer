@@ -18,8 +18,8 @@ export default function HomeBottomTabs() {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: colors.black,
-          borderTopColor: colors.nero,
+          backgroundColor: colors.blackRussian,
+          borderTopColor: colors.blackRussian,
           borderTopWidth: 1,
         },
         showLabel: false,

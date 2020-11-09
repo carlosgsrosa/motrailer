@@ -15,6 +15,7 @@ export default {
   blackRussian: '#131315',
   black: '#000000',
   nero: '#222222',
+  raven: '#757677',
 
   red: '#FF0000',
   fireEngineRed: '#D6182A',

@@ -9,15 +9,16 @@ import {Wrapper, Text, GlobalStyles, Poster} from '../../components';
 export default function CastList(props) {
   const navigation = useNavigation();
 
-  const params = {
-    title: props.name,
-    id: props.id,
-  };
-
   return (
-    <TouchableOpacity onPress={() => navigation.push('Person', params)}>
-      <Wrapper style={GlobalStyles.shadow}>
-        <Poster {...props} gender={props.gender} source={props.profile_path} />
+    <TouchableOpacity
+      onPress={() =>
+        navigation.push('Person', {
+          title: props.name,
+          id: props.id,
+        })
+      }>
+      <Wrapper>
+        <Poster {...props} source={props.profile_path} />
       </Wrapper>
 
       <Text
