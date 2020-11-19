@@ -60,13 +60,13 @@ export default function TVDetail() {
       <HorizontalView
         alignItems="center"
         justifyContent="center"
-        borderRadius="40px"
-        paddingTop="3px"
-        paddingLeft="10px"
-        paddingBottom="3px"
-        paddingRight="10px"
+        borderRadius={40}
+        paddingTop={3}
+        paddingLeft={10}
+        paddingBottom={3}
+        paddingRight={10}
         backgroundColor="#F0F0F0">
-        <Text fontWeight="300" fontSize="15px">
+        <Text fontWeight="300" fontSize={15}>
           {props.name}
         </Text>
       </HorizontalView>
@@ -76,19 +76,19 @@ export default function TVDetail() {
   function CertificationList(props) {
     return (
       <HorizontalView
-        marginTop="15px"
+        marginTop={15}
         alignItems="center"
         justifyContent="center">
         <VerticalView
           backgroundColor={colors.red}
-          paddingLeft="5px"
-          paddingRight="5px"
-          borderRadius="3px">
-          <Text fontWeight="bold" color={colors.white} fontSize="15px">
+          paddingLeft={5}
+          paddingRight={5}
+          borderRadius={3}>
+          <Text fontWeight="bold" color={colors.white} fontSize={15}>
             {props.rating}
           </Text>
         </VerticalView>
-        <Text marginLeft="5px">{data.first_air_date} (US)</Text>
+        <Text marginLeft={5}>{data.first_air_date} (US)</Text>
       </HorizontalView>
     );
   }
@@ -214,8 +214,8 @@ export default function TVDetail() {
   function Header() {
     return (
       <ImageBackground
-        width={getWindowWidth() + 'px'}
-        height="280px"
+        width={getWindowWidth()}
+        height={280}
         resizeMode="cover"
         source={{uri: getUri(data.backdrop_path)}}>
         <TouchableOpacity
@@ -225,7 +225,7 @@ export default function TVDetail() {
               movieName: data.title,
             })
           }>
-          <Image width="54px" height="54px" source={images.icons.youtube} />
+          <Image width={54} height={54} source={images.icons.youtube} />
         </TouchableOpacity>
       </ImageBackground>
     );
@@ -233,13 +233,13 @@ export default function TVDetail() {
 
   function MoviePoster() {
     return (
-      <Wrapper marginLeft="15px" style={GlobalStyles.shadow}>
+      <Wrapper marginLeft={15} style={GlobalStyles.shadow}>
         <Poster
           note={note}
           resizeMode="contain"
-          width="120px"
-          height="180px"
-          borderRadius="6px"
+          width={120}
+          height={180}
+          borderRadius={6}
           type="movie"
           source={data.poster_path}
         />
@@ -251,10 +251,10 @@ export default function TVDetail() {
     return (
       <Text
         style={{height: 50}}
-        marginLeft="10px"
-        marginRight="15px"
+        marginLeft={10}
+        marginRight={15}
         fontWeight="600"
-        fontSize="20px"
+        fontSize={20}
         color={colors.white}
         numberOfLines={2}>
         {stringToUpperCase(data.original_name)} (
@@ -272,7 +272,7 @@ export default function TVDetail() {
           showsVerticalScrollIndicator={false}
           horizontal
           contentContainerStyle={styles.flatListContainer}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent width={3} />}
           data={tvCertification}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => <CertificationList {...item} />}
@@ -283,7 +283,7 @@ export default function TVDetail() {
 
   function Popularity() {
     return (
-      <Text marginTop="5px" fontWeight="300" marginLeft="10px" fontSize="15px">
+      <Text marginTop={5} fontWeight="300" marginLeft={10} fontSize={15}>
         {data.popularity} People wathing
       </Text>
     );
@@ -298,7 +298,7 @@ export default function TVDetail() {
           showsVerticalScrollIndicator={false}
           horizontal
           contentContainerStyle={styles.flatListContainer}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent width={3} />}
           data={genres}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => <StringList {...item} />}
@@ -309,16 +309,16 @@ export default function TVDetail() {
 
   function Rating() {
     return (
-      <HorizontalView marginLeft="10px" alignItems="center">
+      <HorizontalView marginLeft={10} alignItems="center">
         <Image
-          height="22.92px"
-          width="24px"
-          marginRight="5px"
+          height={22.92}
+          width={24}
+          marginRight={5}
           resizeMode="contain"
           source={images.icons.rating_star}
         />
         <VoteAverage
-          marginRight="5px"
+          marginRight={5}
           fontWeight="400"
           fontColor={colors.pinkRed}
           voteAverage={data.vote_average}
@@ -334,10 +334,10 @@ export default function TVDetail() {
     return (
       <Text
         color={colors.shade}
-        marginTop={note ? '160px' : '140px'}
-        marginLeft="15px"
-        marginRight="15px"
-        fontSize="17px"
+        marginTop={note ? 160 : 140}
+        marginLeft={15}
+        marginRight={15}
+        fontSize={17}
         textAlign="justify"
         numberOfLines={4}>
         {data.overview}
@@ -351,16 +351,16 @@ export default function TVDetail() {
         <HorizontalView
           justifyContent="space-between"
           alignItems="center"
-          paddingLeft="15px"
-          paddingRight="15px"
-          paddingTop="10px"
-          paddingBottom="10px"
-          marginTop="15px">
-          <Text fontSize="22px" fontWeight="500" color="#000">
+          paddingLeft={15}
+          paddingRight={15}
+          paddingTop={10}
+          paddingBottom={10}
+          marginTop={15}>
+          <Text fontSize={22} fontWeight="500" color="#000">
             Top Billed Cast
           </Text>
           <TouchableOpacity onPress={openCast}>
-            <Text fontSize="22px" fontWeight="500" color="#000">
+            <Text fontSize={22} fontWeight="500" color="#000">
               ...
             </Text>
           </TouchableOpacity>
@@ -379,9 +379,7 @@ export default function TVDetail() {
               paddingTop: 15,
               paddingRight: 15,
             }}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent width="5px" />
-            )}
+            ItemSeparatorComponent={() => <ItemSeparatorComponent width={5} />}
             data={cast}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => <CastList data={item} />}
@@ -397,16 +395,16 @@ export default function TVDetail() {
         <HorizontalView justifyContent="center" backgroundColor="#F5F5F5">
           <TouchableOpacity style={styles.space} onPress={onWatchList}>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={watchlist ? images.icons.saved : images.icons.save}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.space} onPress={onFavorite}>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={favorite ? images.icons.liked : images.icons.like}
             />
@@ -420,8 +418,8 @@ export default function TVDetail() {
               })
             }>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={images.icons.overview}
             />
@@ -453,15 +451,15 @@ export default function TVDetail() {
         <HorizontalView
           justifyContent="space-between"
           alignItems="center"
-          paddingLeft="15px"
-          paddingRight="15px"
-          paddingBottom="10px"
-          marginTop="15px">
-          <Text fontSize="22px" fontWeight="500" color="#000">
+          paddingLeft={15}
+          paddingRight={15}
+          paddingBottom={10}
+          marginTop={15}>
+          <Text fontSize={22} fontWeight="500" color="#000">
             Media
           </Text>
           <TouchableOpacity onPress={() => openMedia(tvImages, 0)}>
-            <Text fontSize="22px" fontWeight="500" color="#000">
+            <Text fontSize={22} fontWeight="500" color="#000">
               ...
             </Text>
           </TouchableOpacity>
@@ -485,12 +483,12 @@ export default function TVDetail() {
                   position: 'absolute',
                   zIndex: 1,
                 }}>
-                <Image height="64px" width="64px" source={images.icons.zoom} />
+                <Image height={64} width={64} source={images.icons.zoom} />
               </TouchableOpacity>
               <Poster
                 resizeMode="cover"
-                width="220px"
-                height="300px"
+                width={220}
+                height={300}
                 type="images"
                 source={item.file_path}
               />

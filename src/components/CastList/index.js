@@ -23,8 +23,8 @@ export default function CastList(props) {
 
       <Text
         style={GlobalStyles.text}
-        fontSize="12px"
-        marginTop="3px"
+        fontSize={12}
+        marginTop={3}
         numberOfLines={1}
         color={colors.white}>
         {props.name}
@@ -33,8 +33,8 @@ export default function CastList(props) {
       <Text
         style={GlobalStyles.text}
         fontWeight="300"
-        fontSize="10px"
-        marginBottom="15px"
+        fontSize={10}
+        marginBottom={15}
         color={colors.dimGray}
         numberOfLines={1}>
         {props.character}

@@ -60,10 +60,10 @@ export default function Search() {
     <SafeAreaView>
       <AppStatusBar barStyle="light-content" />
       <HorizontalView
-        paddingLeft="15px"
-        paddingTop="15px"
-        paddingRight="15px"
-        paddingBottom="15px"
+        paddingLeft={15}
+        paddingTop={15}
+        paddingRight={15}
+        paddingBottom={15}
         alignItems="center"
         justifyContent="space-between"
         backgroundColor="#EE7429">
@@ -80,8 +80,8 @@ export default function Search() {
           style={{position: 'absolute', zIndex: 1, right: 28}}>
           <Image
             style={{tintColor: '#EE7429'}}
-            width="21px"
-            height="21px"
+            width={21}
+            height={21}
             resizeMode="contain"
             source={images.icons.search}
           />
@@ -93,7 +93,7 @@ export default function Search() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={GlobalStyles.content}
-        ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent height={15} />}
         initialNumToRender={10}
         ListFooterComponent={loading && <Loading />}
         onEndReached={() => getSearchMulti()}

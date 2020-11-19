@@ -46,10 +46,12 @@ export default function AllMovies() {
 
   const getMovies = async () => {
     setLoading(true);
+
     if (totalPages && page > totalPages) {
       setLoading(false);
       return;
     }
+
     await api
       .get(endpoint, params)
       .then((response) => {
@@ -79,7 +81,7 @@ export default function AllMovies() {
   //         showsVerticalScrollIndicator={false}
   //         horizontal
   //         contentContainerStyle={styles.flatListContainer}
-  //         ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
+  //         ItemSeparatorComponent={() => <ItemSeparatorComponent width={3} />}
   //         data={movieGenre}
   //         keyExtractor={(_, index) => String(index)}
   //         renderItem={({item}) => <StringList data={item} />}
@@ -109,13 +111,13 @@ export default function AllMovies() {
   //       <HorizontalView
   //         alignItems="center"
   //         justifyContent="center"
-  //         borderRadius="40px"
-  //         paddingTop="3px"
-  //         paddingLeft="10px"
-  //         paddingBottom="3px"
-  //         paddingRight="10px"
+  //         borderRadius={40}
+  //         paddingTop={3}
+  //         paddingLeft={10}
+  //         paddingBottom={3}
+  //         paddingRight={10}
   //         backgroundColor="#CCCCCC">
-  //         <Text fontWeight="300" fontSize="15px">
+  //         <Text fontWeight="300" fontSize={15}>
   //           {data.name}
   //         </Text>
   //       </HorizontalView>
@@ -133,9 +135,9 @@ export default function AllMovies() {
       return (
         <TvList
           // onAddWatchList={onAddWatchList}
-          borderRadius="6px"
+          borderRadius={6}
           showLabels={false}
-          marginRight="15px"
+          marginRight={15}
           width={getCardWidthDimension(15, 2)}
           height={getCardHeightDimension(15, 2)}
           {...item}
@@ -146,10 +148,10 @@ export default function AllMovies() {
     return (
       <MovieList
         // onAddWatchList={onAddWatchList}
-        borderRadius="6px"
+        borderRadius={6}
         resizeMode="contain"
         showLabels={false}
-        marginRight="15px"
+        marginRight={15}
         width={getCardWidthDimension(15, 3)}
         height={getCardHeightDimension(15, 2)}
         {...item}
@@ -158,22 +160,22 @@ export default function AllMovies() {
   };
 
   return (
-    <SafeAreaView backgroundColor={colors.swamp}>
+    <SafeAreaView backgroundColor={colors.black}>
       <FlatList
         bounces={false}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         numColumns={3}
         contentContainerStyle={GlobalStyles.content}
-        ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent height={15} />}
         ListFooterComponent={loading && <Loading />}
-        // onEndReached={getMovies}
-        // onEndReachedThreshold={1}
+        onEndReached={getMovies}
+        onEndReachedThreshold={0.8}
         data={data}
         keyExtractor={(_, index) => String(index)}
-        ListEmptyComponent={() => (
-          <EmptyContent message="No content was found!" />
-        )}
+        ListEmptyComponent={() =>
+          !loading && <EmptyContent message="No content was found!" />
+        }
         renderItem={({item}) => <Item {...item} />}
       />
     </SafeAreaView>

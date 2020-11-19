@@ -28,7 +28,7 @@ export default function Intro() {
       <>
         <Text
           key={`title-${index}`}
-          fontSize="36px"
+          fontSize={36}
           alignSelf="center"
           color={colors.white}
           fontFamily="SFProDisplay-Bold">
@@ -36,7 +36,7 @@ export default function Intro() {
         </Text>
         <Text
           key={`description-${index}`}
-          fontSize="34px"
+          fontSize={34}
           alignSelf="center"
           color={colors.white}
           fontFamily="SFProDisplay-Ultralight">
@@ -53,9 +53,9 @@ export default function Intro() {
       return dots.map((opacity, i) => (
         <Image
           key={`dots-${i}`}
-          height="16px"
-          width="16px"
-          marginRight="10px"
+          height={16}
+          width={16}
+          marginRight={10}
           opacity={opacity}
           source={images.icons.bullet}
         />
@@ -76,7 +76,7 @@ export default function Intro() {
           }}>
           <Text
             key={`text-button-${index}`}
-            fontSize="20px"
+            fontSize={20}
             fontFamily="SFProDisplay-Regular"
             color={colors.white}>
             {button.label}
@@ -106,7 +106,7 @@ export default function Intro() {
     return (
       <VerticalView style={styles.absolute}>
         {_renderTexts(index)}
-        <HorizontalView marginTop="45px">{_renderDots(index)}</HorizontalView>
+        <HorizontalView marginTop={45}>{_renderDots(index)}</HorizontalView>
         {_renderButtons(index, total)}
       </VerticalView>
     );

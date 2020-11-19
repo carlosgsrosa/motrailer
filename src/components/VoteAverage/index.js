@@ -11,11 +11,11 @@ export default function VoteAverage(props) {
       justifyContent="center"
       alignItems="center"
       marginRight={marginRight}>
-      <Text fontFamily="SFProDisplay-Medium" color={fontColor} fontSize="20px">
+      <Text fontFamily="SFProDisplay-Medium" color={fontColor} fontSize={20}>
         {splitString('.', 0, String(voteAverage))}
       </Text>
       <Text color={fontColor}>.</Text>
-      <Text color={fontColor} fontFamily="SFProDisplay-Regular" fontSize="12px">
+      <Text color={fontColor} fontFamily="SFProDisplay-Regular" fontSize={12}>
         {splitString('.', 1, String(voteAverage))}
       </Text>
     </HorizontalView>

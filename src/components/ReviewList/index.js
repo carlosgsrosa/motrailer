@@ -22,14 +22,14 @@ export default function ReviewList(props) {
       <HorizontalView>
         <VerticalView
           flex={1}
-          paddingLeft="7px"
-          paddingRight="7px"
+          paddingLeft={7}
+          paddingRight={7}
           justifyContent="center"
-          paddingTop="7px"
-          paddingBottom="7px">
+          paddingTop={7}
+          paddingBottom={7}>
           <Text
             color={colors.veryLightGrey}
-            fontSize="16px"
+            fontSize={16}
             fontWeight="bold"
             numberOfLines={1}>
             A review by {author}
@@ -37,7 +37,7 @@ export default function ReviewList(props) {
           <Text
             onPress={toggleNumberOfLines}
             numberOfLines={numberOfLines}
-            marginBottom={Platform.OS === 'ios' ? '10px' : '3px'}
+            marginBottom={Platform.OS === 'ios' ? 10 : 3}
             color={colors.nobel}>
             {content}
           </Text>

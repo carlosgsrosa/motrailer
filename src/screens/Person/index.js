@@ -76,18 +76,18 @@ export default function Person() {
       <LoadingModal visible={loading} />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <HorizontalView
-          paddingLeft="15px"
-          paddingTop="15px"
-          paddingRight="15px"
-          paddingBottom="15px">
+          paddingLeft={15}
+          paddingTop={15}
+          paddingRight={15}
+          paddingBottom={15}>
           <VerticalView style={{width: 190}}>
             <VerticalView justifyContent="center" alignItems="center">
               <Wrapper style={GlobalStyles.shadow}>
                 <Poster
                   resizeMode="cover"
-                  width="190px"
-                  height="276px"
-                  borderRadius="6px"
+                  width={190}
+                  height={276}
+                  borderRadius={6}
                   gender={data.gender}
                   type="person"
                   source={data.profile_path}
@@ -99,21 +99,21 @@ export default function Person() {
                 instagram_id={social.instagram_id}
               />
             </VerticalView>
-            <Text color={colors.white} fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop={15}>
               Known for
             </Text>
             <Text color={colors.dimGray}>{data.known_for_department}</Text>
-            <Text color={colors.white} fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop={15}>
               Birthday
             </Text>
             <Text color={colors.dimGray}>
               {data.birthday} ({getYearsOfAge(data.birthday)} years old)
             </Text>
-            <Text color={colors.white} fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop={15}>
               Place of Birth
             </Text>
             <Text color={colors.dimGray}>{data.place_of_birth}</Text>
-            <Text color={colors.white} fontWeight="bold" marginTop="15px">
+            <Text color={colors.white} fontWeight="bold" marginTop={15}>
               Also Known As
             </Text>
             {alsoKnownAs.map((item, index) => (
@@ -122,7 +122,7 @@ export default function Person() {
               </Text>
             ))}
           </VerticalView>
-          <VerticalView flex={1} paddingLeft="15px">
+          <VerticalView flex={1} paddingLeft={15}>
             <Text color={colors.white}>{data.biography}</Text>
           </VerticalView>
         </HorizontalView>

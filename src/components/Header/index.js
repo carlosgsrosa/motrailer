@@ -43,8 +43,8 @@ export default function Header(props) {
         onPress={() => handleNavigation()}>
         <Image
           style={{tintColor: title === 'PROFILE' ? '#EE7429' : '#FFFFFF'}}
-          width="24px"
-          height="24px"
+          width={24}
+          height={24}
           resizeMode="contain"
           source={getImageSource()}
         />
@@ -56,10 +56,10 @@ export default function Header(props) {
     <HorizontalView
       {...props}
       alignItems="center"
-      paddingLeft="15px"
-      paddingTop="15px"
-      paddingRight="15px"
-      paddingBottom="5px"
+      paddingLeft={15}
+      paddingTop={15}
+      paddingRight={15}
+      paddingBottom={5}
       backgroundColor={backgroundColor}
       justifyContent="flex-end">
       <HorizontalView>
@@ -67,14 +67,14 @@ export default function Header(props) {
           style={{marginRight: 5}}
           onPress={() => navigation.navigate('Profile')}>
           <Avatar
-            width="40px"
-            height="40px"
-            borderRadius="20px"
+            width={40}
+            height={40}
+            borderRadius={20}
             resizeMode="cover"
             borderColor={borderColor}
           />
         </TouchableOpacity>
-        {/* <SearchBar /> */}
+        <SearchBar />
       </HorizontalView>
     </HorizontalView>
   );

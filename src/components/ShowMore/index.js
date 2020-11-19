@@ -13,11 +13,11 @@ export default function ShowMore(props) {
       activeOpacity={0.8}>
       <VerticalView
         backgroundColor="#F5D547"
-        borderRadius="6px"
+        borderRadius={6}
         justifyContent="center"
         alignItems="center"
         style={{height: height, width: width}}>
-        <Text color="#FFFFFF" fontWeight="700" fontSize="20px">
+        <Text color="#FFFFFF" fontWeight="700" fontSize={20}>
           MORE
         </Text>
       </VerticalView>

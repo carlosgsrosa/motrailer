@@ -32,24 +32,24 @@ true;`;
         alignItems="center">
         <TouchableWithoutFeedback onPress={onCancel}>
           <VerticalView
-            borderRadius="6px"
+            borderRadius={6}
             backgroundColor="#FFFFFF"
             style={{minWidth: '90%', maxHeight: 423}}>
             <HorizontalView
               justifyContent="space-between"
               backgroundColor="#EE7429"
-              paddingLeft="15px"
-              paddingTop="15px"
-              paddingRight="15px"
-              paddingBottom="15px">
-              <Text fontSize="20px" fontWeight="bold" color="#FFFFFF">
+              paddingLeft={15}
+              paddingTop={15}
+              paddingRight={15}
+              paddingBottom={15}>
+              <Text fontSize={20} fontWeight="bold" color="#FFFFFF">
                 {title}
               </Text>
               <TouchableOpacity onPress={onCancel} shadowOpacity={0.7}>
                 <Image
                   style={{tintColor: '#FFFFFF'}}
-                  width="22px"
-                  height="22px"
+                  width={22}
+                  height={22}
                   source={images.icons.close}
                 />
               </TouchableOpacity>

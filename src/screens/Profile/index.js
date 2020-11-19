@@ -58,22 +58,22 @@ export default function Profile() {
     return (
       <ImageBackground
         style={styles.imageBackground}
-        width={getWindowWidth() + 'px'}
-        height="210px"
+        width={getWindowWidth()}
+        height={210}
         resizeMode="cover"
         source={images.background.profile}>
         <TouchableOpacity onPress={() => setWebViewVisible(!webViewVisible)}>
-          <VerticalView marginBottom="40px">
+          <VerticalView marginBottom={40}>
             <Avatar
-              width="110px"
-              height="110px"
-              borderRadius="55px"
+              width={110}
+              height={110}
+              borderRadius={55}
               resizeMode="cover"
               borderColor={colors.white}
             />
           </VerticalView>
         </TouchableOpacity>
-        <Text fontSize="28px" fontWeight="300">
+        <Text fontSize={28} fontWeight="300">
           {user ? getName() : null}
         </Text>
       </ImageBackground>
@@ -221,14 +221,14 @@ export default function Profile() {
   const MovieList = (props) => {
     const {id} = props;
     return (
-      <VerticalView marginRight="15px" style={[GlobalStyles.shadow]}>
+      <VerticalView marginRight={15} style={[GlobalStyles.shadow]}>
         <RemoveIcon {...props} />
         <TouchableOpacity onPress={() => navigation.push('MovieDetail', {id})}>
           <Poster
             resizeMode="cover"
             width={getCardWidthDimension(15, 4)}
-            height="119px"
-            borderRadius="6px"
+            height={119}
+            borderRadius={6}
             type="movie"
             source={props.poster_path}
           />
@@ -245,8 +245,8 @@ export default function Profile() {
         onPress={() => onRemoveWatchlist(props)}>
         <Image
           resizeMode="contain"
-          height="46px"
-          width="32px"
+          height={46}
+          width={32}
           source={images.icons.remove}
         />
       </TouchableOpacity>
@@ -280,25 +280,25 @@ export default function Profile() {
           <CustomImageBackground />
           <VerticalView
             backgroundColor={colors.white}
-            paddingLeft="15px"
-            paddingTop="15px"
-            paddingRight="15px">
+            paddingLeft={15}
+            paddingTop={15}
+            paddingRight={15}>
             <HorizontalView
-              marginTop="15px"
-              marginBottom="15px"
+              marginTop={15}
+              marginBottom={15}
               alignItems="center"
               justifyContent="center">
               <TouchableOpacity>
                 <VerticalView
                   borderBottomColor={colors.fireEngineRed}
-                  borderBottomWidth="5px"
-                  paddingLeft="20px"
-                  paddingTop="15px"
-                  paddingRight="20px"
-                  paddingBottom="15px"
-                  marginRight="30px"
+                  borderBottomWidth={5}
+                  paddingLeft={20}
+                  paddingTop={15}
+                  paddingRight={20}
+                  paddingBottom={15}
+                  marginRight={30}
                   alignItems="center">
-                  <Text fontSize="30px" color={colors.nero}>
+                  <Text fontSize={30} color={colors.nero}>
                     0
                   </Text>
                   <Text color={colors.nobel}>Like</Text>
@@ -307,13 +307,13 @@ export default function Profile() {
 
               <TouchableOpacity>
                 <VerticalView
-                  paddingLeft="20px"
-                  paddingTop="15px"
-                  paddingRight="20px"
-                  paddingBottom="15px"
+                  paddingLeft={20}
+                  paddingTop={15}
+                  paddingRight={20}
+                  paddingBottom={15}
                   alignItems="center"
                   style={GlobalStyles.shadow}>
-                  <Text fontSize="30px" color={colors.nero}>
+                  <Text fontSize={30} color={colors.nero}>
                     {totalResults}
                   </Text>
                   <Text color={colors.nobel}>Movies</Text>
@@ -329,7 +329,7 @@ export default function Profile() {
               contentContainerStyle={GlobalStyles.content}
               ListFooterComponent={loading && <Loading />}
               ItemSeparatorComponent={() => (
-                <ItemSeparatorComponent height="15px" />
+                <ItemSeparatorComponent height={15} />
               )}
               ListEmptyComponent={() => (
                 <EmptyContent message="You haven't added any movies to your watchlist." />

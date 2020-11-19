@@ -66,9 +66,9 @@ export default function Review() {
         }}>
         <VerticalView
           flex={1}
-          marginLeft="15px"
-          marginRight="15px"
-          marginBottom="15px">
+          marginLeft={15}
+          marginRight={15}
+          marginBottom={15}>
           <TouchableOpacity
             style={{
               borderRadius: 6,
@@ -78,7 +78,7 @@ export default function Review() {
               marginBottom: 15,
             }}
             onPress={() => {}}>
-            <Text color={colors.white} marginTop="15px" marginBottom="15px">
+            <Text color={colors.white} marginTop={15} marginBottom={15}>
               SUBMIT
             </Text>
           </TouchableOpacity>
@@ -117,7 +117,7 @@ export default function Review() {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={GlobalStyles.content}
-        ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent height={15} />}
         ListEmptyComponent={() => (
           <EmptyContent
             message={`We don't have any reviews for ${movieName}. Would you like to write one?`}
@@ -137,18 +137,18 @@ export default function Review() {
           <HorizontalView
             alignItems="center"
             justifyContent="space-between"
-            paddingLeft="15px"
-            paddingTop="15px"
-            paddingRight="15px"
-            paddingBottom="15px">
+            paddingLeft={15}
+            paddingTop={15}
+            paddingRight={15}
+            paddingBottom={15}>
             <Avatar
-              width="40px"
-              height="40px"
-              borderRadius="20px"
+              width={40}
+              height={40}
+              borderRadius={20}
               resizeMode="cover"
               borderColor={colors.orange}
             />
-            <Text color={colors.shade} marginLeft="10px" marginRight="15px">
+            <Text color={colors.shade} marginLeft={10} marginRight={15}>
               you can start writing your review click here...
             </Text>
           </HorizontalView>

@@ -74,7 +74,7 @@ export default function Filmography() {
         numColumns={2}
         initialNumToRender={10}
         contentContainerStyle={GlobalStyles.content}
-        ItemSeparatorComponent={() => <ItemSeparatorComponent height="15px" />}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent height={15} />}
         ListFooterComponent={loading && <Loading />}
         onEndReached={getMovies}
         onEndReachedThreshold={0.8}
@@ -85,10 +85,10 @@ export default function Filmography() {
         )}
         renderItem={({item}) => (
           <MovieList
-            borderRadius="6px"
-            marginRight="15px"
+            borderRadius={6}
+            marginRight={15}
             width={getCardWidthDimension(15, 2)}
-            height="270px"
+            height={270}
             {...item}
           />
         )}

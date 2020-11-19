@@ -5,10 +5,7 @@ import {HorizontalView} from '../';
 
 export default function Loading(props) {
   return (
-    <HorizontalView
-      paddingTop="15px"
-      paddingBottom="15px"
-      justifyContent="center">
+    <HorizontalView paddingTop={15} paddingBottom={15} justifyContent="center">
       <LottieView
         autoSize
         source={require('../../modal/loading.json')}

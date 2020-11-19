@@ -14,8 +14,8 @@ import {
   MovieTVSections,
 } from '../../components';
 
-const CARD_WIDTH = '140px';
-const CARD_HEIGHT = '210px';
+const CARD_WIDTH = 140;
+const CARD_HEIGHT = 210;
 
 export default function Tv() {
   const [loading, setLoading] = useState(false);

@@ -96,13 +96,13 @@ export function getCardWidthDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
   const cardWidth = (getWindowWidth() - DIVISOR) / columns;
   // getCardWidthDimension 118
-  return cardWidth + 'px';
+  return cardWidth;
 }
 
 export function getCardHeightDimension(padding, columns) {
   const DIVISOR = (columns + 1) * padding;
   const cardHeight = (getWindowWidth() - DIVISOR) / columns;
-  return cardHeight - 7 + 'px';
+  return cardHeight - 7;
 }
 
 export function showError(method = '', message) {

@@ -61,24 +61,26 @@ export default function Movies() {
   const FeaturedMovie = () => {
     return (
       <ImageBackground
-        width={getWindowWidth() + 'px'}
-        height="280px"
+        width={getWindowWidth()}
+        height={280}
         resizeMode="cover"
         source={{uri: getUri(featuredMovie.backdrop_path)}}>
         <LinearGradient
           style={StyleSheet.absoluteFill}
           start={{x: 0, y: 0.3}}
           end={{x: 0, y: 1}}
-          colors={[colors.transparent, 'rgba(0,0,0,0.3)', colors.black]}
+          colors={[colors.transparent, 'rgba(0,0,0,0.8)', colors.black]}
         />
         <VerticalView
-          paddingLeft="15px"
-          paddingRight="15px"
-          style={{height: '100%', justifyContent: 'center'}}>
-          <Text color={colors.white} fontSize="25px" fontWeight="bold">
+          justifyContent="flex-end"
+          paddingLeft={10}
+          paddingRight={10}
+          paddingBottom={15}
+          style={{height: '100%'}}>
+          <Text color={colors.white} fontSize={25} fontWeight="bold">
             {featuredMovie.title}
           </Text>
-          <Text marginTop="15px" color={colors.veryLightGrey} numberOfLines={4}>
+          <Text marginTop={15} color={colors.veryLightGrey} numberOfLines={4}>
             {featuredMovie.overview}
           </Text>
           <TouchableOpacity
@@ -88,8 +90,8 @@ export default function Movies() {
                 id: featuredMovie.id,
               })
             }>
-            <Image width="24px" height="24px" source={images.icons.info} />
-            <Text color={colors.white} fontWeight="bold" marginLeft="10px">
+            <Image width={24} height={24} source={images.icons.info} />
+            <Text color={colors.white} fontWeight="bold" marginLeft={10}>
               More Info
             </Text>
           </TouchableOpacity>
@@ -116,7 +118,7 @@ export default function Movies() {
     <VerticalView backgroundColor={colors.black}>
       <AppStatusBar barStyle="light-content" />
       <LoadingModal visible={loading} />
-      <Header borderColor={colors.orange} style={styles.header} />
+      {/* <Header borderColor={colors.orange} style={styles.header} /> */}
 
       <ScrollView
         scrollEventThrottle={16}
@@ -128,9 +130,9 @@ export default function Movies() {
 
         {originals && (
           <MovieTVSections
-            width="140px"
-            height="210px"
-            borderRadius="6px"
+            width={140}
+            height={210}
+            borderRadius={6}
             type="movie"
             {...originals}
           />
@@ -138,9 +140,9 @@ export default function Movies() {
 
         {trending && (
           <MovieTVSections
-            width="140px"
-            height="210px"
-            borderRadius="6px"
+            width={140}
+            height={210}
+            borderRadius={6}
             type="movie"
             {...trending}
           />
@@ -148,9 +150,9 @@ export default function Movies() {
 
         {upcoming && (
           <MovieTVSections
-            width="140px"
-            height="210px"
-            borderRadius="6px"
+            width={140}
+            height={210}
+            borderRadius={6}
             type="movie"
             {...upcoming}
           />
@@ -158,9 +160,9 @@ export default function Movies() {
 
         {topRated && (
           <MovieTVSections
-            width="140px"
-            height="210px"
-            borderRadius="6px"
+            width={140}
+            height={210}
+            borderRadius={6}
             type="movie"
             {...topRated}
           />

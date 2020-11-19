@@ -18,7 +18,7 @@ export default function HomeBottomTabs() {
     <Tab.Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: colors.blackRussian,
+          backgroundColor: colors.black,
           borderTopColor: colors.blackRussian,
           borderTopWidth: 1,
         },
@@ -32,8 +32,8 @@ export default function HomeBottomTabs() {
             : route.name.toLowerCase() + OUTLINE;
           return (
             <Image
-              height="40px"
-              width="36px"
+              height={40}
+              width={36}
               resizeMode="contain"
               source={images.icons[name]}
             />

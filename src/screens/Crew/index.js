@@ -37,7 +37,7 @@ export default function Crew() {
           showsVerticalScrollIndicator={false}
           data={data}
           contentContainerStyle={GlobalStyles.content}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent width="5px" />}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent width={5} />}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -49,7 +49,7 @@ export default function Crew() {
                 <Poster
                   width={getCardWidthDimension(15, 3)}
                   height={getCardHeightDimension(15, 2)}
-                  borderRadius="6px"
+                  borderRadius={6}
                   gender={item.gender}
                   type="person"
                   resizeMode="cover"
@@ -60,8 +60,8 @@ export default function Crew() {
               <Text
                 style={GlobalStyles.text}
                 color={colors.white}
-                fontSize="12px"
-                marginTop="3px"
+                fontSize={12}
+                marginTop={3}
                 numberOfLines={1}>
                 {item.name}
               </Text>
@@ -69,8 +69,8 @@ export default function Crew() {
               <Text
                 style={GlobalStyles.text}
                 fontWeight="300"
-                fontSize="11px"
-                marginBottom="15px"
+                fontSize={11}
+                marginBottom={15}
                 color={colors.dimGray}
                 numberOfLines={1}>
                 {item.job}

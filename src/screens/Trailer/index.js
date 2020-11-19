@@ -49,7 +49,7 @@ export default function Trailer() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={GlobalStyles.content}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent height="3px" />}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent height={3} />}
           ListEmptyComponent={() => (
             <EmptyContent
               message={`There are no trailers added to ${movieName}.`}

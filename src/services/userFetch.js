@@ -19,7 +19,7 @@ export default {
       originals: {
         slug: 'originals',
         title: 'Originais do Netflix',
-        endpoint: `/discover/movie?with_networks=231&api_key=${API_KEY}&sort_by=popularity.desc&page=1include_null_first_air_dates=false`,
+        endpoint: `/discover/movie?with_ott_providers=8&api_key=${API_KEY}&sort_by=popularity.desc&page=1include_null_first_air_dates=false`,
         data: await basicFetch(
           `/discover/movie?with_networks=231&api_key=${API_KEY}&sort_by=popularity.desc&page=1include_null_first_air_dates=false`,
         ),

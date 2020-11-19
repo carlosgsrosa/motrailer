@@ -1,5 +1,5 @@
-import React from 'react';
-import {Platform, StatusBar} from 'react-native';
+import React, {useState} from 'react';
+import {View, Platform, StatusBar, TextInput} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 const images = [
@@ -43,7 +43,9 @@ const HEADER_HEIGHT =
 
 // import Toggle from './Toggle';
 // import WebViewInjection from './WebViewInjection';
-import BottomSheetExamples from './BottomSheetExamples';
+// import Swiper from './Swiper';
+// import Memo from './Memo';
+import OnBoardinFlatListAnimation from './OnBoardinFlatListAnimation';
 
 export default function Testes() {
   const scrollY = new Animated.Value(0);
@@ -54,7 +56,8 @@ export default function Testes() {
   });
 
   return (
-    <BottomSheetExamples />
+    <OnBoardinFlatListAnimation />
+    // <Swiper />
     // <WebViewInjection />
     // <Toggle />
     // <View style={{flex: 1}}>

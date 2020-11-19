@@ -37,10 +37,10 @@ export default function Settings() {
       <LoadingModal visible={loading} />
       <TouchableOpacity onPress={logOut}>
         <HorizontalView
-          paddingLeft="15px"
-          paddingTop="15px"
-          paddingRight="15px"
-          paddingBottom="15px"
+          paddingLeft={15}
+          paddingTop={15}
+          paddingRight={15}
+          paddingBottom={15}
           backgroundColor="#CCCCCC">
           <Text>Deslogar</Text>
         </HorizontalView>

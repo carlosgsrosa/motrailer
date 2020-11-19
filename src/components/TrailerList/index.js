@@ -14,18 +14,18 @@ export default function TrailerList({data}) {
 
   return (
     <VerticalView
-      borderRadius="6px"
-      marginBottom="15px"
+      borderRadius={6}
+      marginBottom={15}
       style={{height: 200, width: '100%', overflow: 'hidden'}}>
       <Text
-        paddingLeft="5px"
-        paddingTop="5px"
-        paddingRight="5px"
-        paddingBottom="5px"
+        paddingLeft={5}
+        paddingTop={5}
+        paddingRight={5}
+        paddingBottom={5}
         backgroundColor={colors.black}
         color={colors.white}
         numberOfLines={1}
-        fontSize="16px"
+        fontSize={16}
         fontWeight="300">
         {name}
       </Text>

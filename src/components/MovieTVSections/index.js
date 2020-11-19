@@ -33,12 +33,12 @@ export default (props) => {
   return (
     <VerticalView>
       <HorizontalView
-        marginLeft="15px"
-        marginRight="15px"
+        marginLeft={15}
+        marginRight={15}
         justifyContent="space-between"
         alignItems="center">
         <Text
-          fontSize="28px"
+          fontSize={28}
           fontFamily="SFProDisplay-Medium"
           fontWeight="400"
           color={colors.white}>
@@ -49,7 +49,7 @@ export default (props) => {
             navigation.navigate('AllMovies', {title, endpoint, type})
           }>
           <Text
-            fontSize="25px"
+            fontSize={25}
             fontFamily="SFProDisplay-Medium"
             fontWeight="bold"
             color={colors.orange}>
@@ -64,7 +64,7 @@ export default (props) => {
         showsVerticalScrollIndicator={false}
         horizontal
         contentContainerStyle={GlobalStyles.content}
-        ItemSeparatorComponent={() => <ItemSeparatorComponent width="5px" />}
+        ItemSeparatorComponent={() => <ItemSeparatorComponent width={5} />}
         ListFooterComponent={() => (
           <ShowMore
             width={140}

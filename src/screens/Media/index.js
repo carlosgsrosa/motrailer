@@ -28,9 +28,9 @@ export default function Media() {
       <HorizontalView
         key={`horizontal-view-${index}`}
         justifyContent="center"
-        paddingTop="15px"
-        paddingBottom="15px">
-        <Text key={`render-text-${index}`} fontSize="18px" fontWeight="500">
+        paddingTop={15}
+        paddingBottom={15}>
+        <Text key={`render-text-${index}`} fontSize={18} fontWeight="500">
           {index + 1}/{total}
         </Text>
       </HorizontalView>
@@ -43,11 +43,11 @@ export default function Media() {
       <ImageBackground
         style={{width: '100%', height: '100%'}}
         source={images.background.place_holder}>
-        <VerticalView paddingLeft="15px" paddingTop="15px" paddingBottom="15px">
+        <VerticalView paddingLeft={15} paddingTop={15} paddingBottom={15}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Image
-              width="24px"
-              height="24px"
+              width={24}
+              height={24}
               resizeMode="contain"
               source={images.icons.close}
             />

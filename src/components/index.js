@@ -26,76 +26,92 @@ import MovieTVSections from './MovieTVSections';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
-  background-color: ${(props) => props.backgroundColor || colors.transparent};
+
+  ${(props) =>
+    props.backgroundColor && `background-color: ${props.backgroundColor};`};
 `;
 
 const Wrapper = styled.View`
-  margin-left: ${(props) => props.marginLeft || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
-
-  border-radius: ${(props) => props.borderRadius || '0px'};
+  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
 `;
 
 const ScrollView = styled.ScrollView`
-  background-color: ${(props) => props.backgroundColor || colors.transparent};
+  ${(props) =>
+    props.backgroundColor && `background-color: ${props.backgroundColor};`};
 
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 
-  padding-left: ${(props) => props.paddingLeft || '0px'};
-  padding-top: ${(props) => props.paddingTop || '0px'};
-  padding-right: ${(props) => props.paddingRight || '0px'};
-  padding-bottom: ${(props) => props.paddingBottom || '0px'};
+  ${(props) => props.paddingLeft && `padding-left: ${props.paddingLeft}px;`};
+  ${(props) => props.paddingTop && `padding-top: ${props.paddingTop}px;`};
+  ${(props) => props.paddingRight && `padding-right: ${props.paddingRight}px;`};
+  ${(props) =>
+    props.paddingBottom && `padding-bottom: ${props.paddingBottom}px;`};
 
-  border-width: ${(props) => props.borderWidth || '0px'};
-  border-color: ${(props) => props.borderColor || '0px'};
+  ${(props) => props.borderWidth && `border-width: ${props.borderWidth}px;`};
+
+  ${(props) => props.borderColor && `border-color: ${props.borderColor}px;`};
 `;
 
 const VerticalView = styled.View`
-  ${(props) => props.flex && `flex: ${props.flex}`};
+  ${(props) => props.flex && `flex: ${props.flex};`};
+
   ${(props) =>
-    props.backgroundColor && `background-color: ${props.backgroundColor}`};
+    props.backgroundColor && `background-color: ${props.backgroundColor};`};
 
-  ${(props) => props.alignItems && `align-items: ${props.alignItems}`};
+  ${(props) => props.alignItems && `align-items: ${props.alignItems};`};
   ${(props) =>
-    props.justifyContent && `justify-content: ${props.justifyContent}`};
+    props.justifyContent && `justify-content: ${props.justifyContent};`};
 
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 
-  padding-left: ${(props) => props.paddingLeft || '0px'};
-  padding-top: ${(props) => props.paddingTop || '0px'};
-  padding-right: ${(props) => props.paddingRight || '0px'};
-  padding-bottom: ${(props) => props.paddingBottom || '0px'};
+  ${(props) => props.paddingLeft && `margin-left: ${props.paddingLeft}px;`};
+  ${(props) => props.paddingTop && `margin-top: ${props.paddingTop}px;`};
+  ${(props) => props.paddingRight && `margin-right: ${props.paddingRight}px;`};
+  ${(props) =>
+    props.paddingBottom && `margin-bottom: ${props.paddingBottom}px;`};
 
-  border-width: ${(props) => props.borderWidth || '0px'};
-  border-left-width: ${(props) => props.borderLeftWidth || '0px'};
-  border-top-width: ${(props) => props.borderTopWidth || '0px'};
-  border-right-width: ${(props) => props.borderRightWidth || '0px'};
-  border-bottom-width: ${(props) => props.borderBottomWidth || '0px'};
+  ${(props) => props.borderWidth && `border-width: ${props.borderWidth}px;`};
+  ${(props) =>
+    props.borderLeftWidth && `border-left-width: ${props.borderLeftWidth}px;`};
+  ${(props) =>
+    props.borderTopWidth && `border-top-width: ${props.borderTopWidth}px;`};
+  ${(props) =>
+    props.borderRightWidth &&
+    `border-right-width: ${props.borderRightWidth}px;`};
+  ${(props) =>
+    props.borderBottomWidth &&
+    `border-bottom-width: ${props.borderBottomWidth}px;`};
 
-  border-color: ${(props) => props.borderColor || colors.transparent};
-  border-left-color: ${(props) => props.borderLeftColor || colors.transparent};
-  border-top-color: ${(props) => props.borderTopColor || colors.transparent};
-  border-right-color: ${(props) =>
-    props.borderRightColor || colors.transparent};
-  border-bottom-color: ${(props) => props.borderColor || colors.transparent};
+  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
 
-  border-radius: ${(props) => props.borderRadius || '0px'};
+  ${(props) => props.borderColor && `border-color: ${props.borderColor};`};
+
+  ${(props) =>
+    props.borderLeftColor && `border-left-color: ${props.borderLeftColor};`};
+  ${(props) =>
+    props.borderTopColor && `border-top-color: ${props.borderTopColor};`};
+  ${(props) =>
+    props.borderRightColor && `border-right-color: ${props.borderRightColor};`};
+  ${(props) =>
+    props.borderBottomColor &&
+    `border-bottom-color: ${props.borderBottomColor};`};
 `;
 
 const HorizontalView = styled.View`
-  ${(props) => props.flex && `flex: ${props.flex}`};
-
   flex-direction: row;
+
+  ${(props) => props.flex && `flex: ${props.flex}`};
 
   ${(props) =>
     props.backgroundColor && `background-color: ${props.backgroundColor}`};
@@ -103,15 +119,16 @@ const HorizontalView = styled.View`
   ${(props) =>
     props.justifyContent && `justify-content: ${props.justifyContent}`};
 
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 
-  padding-left: ${(props) => props.paddingLeft || '0px'};
-  padding-top: ${(props) => props.paddingTop || '0px'};
-  padding-right: ${(props) => props.paddingRight || '0px'};
-  padding-bottom: ${(props) => props.paddingBottom || '0px'};
+  ${(props) => props.paddingLeft && `margin-left: ${props.paddingLeft}px;`};
+  ${(props) => props.paddingTop && `margin-top: ${props.paddingTop}px;`};
+  ${(props) => props.paddingRight && `margin-right: ${props.paddingRight}px;`};
+  ${(props) =>
+    props.paddingBottom && `margin-bottom: ${props.paddingBottom}px;`};
 
   border-width: ${(props) => props.borderWidth || '0px'};
   border-color: ${(props) => props.borderColor || colors.transparent};
@@ -119,14 +136,14 @@ const HorizontalView = styled.View`
 `;
 
 const ItemSeparatorComponent = styled.View`
-  width: ${(props) => props.width || '0px'};
-  height: ${(props) => props.height || '0px'};
+  ${(props) => props.width && `width: ${props.width}px;`};
+  ${(props) => props.height && `height: ${props.height}px;`};
 `;
 
 const Text = styled.Text`
-  font-size: ${(props) => props.fontSize || '15px'};
+  ${(props) => props.fontSize && `font-size: ${props.fontSize}px;`};
 
-  ${(props) => props.width && `width: ${props.width}`};
+  ${(props) => props.width && `width: ${props.width};`};
 
   color: ${(props) => props.color || colors.black};
 
@@ -138,15 +155,16 @@ const Text = styled.Text`
 
   font-weight: ${(props) => props.fontWeight || 'normal'};
 
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 
-  padding-left: ${(props) => props.paddingLeft || '0px'};
-  padding-top: ${(props) => props.paddingTop || '0px'};
-  padding-right: ${(props) => props.paddingRight || '0px'};
-  padding-bottom: ${(props) => props.paddingBottom || '0px'};
+  ${(props) => props.paddingLeft && `margin-left: ${props.paddingLeft}px;`};
+  ${(props) => props.paddingTop && `margin-top: ${props.paddingTop}px;`};
+  ${(props) => props.paddingRight && `margin-right: ${props.paddingRight}px;`};
+  ${(props) =>
+    props.paddingBottom && `margin-bottom: ${props.paddingBottom}px;`};
 
   border-width: ${(props) => props.borderWidth || '0px'};
   border-color: ${(props) => props.borderColor || colors.transparent};
@@ -154,15 +172,15 @@ const Text = styled.Text`
 `;
 
 const Image = styled.Image`
-  width: ${(props) => props.width || '0px'};
-  height: ${(props) => props.height || '0px'};
+  ${(props) => props.width && `width: ${props.width}px;`};
+  ${(props) => props.height && `height: ${props.height}px;`};
 
-  border-radius: ${(props) => props.borderRadius || '0px'};
+  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
 
-  margin-left: ${(props) => props.marginLeft || '0px'};
-  margin-top: ${(props) => props.marginTop || '0px'};
-  margin-right: ${(props) => props.marginRight || '0px'};
-  margin-bottom: ${(props) => props.marginBottom || '0px'};
+  ${(props) => props.marginLeft && `margin-left: ${props.marginLeft}px;`};
+  ${(props) => props.marginTop && `margin-top: ${props.marginTop}px;`};
+  ${(props) => props.marginRight && `margin-right: ${props.marginRight}px;`};
+  ${(props) => props.marginBottom && `margin-bottom: ${props.marginBottom}px;`};
 `;
 
 export const Button = styled.TouchableOpacity`
@@ -179,13 +197,16 @@ export const Button = styled.TouchableOpacity`
 `;
 
 export const ImageBackground = styled.ImageBackground`
-  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}`};
+  ${(props) => props.width && `width: ${props.width}px;`};
+  ${(props) => props.height && `height: ${props.height}px;`};
 
-  width: ${(props) => props.width || '24px'};
-  height: ${(props) => props.height || '24px'};
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+  ${(props) => props.borderRadius && `border-radius: ${props.borderRadius}px;`};
+
+  ${(props) =>
+    props.justifyContent && `justify-content: ${props.justifyContent};`};
+  ${(props) => props.alignItems && `align-items: ${props.alignItems};`};
+
+  ${(props) => props.overflow && `overflow: ${props.overflow};`};
 `;
 
 function elevationShadowStyle(elevation) {

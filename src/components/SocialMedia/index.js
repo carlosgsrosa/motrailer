@@ -26,10 +26,10 @@ const openURL = (type, id) => {
       onPress={() => {
         Linking.openURL(media[type].url);
       }}>
-      <HorizontalView marginLeft="15px" marginTop="15px" marginBottom="15px">
+      <HorizontalView marginLeft={15} marginTop={15} marginBottom={15}>
         <Image
-          height="24px"
-          width="24px"
+          height={24}
+          width={24}
           style={{tintColor: colors.dimGray}}
           source={media[type].source}
         />

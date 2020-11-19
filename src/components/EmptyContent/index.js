@@ -10,11 +10,11 @@ export default function EmptyContent({message}) {
       flex={1}
       justifyContent="center"
       style={{alignItems: 'center', justifyContent: 'center'}}>
-      <Image height="150px" width="171px" source={images.icons.logo} />
+      <Image height={150} width={171} source={images.icons.logo} />
       <Text
-        marginTop="15px"
+        marginTop={15}
         fontWeight="200"
-        fontSize="18px"
+        fontSize={18}
         color="#666666"
         textAlign="center">
         {message}

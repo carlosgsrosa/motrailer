@@ -22,12 +22,12 @@ export default function RBSheetDetail({tag, image, overview}) {
         },
         container: {borderTopLeftRadius: 12, borderTopRightRadius: 12},
       }}>
-      <VerticalView marginLeft="15px" marginRight="15px" marginBottom="15px">
+      <VerticalView marginLeft={15} marginRight={15} marginBottom={15}>
         <Image
           width="100%"
-          height="160px"
-          marginBottom="15px"
-          borderRadius="6px"
+          height={160}
+          marginBottom={15}
+          borderRadius={6}
           resizeMode="cover"
           source={{uri: getUri(image)}}
         />

@@ -65,14 +65,14 @@ export default function Movie() {
       <HorizontalView
         alignItems="center"
         justifyContent="center"
-        borderWidth="0.7px"
+        borderWidth={0.7}
         borderColor={colors.nobel}
-        borderRadius="6px"
-        paddingTop="3px"
-        paddingLeft="10px"
-        paddingBottom="3px"
-        paddingRight="10px">
-        <Text fontSize="15px" color={colors.white}>
+        borderRadius={6}
+        paddingTop={3}
+        paddingLeft={10}
+        paddingBottom={3}
+        paddingRight={10}>
+        <Text fontSize={15} color={colors.white}>
           {data.name}
         </Text>
       </HorizontalView>
@@ -82,19 +82,19 @@ export default function Movie() {
   function CertificationList({data, runtime}) {
     return (
       <HorizontalView
-        marginTop="15px"
+        marginTop={15}
         alignItems="center"
         justifyContent="center">
         <VerticalView
           backgroundColor={colors.red}
-          paddingLeft="5px"
-          paddingRight="5px"
-          borderRadius="3px">
-          <Text fontWeight="bold" color={colors.whiteSmoke} fontSize="15px">
+          paddingLeft={5}
+          paddingRight={5}
+          borderRadius={3}>
+          <Text fontWeight="bold" color={colors.whiteSmoke} fontSize={15}>
             {data.certification ? data.certification : null}
           </Text>
         </VerticalView>
-        <Text marginLeft="5px" color={colors.whiteSmoke} fontWeight="300">
+        <Text marginLeft={5} color={colors.whiteSmoke} fontWeight="300">
           {formatDate(data.release_date)} (US) • {minutesInHours(runtime)}
         </Text>
       </HorizontalView>
@@ -223,15 +223,17 @@ export default function Movie() {
   function Header() {
     return (
       <ImageBackground
-        width={getWindowWidth() + 'px'}
-        height="280px"
+        justifyContent="center"
+        alignItems="center"
+        width={getWindowWidth()}
+        height={280}
         resizeMode="cover"
         source={{uri: getUri(movie.backdrop_path)}}>
         <LinearGradient
           style={StyleSheet.absoluteFill}
           start={{x: 0, y: 0.3}}
           end={{x: 0, y: 1}}
-          colors={[colors.transparent, 'rgba(24,25,26, 0.3)', colors.swamp]}
+          colors={[colors.transparent, 'rgba(0,0,0,0.8)', colors.black]}
         />
         <TouchableOpacity
           onPress={() =>
@@ -240,7 +242,7 @@ export default function Movie() {
               movieName: movie.title,
             })
           }>
-          <Image width="54px" height="54px" source={images.icons.youtube} />
+          <Image width={54} height={54} source={images.icons.youtube} />
         </TouchableOpacity>
       </ImageBackground>
     );
@@ -248,16 +250,13 @@ export default function Movie() {
 
   function MoviePoster() {
     return (
-      <Wrapper
-        marginLeft="15px"
-        borderRadius="6px"
-        backgroundColor={colors.white}>
+      <Wrapper marginLeft={15} borderRadius={6}>
         <Poster
           note={note}
           resizeMode="contain"
-          width="120px"
-          height="180px"
-          borderRadius="6px"
+          width={120}
+          height={180}
+          borderRadius={6}
           type="movie"
           source={movie.poster_path}
         />
@@ -268,10 +267,10 @@ export default function Movie() {
   function Name() {
     return (
       <Text
-        marginLeft="10px"
-        marginRight="15px"
+        marginLeft={10}
+        marginRight={15}
         fontWeight="bold"
-        fontSize="20px"
+        fontSize={20}
         color={colors.white}
         numberOfLines={2}>
         {stringToUpperCase(movie.title)} ({getYearFromDate(movie.release_date)})
@@ -288,7 +287,7 @@ export default function Movie() {
           showsVerticalScrollIndicator={false}
           horizontal
           contentContainerStyle={styles.flatListContainer}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
+          ItemSeparatorComponent={() => <ItemSeparatorComponent width={3} />}
           data={movieCertification}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => (
@@ -302,10 +301,10 @@ export default function Movie() {
   function Popularity() {
     return (
       <Text
-        marginTop="5px"
+        marginTop={5}
         fontWeight="300"
-        marginLeft="10px"
-        fontSize="15px"
+        marginLeft={10}
+        fontSize={15}
         color={colors.whiteSmoke}>
         {movie.popularity} People watching
       </Text>
@@ -320,8 +319,8 @@ export default function Movie() {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           horizontal
-          contentContainerStyle={styles.flatListContainer}
-          ItemSeparatorComponent={() => <ItemSeparatorComponent width="3px" />}
+          // contentContainerStyle={styles.flatListContainer}
+          // ItemSeparatorComponent={() => <ItemSeparatorComponent width={3} />}
           data={genres}
           keyExtractor={(_, index) => String(index)}
           renderItem={({item}) => <StringList data={item} />}
@@ -332,16 +331,16 @@ export default function Movie() {
 
   function Rating() {
     return (
-      <HorizontalView marginLeft="10px" alignItems="center">
+      <HorizontalView marginLeft={10} alignItems="center">
         <Image
-          height="22.92px"
-          width="24px"
-          marginRight="5px"
+          height={22.92}
+          width={24}
+          marginRight={5}
           resizeMode="contain"
           source={images.icons.rating_star}
         />
         <VoteAverage
-          marginRight="5px"
+          marginRight={5}
           fontWeight="400"
           fontColor={colors.fireEngineRed}
           voteAverage={movie.vote_average}
@@ -358,11 +357,11 @@ export default function Movie() {
       <TouchableOpacity onPress={() => refRBSheet.current.open()}>
         <Text
           color={colors.whiteSmoke}
-          marginTop={note ? '170px' : '140px'}
-          marginLeft="15px"
-          marginRight="15px"
-          marginBottom="15px"
-          fontSize="17px"
+          marginTop={note ? 170 : 140}
+          marginLeft={15}
+          marginRight={15}
+          marginBottom={15}
+          fontSize={17}
           textAlign="justify"
           numberOfLines={4}>
           {movie.overview}
@@ -377,15 +376,15 @@ export default function Movie() {
         <HorizontalView
           justifyContent="space-between"
           alignItems="center"
-          paddingLeft="15px"
-          paddingRight="15px"
-          paddingBottom="10px"
-          marginTop="15px">
-          <Text fontSize="22px" fontWeight="bold" color={colors.white}>
+          paddingLeft={15}
+          paddingRight={15}
+          paddingBottom={10}
+          marginTop={15}>
+          <Text fontSize={22} fontWeight="bold" color={colors.white}>
             Top-Billed Cast
           </Text>
           <TouchableOpacity onPress={openCastClick}>
-            <Text fontSize="22px" fontWeight="bold" color={colors.white}>
+            <Text fontSize={22} fontWeight="bold" color={colors.white}>
               ...
             </Text>
           </TouchableOpacity>
@@ -404,17 +403,15 @@ export default function Movie() {
               paddingTop: 15,
               paddingRight: 15,
             }}
-            ItemSeparatorComponent={() => (
-              <ItemSeparatorComponent width="5px" />
-            )}
+            ItemSeparatorComponent={() => <ItemSeparatorComponent width={5} />}
             data={movieCredit}
             keyExtractor={(_, index) => String(index)}
             renderItem={({item}) => (
               <CastList
                 resizeMode="cover"
-                width="90px"
-                height="131px"
-                borderRadius="6px"
+                width={90}
+                height={131}
+                borderRadius={6}
                 type="person"
                 {...item}
               />
@@ -431,8 +428,8 @@ export default function Movie() {
         <HorizontalView justifyContent="center">
           {/* <TouchableOpacity style={styles.space} onPress={onWatchListClick}>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={watchlist ? images.icons.saved : images.icons.rate}
             />
@@ -442,23 +439,23 @@ export default function Movie() {
           </TouchableOpacity> */}
           <TouchableOpacity style={styles.space} onPress={onWatchListClick}>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={watchlist ? images.icons.saved : images.icons.save}
             />
-            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} marginTop={7}>
               {watchlist ? 'Saved' : 'Save'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.space} onPress={onFavoriteClick}>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={favorite ? images.icons.liked : images.icons.like}
             />
-            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} marginTop={7}>
               {favorite ? 'Liked' : 'Like'}
             </Text>
           </TouchableOpacity>
@@ -471,12 +468,12 @@ export default function Movie() {
               })
             }>
             <Image
-              width="54px"
-              height="54px"
+              width={54}
+              height={54}
               resizeMode="contain"
               source={images.icons.overview}
             />
-            <Text color={colors.whiteSmoke} style={{marginTop: 7}}>
+            <Text color={colors.whiteSmoke} marginTop={7}>
               Review
             </Text>
           </TouchableOpacity>
@@ -509,15 +506,15 @@ export default function Movie() {
         <HorizontalView
           justifyContent="space-between"
           alignItems="center"
-          paddingLeft="15px"
-          paddingRight="15px"
-          paddingBottom="10px"
-          marginTop="15px">
-          <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
+          paddingLeft={15}
+          paddingRight={15}
+          paddingBottom={10}
+          marginTop={15}>
+          <Text fontSize={22} fontWeight="bold" color={colors.orange}>
             Media
           </Text>
           <TouchableOpacity onPress={() => openMedia(moviePosters, 0)}>
-            <Text fontSize="22px" fontWeight="bold" color={colors.orange}>
+            <Text fontSize={22} fontWeight="bold" color={colors.orange}>
               ...
             </Text>
           </TouchableOpacity>
@@ -541,12 +538,12 @@ export default function Movie() {
                   position: 'absolute',
                   zIndex: 1,
                 }}>
-                <Image height="64px" width="64px" source={images.icons.zoom} />
+                <Image height={64} width={64} source={images.icons.zoom} />
               </TouchableOpacity>
               <Poster
                 resizeMode="cover"
-                width="220px"
-                height="300px"
+                width={220}
+                height={300}
                 type="images"
                 source={item.file_path}
               />
@@ -566,7 +563,7 @@ export default function Movie() {
   }
 
   return (
-    <VerticalView flex={1} backgroundColor={colors.swamp}>
+    <VerticalView flex={1} backgroundColor={colors.black}>
       <AppStatusBar transparent barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Header />
@@ -584,7 +581,6 @@ export default function Movie() {
         <VerticalView />
         <Cast />
         <UserActionButtons />
-        {/* <Images /> */}
         <RBSheetDetail
           tag={refRBSheet}
           image={movie.poster_path}

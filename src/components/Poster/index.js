@@ -49,8 +49,8 @@ export default function Poster(props) {
         style={horizontalView}>
         <Image
           resizeMode="contain"
-          width="50px"
-          height="27.19px"
+          width={50}
+          height={27.19}
           source={getStreamingSource(note)}
         />
       </HorizontalView>
@@ -59,19 +59,19 @@ export default function Poster(props) {
 
   return (
     <VerticalView borderRadius={borderRadius} style={styles.overflow}>
-      <ImageBackground
+      {/* <ImageBackground
         resizeMode="cover"
         width={width}
         height={height}
-        source={images.background.place_holder}>
-        <Image
-          borderRadius={borderRadius}
-          resizeMode={resizeMode}
-          width={width}
-          height={height}
-          source={source ? {uri: getUri(source)} : getImage()}
-        />
-      </ImageBackground>
+        source={images.background.place_holder}> */}
+      <Image
+        borderRadius={borderRadius}
+        resizeMode={resizeMode}
+        width={width}
+        height={height}
+        source={source ? {uri: getUri(source)} : getImage()}
+      />
+      {/* </ImageBackground> */}
       <StreamingSource />
     </VerticalView>
   );

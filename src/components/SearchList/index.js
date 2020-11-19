@@ -66,7 +66,7 @@ export default function SearchList({data}) {
             activeOpacity={0.8}
             key={String(index)}
             onPress={() => navigation.navigate('MovieDetail', {id: item.id})}>
-            <Text numberOfLines={1} color="#999999" paddingTop="3px">
+            <Text numberOfLines={1} color="#999999" paddingTop={3}>
               • {item.original_title || item.original_name}
             </Text>
           </TouchableOpacity>
@@ -87,26 +87,24 @@ export default function SearchList({data}) {
       <VerticalView style={GlobalStyles.shadow}>
         <HorizontalView>
           <Poster
-            width="100px"
-            height="145px"
+            width={100}
+            height={145}
             resizeMode="cover"
-            borderRadius="6px"
+            borderRadius={6}
             type={data.media_type}
             source={image}
           />
           <VerticalView
             flex={1}
-            paddingLeft="7px"
-            paddingRight="7px"
+            paddingLeft={7}
+            paddingRight={7}
             justifyContent="center"
-            paddingTop="7px"
-            paddingBottom="7px">
-            <Text fontSize="16px" fontWeight="bold" numberOfLines={1}>
+            paddingTop={7}
+            paddingBottom={7}>
+            <Text fontSize={16} fontWeight="bold" numberOfLines={1}>
               {title}
             </Text>
-            <Text
-              marginBottom={Platform.OS === 'ios' ? '10px' : '3px'}
-              color="#b0b0b0">
+            <Text marginBottom={Platform.OS === 'ios' ? 10 : 3} color="#b0b0b0">
               {date}
             </Text>
             <Overview />

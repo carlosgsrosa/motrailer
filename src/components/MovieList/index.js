@@ -47,13 +47,13 @@ export default function MovieList(props) {
   const MovieDescription = () => {
     return (
       <VerticalView style={styles.movieDescription}>
-        <Text color={colors.dimGray} fontSize="12px">
+        <Text color={colors.dimGray} fontSize={12}>
           {getYearFromDate(data.release_date)}
         </Text>
         <Text
           width={props.width}
           color={colors.white}
-          fontSize="12px"
+          fontSize={12}
           fontWeight="bold"
           numberOfLines={3}>
           {stringToUpperCase(data.title)}

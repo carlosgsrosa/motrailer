@@ -49,8 +49,8 @@ export default function TvList(props) {
         style={styles.whatlist}>
         <Image
           resizeMode="contain"
-          height="46px"
-          width="32px"
+          height={46}
+          width={32}
           source={
             data.watchlist
               ? images.icons.watchlist_checked
@@ -85,7 +85,7 @@ export default function TvList(props) {
           resizeMode="cover"
           width={width}
           height={height}
-          borderRadius="6px"
+          borderRadius={6}
           type="movie"
           source={data.poster_path}
         />

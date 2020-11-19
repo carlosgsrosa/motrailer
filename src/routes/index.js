@@ -71,9 +71,9 @@ export default function Routes() {
           headerRight: () => (
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Image
-                marginRight="15px"
-                width="24px"
-                height="24px"
+                marginRight={15}
+                width={24}
+                height={24}
                 source={images.icons.share}
               />
             </TouchableOpacity>
@@ -89,9 +89,9 @@ export default function Routes() {
           headerRight: () => (
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Image
-                marginRight="15px"
-                width="24px"
-                height="24px"
+                marginRight={15}
+                width={24}
+                height={24}
                 source={images.icons.share}
               />
             </TouchableOpacity>
@@ -113,9 +113,9 @@ export default function Routes() {
           headerRight: () => (
             <TouchableOpacity onPress={() => alert('Soon')}>
               <Image
-                marginRight="15px"
-                width="24px"
-                height="24px"
+                marginRight={15}
+                width={24}
+                height={24}
                 source={images.icons.filter}
               />
             </TouchableOpacity>
